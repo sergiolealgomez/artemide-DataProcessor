@@ -1,0 +1,8 @@
+
+#.out files produced by fortran
+a.out
+*.out
+*.mod
+
+#artemide temporary files
+aTMDe-temporary
