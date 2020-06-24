@@ -84,6 +84,12 @@ class DataSet:
         self.matrixA=[] # matrix of systemtic shifts
         self.matrixAinverse=[]
         
+        # the list of list correlated errors for each point
+        # contains point-to-point correlations and normalization correlations
+        self._listOfCorrErrors=numpy.array([])
+        # the list of uncorrelated errors-squared
+        self._listOfVariances=numpy.array([])
+        
         
     def __repr__ (self):
         return "<DataSet: %s with %s points>" % (self.name, self.numberOfPoints)
@@ -150,9 +156,11 @@ class DataSet:
         
         ### 2) Calculate covariace matrices
         if computeCovarianceMatrix:
-            self.CalculateV()
+            self._computeListOfCorrErrors()
+            self._computeListOfVariances()
+            self._CalculateV()
             self.invV=numpy.linalg.inv(self.V)
-            self.CalculateA()
+            self._CalculateA()
             self.matrixAinverse=numpy.linalg.inv(self.matrixA)
         
 
@@ -163,13 +171,25 @@ class DataSet:
         if not silent:
             print('Set ',self.name,' finalized. (',self.numberOfPoints,' points)')
 
-    def CutData(self,cutFunction,addName):
-        """ Create an instance of DataSet, which contains all points after 
-            application of cutFunction. New set has name=name+addName
-            
-            cutFunction has interface
-            f(Point1)=bool, Point2
+    def CutData(self,cutFunction,addName=""):
+        """
+        Create an instance of DataSet, which contains all points of the original one after 
+        application of cutFunction. New set has name=name+addName
+
+        Parameters
+        ----------
+        cutFunction : function with the interface f(Point1)=bool, Point2
             where bool states that the point2 should be included into the set.
+                        
+        addName : string, optional
+            addendant to the name of the new sets (includind the subsets)
+            Default values is ""
+
+        Returns
+        -------
+        dNew : DataSet
+            The cut DataSet
+
         """
         import copy
         
@@ -195,7 +215,7 @@ class DataSet:
                 
         
     
-    def CalculateV(self):
+    def _CalculateV(self):
         """ Calculate the covariance matrix.
         
         The covariance matrix defined as, V[i,j] where
@@ -222,8 +242,35 @@ class DataSet:
                 b=numpy.array(self.normErr)*self.points[j]["xSec"]
                 
                 self.V[i][j]+=numpy.sum(a*b)
+       
+     
+    def _computeListOfCorrErrors(self):
+        """
+        Compute the list of correlated errors for each point.
+        """
+        dummy=numpy.zeros((self.numberOfPoints,self.numOfCorrErr+self.numOfNormErr))
         
-    def CalculateA(self):
+        for i in range(self.numberOfPoints):
+            for j in range(self.numOfCorrErr):
+                dummy[i][j]=self.points[i]["corrErr"][j]
+            for j in range(self.numOfNormErr):
+                dummy[i][self.numOfCorrErr+j]=self.points[i]["xSec"]*self.normErr[j]
+        
+        self._listOfCorrErrors=dummy
+            
+    def _computeListOfVariances(self):
+        """
+        Compute the list of uncorrelated errors SQUARED for each point.
+        """
+        dummy=numpy.zeros(self.numberOfPoints)
+        
+        for i in range(self.numberOfPoints):            
+            for err in self.points[i]["uncorrErr"]:
+                dummy[i]+=err**2
+            
+        self._listOfVariances=dummy
+      
+    def _CalculateA(self):
         """ Evaluate the matrix A which is needed for the estimation of systematic shifts.
         
         The matrix A defined as 
@@ -231,33 +278,36 @@ class DataSet:
         """
         ## determine the number of correlated errors
         sc=self.numOfCorrErr+self.numOfNormErr
+        
+        ## building list sum_p sigma[p,j](corr)/sqrt{sigma[p](uncorr)}
+        cErr=numpy.zeros((self.numberOfPoints,sc))
+        for i in range(self.numberOfPoints):
+            for j in range(sc):
+                cErr[i][j]=self._listOfCorrErrors[i][j]/numpy.sqrt(self._listOfVariances[i])
+        
+        
         self.matrixA=numpy.identity(sc)
-        
-        ## building list of all correlated errors.
-        cErr=[]
-        for p in self.points:
-            a=numpy.array(p["uncorrErr"])
-            cErr.append(numpy.concatenate(
-                    (numpy.array(p["corrErr"]),numpy.array(self.normErr)*p["xSec"]))
-                    /numpy.sqrt(numpy.sum(a**2)))
-        
-         ## add contribution of a point to matrix A
+        ### add contribution of a point to matrix A
         for i in range(sc):
             for j in range(sc):
-                for c in cErr:          
-                    self.matrixA[i][j]+=c[i]*c[j]
-                    
-    def chi2(self,theoryPrediction):
-        """ Evaluate chi^2=x.V^{-1}.x, where x is theory prediction
-        """
-        diffX=[(theoryPrediction[i]-self.points[i]["xSec"]) for i in range(self.numberOfPoints)]
-        return numpy.matmul(diffX,numpy.matmul(self.invV,diffX))
-    
+                for k in range(self.numberOfPoints):          
+                    self.matrixA[i][j]+=cErr[k][i]*cErr[k][j]
     
     def MatchWithData(self,theoryPrediction):
-        """Adjust the input theory vector to the experimental data.
-        
+        """
+        Adjust the input theory vector to the experimental data.
         Multiply by the proper translation factor and normalize if needed.
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+            The theory prediction to be compared with the data
+
+        Returns
+        -------
+        list of floats
+            Matched prediction
+
         """
         res=[]
         norm=1
@@ -273,7 +323,129 @@ class DataSet:
                 norm=self._normExp/normTh       
                 return [v*norm for v in res]
         else:
-            return res  
+            return res                  
+    
+    def chi2(self,theoryPrediction):
+        """
+        Evaluate chi^2=x.V^{-1}.x, where x is theory prediction
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+           The theory prediction (matched to the data)
+
+        Returns
+        -------
+        Float
+            chi^2
+
+        """
+        diffX=[(theoryPrediction[i]-self.points[i]["xSec"]) for i in range(self.numberOfPoints)]
+        return numpy.matmul(diffX,numpy.matmul(self.invV,diffX))
+    
+    def DetermineSystematicShift(self,theoryPrediction):
+        """
+        Determine the systematic shift by nuisance parameters evaluations.        
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+            List theory predictions (matched) to be compared to the data
+
+        Returns
+        -------
+        result : list of floats
+            List of systematic shift point-per-point
+
+        """
+        
+        sc=self.numOfCorrErr+self.numOfNormErr
+        ## empty vector for rho        
+        rho=numpy.zeros(sc)
+        
+        for i in range(self.numberOfPoints):
+            ## the vector rho[i]= (exp-theory)*corrErr[i]/uncorr^2            
+            rho+=(self.points[i]["xSec"] -theoryPrediction[i])*self._listOfCorrErrors[i]/self._listOfVariances[i]
+        
+        ## these are nuisance parameters
+        lambd=numpy.matmul(self.matrixAinverse,rho)
+        ## the shifts
+        dd=[]
+        for ss in self._listOfCorrErrors:
+            dummy=0.
+            for i in range(sc):
+                dummy+=lambd[i]*ss[i]
+            dd.append(dummy)
+        
+        return dd
+    
+    def DetermineAvarageSystematicShift(self,theoryPrediction):
+        """
+        Determine the mean systematic shift in % by nuisance parameters evaluations.
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+             List theory predictions (matched) to be compared to the data
+
+        Returns
+        -------
+        float
+            The avarage excess/deficit of the theory to data (due to systematic shift)
+
+        """
+        dd=self.DetermineSystematicShift(theoryPrediction)
+        tmp=[]
+        for i in range(len(dd)):
+            if self.points[i]["xSec"]!=0:
+                tmp.append(dd[i]/self.points[i]["xSec"])
+            
+        return sum(tmp)/len(dd)
+    
+    def DecomposeChi2(self,theoryPrediction):
+        """
+        Determine the nuisance parameters and perform the decomposition of chi^2 to correlated and uncorrelated parts.
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+             List theory predictions (matched) to be compared to the data
+             
+        Returns
+        -------
+        list of 3 floats
+            chi2(uncorr), chi2(corr), chi2(total)
+
+        """
+        sc=self.numOfCorrErr+self.numOfNormErr
+        ## empty vector for rho        
+        rho=numpy.zeros(sc)
+        
+        for i in range(self.numberOfPoints):
+            ## the vector rho[i]= (exp-theory)*corrErr[i]/uncorr^2            
+            rho+=(self.points[i]["xSec"] -theoryPrediction[i])*self._listOfCorrErrors[i]/self._listOfVariances[i]
+        
+        ## these are nuisance parameters
+        lambd=numpy.matmul(self.matrixAinverse,rho)
+        ## the shifts
+        dd=[]
+        for ss in self._listOfCorrErrors:
+            dummy=0.
+            for i in range(sc):
+                dummy+=lambd[i]*ss[i]
+            dd.append(dummy)
+        
+        ### uncorrelated part of chi**2
+        chiD=0.
+        for j in range(self.numberOfPoints):
+            chiD+=(self.points[j]["xSec"]-theoryPrediction[j]-dd[j])**2/self._listOfVariances[j]
+        
+        chiL=0.
+        for i in range(sc):
+            chiL+=lambd[i]**2
+        
+        return [chiD,chiL,chiD+chiL]
+
         
     def GenerateReplica(self,includeNormInV=True):
         """Create a new set of pseudo-data that is replica of the given set.

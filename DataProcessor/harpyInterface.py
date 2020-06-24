@@ -7,6 +7,7 @@ Created on Fri May  8 14:52:27 2020
 """
 
 import harpy
+import numpy
 from . import DataSet
 from . import DataMultiSet
 
@@ -146,16 +147,53 @@ def ComputeChi2(data,method="default"):
     else:
         return ZZ
 
-def PrintChi2Table(data,method="default",processType="default"):
-    """ Compute and print the table of chi^2 for experiments
+def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=False):
+    """
+    Compute and print the values of chi^2/Npt for experiments
+
+    Parameters
+    ----------
+    data : DataSet or DataMultiSet
+        The data for which the computation is made
+    method : string, optional
+        The mthod of computation of xSection.
+        The default is "default".
+    printSysShift: bool, optional
+        If True print the list of systematic shifts (determined by nuisance parameter)
+        The default is True
+    printDecomposedChi2: bool, optional
+        If True the chi62 presented in the decomposed form
+        The default is False
+
+    Returns
+    -------
+    None.
+
     """
     import time
     
     startT=time.time()
     
-    chi2T, chi2Part = ComputeChi2(data,method,processType)
+    YY=ComputeXSec(data,method)
+    
+    ZZ=data.chi2(YY)
+    
+    if isinstance(data,DataSet.DataSet):
+        chi2T, chi2Part = ZZ, [ZZ]
+    else:
+        chi2T, chi2Part = ZZ
+    
+    #chi2T, chi2Part = ComputeChi2(data,method)
+    
+    if printSysShift:
+        shift=data.DetermineAvarageSystematicShift(YY)
+    
+    if printDecomposedChi2:
+        decChi2=data.DecomposeChi2(YY)
     
     endT=time.time()
+    
+    
     
     if isinstance(data,DataSet.DataSet):
         maxLength=len(data.name)
@@ -164,17 +202,57 @@ def PrintChi2Table(data,method="default",processType="default"):
     else:
         maxLength=10
     
-    print("{:{width}}".format("name",width=maxLength)+' | '+' chi^2/N  '+' | ')
-    print("{:-<{width}}".format("",width=maxLength)+'-|-'+'----------'+'-|-')
+    line="{:{width}}".format("name",width=maxLength)+' | '
+    line2="{:-<{width}}".format("",width=maxLength)+'-|-'
+    if printDecomposedChi2:
+        line+=' chiL^2/N '+' | '+' chiD^2/N '+' | '+' chi^2/N  '+' | '
+        line2+='----------'+'-|-'+'----------'+'-|-'+'----------'+'-|-'
+    else:
+        line+=' chi^2/N  '+' | '
+        line2+='----------'+'-|-'
+    
+    if printSysShift:
+        line+='sys.shift%'+' | '        
+        line2+='----------'+'-|-'
+    print(line)
+    print(line2)
+   
     #Only one set in MultiSet of just Set
     if len(chi2Part)==1:
-        print("{:{width}} | {:10.3f} |".format(data.name,chi2T/data.numberOfPoints,width=maxLength))
+        line="{:{width}} |".format(data.name,width=maxLength)
+        if printDecomposedChi2:
+            line+=" {:10.3f} | {:10.3f} | {:10.3f} |".format(
+                decChi2[0]/data.numberOfPoints,decChi2[1]/data.numberOfPoints,decChi2[2]/data.numberOfPoints)
+        else:
+            line+=" {:10.3f} |".format(chi2T/data.numberOfPoints)
+        if printSysShift:
+            line+=" {:10.3f} |".format(shift*100)
+        print(line)
     else:
         for i in range(len(chi2Part)):
-            print("{:{width}} | {:10.3f} |".format(
-                    data.sets[i].name,chi2Part[i]/data.sets[i].numberOfPoints,width=maxLength))
-        print("{:-<{width}}".format("",width=maxLength)+'-|-'+'----------'+'-|-')
-        print("{:{width}} | {:10.3f} |".format('Total',chi2T/data.numberOfPoints,width=maxLength))
+            line="{:{width}} |".format(data.sets[i].name,width=maxLength)
+            if printDecomposedChi2:
+                line+=" {:10.3f} | {:10.3f} | {:10.3f} |".format(
+                    decChi2[i][0]/data.sets[i].numberOfPoints,
+                    decChi2[i][1]/data.sets[i].numberOfPoints,
+                    decChi2[i][2]/data.sets[i].numberOfPoints)
+            else:
+                line+=" {:10.3f} |".format(chi2Part[i]/data.sets[i].numberOfPoints)
+            if printSysShift:
+                line+=" {:10.3f} |".format(shift[i]*100)
+            print(line)
+            
+        print(line2)
+        line="{:{width}} |".format('Total',width=maxLength)
+        if printDecomposedChi2:
+            sumdChi=numpy.sum(decChi2, axis=0)
+            line+=" {:10.3f} | {:10.3f} | {:10.3f} |".format(
+                    sumdChi[0]/data.numberOfPoints,
+                    sumdChi[1]/data.numberOfPoints,
+                    sumdChi[2]/data.numberOfPoints)
+        else:
+            line+=" {:10.3f} |".format(chi2T/data.numberOfPoints)
+        print(line)
         
     print("Computation time = ",endT-startT,' sec.')
         

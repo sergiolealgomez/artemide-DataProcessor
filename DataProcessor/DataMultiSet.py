@@ -25,9 +25,16 @@ class DataMultiSet:
     """Collection of DataSet's
     """
     def __init__(self,name,dataSets):
-        """Argument is the list of DataSet
+        """
         
-        """       
+
+        Parameters
+        ----------
+        name : string
+            The name for the collection of data sets
+        dataSets : list of DataSet's
+            These data sets will be added to the collection
+        """     
         self.name=name
         self.sets=dataSets
         self.numberOfSets=len(dataSets)
@@ -35,7 +42,7 @@ class DataMultiSet:
         if all([self.sets[0].processType==ss.processType for ss in self.sets]):
             self.processType=self.sets[0].processType
         else:
-            raise Exception('processType must be same for all sets. \
+            raise TypeError('processType must be same for all sets. \
                             Received value : {}'.format([ss.processType for ss in self.sets]))
         
         ## so to extract set 5, call [index1[5]:index2[5]]
@@ -76,7 +83,67 @@ class DataMultiSet:
             res.append(self.sets[i].chi2(matchedTheory[self._i1[i]:self._i2[i]]))
         return sum(res), res
     
-    def CutData(self,cutFunction,addName):
+    def DetermineSystematicShift(self,matchedTheory):
+        """
+        Determine the systematic shift by nuisance parameters evaluations.        
+
+        Parameters
+        ----------
+        theoryPrediction : list of list of floats
+            List theory predictions (matched) to be compared to the data
+
+        Returns
+        -------
+        result : list of list of floats
+            List of systematic shift point-per-point
+
+        """
+        res=[]
+        for i in range(self.numberOfSets):
+            res.append(self.sets[i].DetermineSystematicShift(matchedTheory[self._i1[i]:self._i2[i]]))
+        return res
+    
+    def DetermineAvarageSystematicShift(self,matchedTheory):
+        """
+        Determine the mean systematic shift in % by nuisance parameters evaluations.
+
+        Parameters
+        ----------
+        theoryPrediction : list of list of floats
+             List theory predictions (matched) to be compared to the data
+
+        Returns
+        -------
+        list of floats
+            The avarage excess/deficit of the theory to data (due to systematic shift)
+
+        """
+        res=[]
+        for i in range(self.numberOfSets):
+            res.append(self.sets[i].DetermineAvarageSystematicShift(matchedTheory[self._i1[i]:self._i2[i]]))
+        return res
+    
+    def DecomposeChi2(self,matchedTheory):
+        """
+        Determine the nuisance parameters and perform the decomposition of chi^2 to correlated and uncorrelated parts.
+
+        Parameters
+        ----------
+        theoryPrediction : list of list of floats
+             List theory predictions (matched) to be compared to the data
+             
+        Returns
+        -------
+        list of list of 3 floats
+            chi2(uncorr), chi2(corr), chi2(total)
+
+        """
+        res=[]
+        for i in range(self.numberOfSets):
+            res.append(self.sets[i].DecomposeChi2(matchedTheory[self._i1[i]:self._i2[i]]))
+        return res
+    
+    def CutData(self,cutFunction,addName=""):
         """ Create an instance of DataMultiSet, which contains all sets after 
             application of CutData to each. New multiset has name=name+addName
             
