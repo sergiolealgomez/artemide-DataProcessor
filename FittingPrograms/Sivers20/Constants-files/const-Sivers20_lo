@@ -305,9 +305,9 @@
 *p2  : Use transverse momentum corrections in kinematics
  T
 *p3  : Use target mass corrections in kinematics
- T
+ F
 *p4  : Use product mass corrections in kinematics
- T
+ F
 *p5  : Use transverse momentum corrections in x1 and z1
  T
 *B   : ---- Numerical evaluation parameters ----
@@ -378,7 +378,7 @@
 # ---------------------------------------------------------------------------
 *12  :
 *p1  : initialize SiversTMDPDF module
- F
+ T
  
 *A   : ---- Main definitions ----
 *p1  : Order of coefficient function

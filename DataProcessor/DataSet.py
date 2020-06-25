@@ -62,6 +62,9 @@ class DataSet:
         self.points=[]
         self.numberOfPoints=0
         
+        ## flag that signalize the emptiness of the DataSet
+        self.isEmpty=True
+        
         ## option that set is self normalized 
         ## the theory would be normalized to experiment
         self.isNormalized=False
@@ -106,6 +109,7 @@ class DataSet:
             if pCopy["type"]==self.processType:
                 self.points.append(pCopy)
                 self.numberOfPoints+=1
+                self.isEmpty=False
                 
             else:
                 print("AddPoint: Point has wrong type")
@@ -138,9 +142,12 @@ class DataSet:
         if self.numberOfPoints != len(self.points):
             print('DataSet.FinalizeSet: Mismatch in the number of points. Data set: ',self.name)
             self.numberOfPoints = len(self.points)
-        if self.numberOfPoints <= 0:
-            print('DataSet.Finalize: ERROR: the number of points ',self.numberOfPoints,' non-positive.')
-            print('Unable to finalize data set :',self.name)
+        if self.numberOfPoints == 0:
+            print('DataSet.Finalize: the number of points in null.')
+            print('The DataSet '+self.name+' is empty.')
+            self.isEmpty=True
+            return None
+        
         
         ### 1) fill fields with numbers of errors + fill list of corr.error for each point
         self.numOfUncorrErr=len(self.points[0]["uncorrErr"])

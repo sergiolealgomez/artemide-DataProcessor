@@ -25,6 +25,27 @@ totalData=[]
 M_proton=0.938
 m_pion=0.139
 m_kaon=0.494
+
+#%%
+#### determines the limits of the Q bin
+#### Qmin^2 = MAX (Q^2min, xmin y min (s-M^2), xmin/(1-xmin)*(W2min-M^2))
+#### Qmax^2 = MIN (Q^2max, xmax y max (s-M^2), xmax/(1-xmax)*(W2max-M^2))
+def Qbounds(xMin,xMax):
+    Q2min=1.
+    Q2max=10000.
+    WM2min=10.-(0.938)**2
+    WM2max=10000.-(0.938)**2  ## no upper limit
+    yMin=0.1
+    yMax=0.95
+    sM2=2*27.6*0.938
+    
+    if xMax<1:
+        return [numpy.sqrt(numpy.max([Q2min,xMin*yMin*sM2, xMin/(1-xMin)*WM2min])),
+                numpy.sqrt(numpy.min([Q2max,xMax*yMax*sM2, xMax/(1-xMax)*WM2max]))]
+    else:
+        return [numpy.sqrt(numpy.max([Q2min,xMin*yMin*sM2, xMin/(1-xMin)*WM2min])),
+                numpy.sqrt(numpy.min([Q2max,xMax*yMax*sM2, 1000*WM2max]))]
+
 #%%
 
 ### bins are presented by Gunar Schnell
@@ -82,7 +103,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=zBin[binN-1:binN+1]        
     p1["xSec"]=data_current[i][6]
@@ -137,7 +158,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -192,7 +213,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -246,7 +267,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=zBin[binN-1:binN+1]        
     p1["xSec"]=data_current[i][6]
@@ -301,7 +322,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -357,7 +378,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -412,7 +433,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=zBin[binN-1:binN+1]        
     p1["xSec"]=data_current[i][6]
@@ -467,7 +488,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -522,7 +543,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -576,7 +597,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=zBin[binN-1:binN+1]        
     p1["xSec"]=data_current[i][6]
@@ -631,7 +652,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -686,7 +707,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -740,7 +761,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=zBin[binN-1:binN+1]        
     p1["xSec"]=data_current[i][6]
@@ -795,7 +816,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -850,7 +871,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][2]    
     p1["x"]=[xBin[0],xBin[6]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
     p1["z"]=[zBin[0],zBin[6]]       
     p1["xSec"]=data_current[i][6]
@@ -1378,7 +1399,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][4]    
     p1["x"]=data_current[i][0]
     p1["<Q>"]=numpy.sqrt(data_current[i][3])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][6]
     p1["z"]=data_current[i][1]        
     p1["xSec"]=data_current[i][9]
@@ -1434,7 +1455,7 @@ for i in range(len(data_current)):
     p1["<x>"]=data_current[i][4]    
     p1["x"]=data_current[i][0]
     p1["<Q>"]=numpy.sqrt(data_current[i][3])
-    p1["Q"]=[1.,2.*27.6*0.938*0.95*p1["x"][1]]    
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][6]
     p1["z"]=data_current[i][1]        
     p1["xSec"]=data_current[i][9]

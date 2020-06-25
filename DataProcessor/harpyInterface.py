@@ -33,7 +33,8 @@ def _ComputeXSec_Data(data,method="default"):
     data can be: DataSet or DataMultiSet
     methods are:
         default = usual one
-        binless = evaluated with avarage values of bins only
+        binless = evaluated with avarage values of bins only. Multiplied by area of the bin
+        central = evaluated with avarage values of bins only. No further modifications.
     """
     
     if method=="default":        
@@ -88,18 +89,34 @@ def _ComputeXSec_Data(data,method="default"):
                           (data.points[i]["pT"][1]**2-data.points[i]["pT"][0]**2)*
                           (data.points[i]["x"][1]-data.points[i]["x"][0])*
                           (data.points[i]["z"][1]-data.points[i]["z"][0]))
+    elif method=="central":
+        if data.processType == "DY":
+            XX=harpy.DY.xSecListBINLESS([d["process"] for d in data.points],
+                                    [d["s"] for d in data.points],
+                                    [d["<qT>"] for d in data.points],
+                                    [d["<Q>"] for d in data.points],
+                                    [d["<y>"] for d in data.points],
+                                    [d["includeCuts"] for d in data.points],
+                                    [d["cutParams"] for d in data.points])
+            
+        elif data.processType=="SIDIS":
+            XX=harpy.SIDIS.xSecListBINLESS([d["process"] for d in data.points],
+                                    [d["s"] for d in data.points],
+                                    [d["<pT>"] for d in data.points],
+                                    [d["<z>"] for d in data.points],
+                                    [d["<x>"] for d in data.points],
+                                    [d["<Q>"] for d in data.points],
+                                    [[d["M_target"],d["M_product"]] for d in data.points])
      
     YY=data.MatchWithData(XX)
     return YY
 
-def _ComputeXSec_Point(p,method="default",processType="default"):
+def _ComputeXSec_Point(p,method="default"):
     """ Computes the cross-section values for the given point
     methods are:
         default = usual one
-        binless = evaluated with avarage values of bins only
-    processType are:
-        default = the process number is taken for process
-        weight = the process number is take from weightProcess
+        binless = evaluated with avarage values of bins only. Multiplied by area of the bin
+        central = evaluated with avarage values of bins only. No further modifications.
     """
     
     if method=="default":        
@@ -111,6 +128,8 @@ def _ComputeXSec_Point(p,method="default",processType="default"):
             XX1=harpy.SIDIS.xSecList([p["process"]],[p["s"]],[p["pT"]],[p["z"]],
                                     [p["x"]],[p["Q"]],[p["includeCuts"]],
                                     [p["cutParams"]],[[p["M_target"],p["M_product"]]])
+        else:
+            raise Exception('The dictionary is not a point.')
         
         XX=XX1[0]*p["thFactor"]
         
@@ -129,8 +148,24 @@ def _ComputeXSec_Point(p,method="default",processType="default"):
             ### Matching with data (note that the normalization is ignored)
             XX=XX1[0]*(p["Q"][1]**2-p["Q"][0]**2)*(p["pT"][1]**2-p["pT"][0]**2)* \
                 (p["x"][1]-p["x"][0])*(p["z"][1]-p["z"][0])*p["thFactor"]
-    else:
-        raise Exception('The dictionary is not a point.')
+        else:
+            raise Exception('The dictionary is not a point.')
+    elif method=="central":
+        if p["type"] == "DY":
+            XX1=harpy.DY.xSecListBINLESS([p["process"]],[p["s"]],[p["<qT>"]],[p["<Q>"]],
+                                    [p["<y>"]],[p["includeCuts"]],[p["cutParams"]])
+            ### Matching with data (note that the normalization is ignored)
+            XX=XX1[0]*p["thFactor"]
+            
+        elif p["type"]=="SIDIS":
+            XX1=harpy.SIDIS.xSecListBINLESS([p["process"]],[p["s"]],[p["<pT>"]],[p["<z>"]],
+                                    [p["<x>"]],[p["<Q>"]],[[p["M_target"],p["M_product"]]])            
+
+            ### Matching with data (note that the normalization is ignored)
+            XX=XX1[0]*p["thFactor"]
+        else:
+            raise Exception('The dictionary is not a point.')
+    
        
     return XX,[XX]
 

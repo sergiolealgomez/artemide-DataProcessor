@@ -20,7 +20,7 @@ import DataProcessor.DataMultiSet
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 #%%
 #######################################
-#Initialize artemide with a replica -2
+#Initialize artemide
 #######################################
 import harpy
 path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"
