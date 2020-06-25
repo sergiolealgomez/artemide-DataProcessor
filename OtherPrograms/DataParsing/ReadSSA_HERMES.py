@@ -32,6 +32,8 @@ m_kaon=0.494
 xBin=[0.023,0.045,0.067,0.086,0.113,0.160,0.220,0.400]
 zBin=[0.2,0.27,0.34,0.41,0.49,0.56,0.63,0.70]
 ptBin=[0.00001,0.17,0.25,0.33,0.41,0.58,0.80,2.00]
+### Scale uncertanty
+scaleUncertanty=0.073
 
 #%%
 ###############################################################################
@@ -61,12 +63,12 @@ DataCurrent=DataProcessor.DataSet.DataSet('hermes.sivers.pi+.Qint.dz',"SIDIS")
 DataCurrent.comment="HERMESS SSA-Sivers pi+ (integrated in Q, differential in z). The data MUST be evaluated at a point"
 DataCurrent.reference="0906.3918"
 
-
 proc_current=[1,1,12001]
 proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -121,6 +123,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -175,6 +178,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -228,6 +232,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -282,6 +287,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -337,6 +343,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -391,6 +398,7 @@ proc_denominator=[1,1,2021]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -445,6 +453,7 @@ proc_denominator=[1,1,2021]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -499,6 +508,7 @@ proc_denominator=[1,1,2021]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -552,6 +562,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -606,6 +617,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -660,6 +672,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -713,6 +726,7 @@ proc_denominator=[1,1,2022]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -767,6 +781,7 @@ proc_denominator=[1,1,2022]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -821,6 +836,7 @@ proc_denominator=[1,1,2022]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -891,6 +907,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -945,6 +962,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1000,6 +1018,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1054,6 +1073,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1108,6 +1128,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1162,6 +1183,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1217,6 +1239,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1271,6 +1294,7 @@ proc_denominator=[1,1,2002]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1341,6 +1365,7 @@ proc_denominator=[1,1,2001]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
@@ -1396,6 +1421,7 @@ proc_denominator=[1,1,2021]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
 
 for i in range(len(data_current)):
     # makeup a point
