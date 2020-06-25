@@ -237,8 +237,8 @@ def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=
     else:
         maxLength=10
     
-    line="{:{width}}".format("name",width=maxLength)+' | '
-    line2="{:-<{width}}".format("",width=maxLength)+'-|-'
+    line="{:{width}}".format("name",width=maxLength)+' | '+'  N  '+' | '
+    line2="{:-<{width}}".format("",width=maxLength)+'-|-'+'-----'+'-|-'
     if printDecomposedChi2:
         line+=' chiL^2/N '+' | '+' chiD^2/N '+' | '+' chi^2/N  '+' | '
         line2+='----------'+'-|-'+'----------'+'-|-'+'----------'+'-|-'
@@ -254,7 +254,7 @@ def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=
    
     #Only one set in MultiSet of just Set
     if len(chi2Part)==1:
-        line="{:{width}} |".format(data.name,width=maxLength)
+        line="{:{width}} | {:5d} |".format(data.name,data.numberOfPoints,width=maxLength)
         if printDecomposedChi2:
             line+=" {:10.3f} | {:10.3f} | {:10.3f} |".format(
                 decChi2[0]/data.numberOfPoints,decChi2[1]/data.numberOfPoints,decChi2[2]/data.numberOfPoints)
@@ -265,7 +265,7 @@ def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=
         print(line)
     else:
         for i in range(len(chi2Part)):
-            line="{:{width}} |".format(data.sets[i].name,width=maxLength)
+            line="{:{width}} | {:5d} |".format(data.sets[i].name,data.sets[i].numberOfPoints,width=maxLength)
             if printDecomposedChi2:
                 line+=" {:10.3f} | {:10.3f} | {:10.3f} |".format(
                     decChi2[i][0]/data.sets[i].numberOfPoints,
@@ -278,7 +278,7 @@ def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=
             print(line)
             
         print(line2)
-        line="{:{width}} |".format('Total',width=maxLength)
+        line="{:{width}} | {:5d} |".format('Total',data.numberOfPoints, width=maxLength)
         if printDecomposedChi2:
             sumdChi=numpy.sum(decChi2, axis=0)
             line+=" {:10.3f} | {:10.3f} | {:10.3f} |".format(

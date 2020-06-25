@@ -82,10 +82,27 @@ def cutFunc(p):
 
 #%%
 ### Loading the data set
+# theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
+#                     'compass.sivers.pi+.dpt', 'compass.sivers.pi-.dpt',
+#                     'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',
+#                     'compass.sivers.pi+.dx', 'compass.sivers.pi-.dx',
+#                     'compass.sivers.k+.dx', 'compass.sivers.k-.dx',
+#                     'compass.sivers.pi+.dz', 'compass.sivers.pi-.dz',
+#                     'compass.sivers.k+.dz', 'compass.sivers.k-.dz',                    
+#                     'hermes.sivers.pi+.Qint.dpt','hermes.sivers.k+.Qint.dpt',
+#                     'hermes.sivers.pi-.Qint.dpt','hermes.sivers.k-.Qint.dpt',
+#                     'hermes.sivers.pi+.Qint.dx','hermes.sivers.k+.Qint.dx',
+#                     'hermes.sivers.pi-.Qint.dx','hermes.sivers.k-.Qint.dx',
+#                     'hermes.sivers.pi+.Qint.dz','hermes.sivers.k+.Qint.dz',
+#                     'hermes.sivers.pi-.Qint.dz','hermes.sivers.k-.Qint.dz',
+#                     'hermes.sivers.pi+.Q<2.dpt','hermes.sivers.k+.Q<2.dpt',
+#                     'hermes.sivers.pi+.Q>2.dpt','hermes.sivers.k+.Q>2.dpt',                    
+#                     'hermes.sivers.pi+.Q<2.dz','hermes.sivers.k+.Q<2.dz',
+#                     'hermes.sivers.pi+.Q>2.dz','hermes.sivers.k+.Q>2.dz',                    
+#                     'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d']))
 theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
                     'compass.sivers.pi+.dpt', 'compass.sivers.pi-.dpt',
-                    'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',
-                    'hermes.sivers.pi+.Q>2.dpt','hermes.sivers.k+.Q>2.dpt',
+                    'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',                   
                     'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d']))
 
 setSIDIS=theData.CutData(cutFunc) 
@@ -99,8 +116,8 @@ harpy.setNPparameters_uTMDPDF([0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0.
 harpy.setNPparameters_uTMDFF([0.259499, 0.476235, 0.477143, 0.482977])
 harpy.setNPparameters_SiversTMDPDF([0.25, 0., 0.01, 0.3, 0.4, 0.01, 0.3, 0.4,0.01, 0.3, 0.4])
 
-
-DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central")
+#%%
+DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
     
 #%%
 #######################################
