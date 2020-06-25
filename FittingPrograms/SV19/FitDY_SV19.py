@@ -184,7 +184,7 @@ totalN=setDY.numberOfPoints
 def chi_2(x):
     startT=time.time()
     harpy.setNPparameters(x)
-    print('np set =',["{:8.3f}".format(i) for i in x],)    
+    print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
     
     ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
     

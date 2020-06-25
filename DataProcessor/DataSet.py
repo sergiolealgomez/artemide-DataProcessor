@@ -550,9 +550,14 @@ class DataSet:
         file.write("Total cross-section nomalized,"+str(self.isNormalized)+"\n")
         file.write("List of points \n")
         
+        ### for weighted processes I add a column
+        includeWeightProc=('weightProcess' in list(self.points[0].keys()))
         ### Points table header
         
-        file.write("Point id,process id,s[GeV^2],<Q>[GeV],Qmin[GeV],Qmax[GeV],")
+        file.write("Point id,process id,")
+        if includeWeightProc:
+            file.write("weightProcess,")
+        file.write("s[GeV^2],<Q>[GeV],Qmin[GeV],Qmax[GeV],")
         if self.processType=="DY":
             file.write("<y>,yMin,yMax,<qT>[GeV],qTMin[GeV],qTMax[GeV],")
         elif self.processType=="SIDIS":
@@ -584,7 +589,10 @@ class DataSet:
         for p in self.points:
             file.write(p["id"])
             file.write(",")
-            file.write(str(p["process"]).replace(","," -").replace("[","").replace("]",""))
+            file.write(str(p["process"]).replace(","," -").replace("[","").replace("]",""))            
+            file.write(",")
+            if includeWeightProc:
+                file.write(str(p["weightProcess"]).replace(","," -").replace("[","").replace("]",""))            
             file.write(",")
             file.write(str(p["s"]))
             file.write(",")
@@ -731,6 +739,11 @@ def LoadCSV(path):
     ### skip head for points
     line=file.readline()    
     line=file.readline()
+    
+    ### Check for extra columns
+    line=line.split(",")    
+    includeWeightProc=('weightProcess' in line)
+    
     for i in range(nPoints):
         
         k=0### number of the last line in the block
@@ -745,10 +758,15 @@ def LoadCSV(path):
             raise Exception("Unknown process")
         
         p["process"]=[int(ll) for ll in line[1].split("-")]
-        p["s"]=float(line[2])
-        p["<Q>"]=float(line[3])
-        p["Q"]=[float(line[4]),float(line[5])]
-        k=k+5
+        if includeWeightProc:
+            p["weightProcess"]=[int(ll) for ll in line[2].split("-")]
+            k=2
+        else:
+            k=1
+        p["s"]=float(line[k+1])
+        p["<Q>"]=float(line[k+2])
+        p["Q"]=[float(line[k+3]),float(line[k+4])]
+        k=k+4
         
         if processType=="DY":
             p["<y>"]=float(line[k+1])
