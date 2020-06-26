@@ -191,7 +191,7 @@ def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=
     data : DataSet or DataMultiSet
         The data for which the computation is made
     method : string, optional
-        The mthod of computation of xSection.
+        The method of computation of xSection.
         The default is "default".
     printSysShift: bool, optional
         If True print the list of systematic shifts (determined by nuisance parameter)
@@ -290,4 +290,3 @@ def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=
         print(line)
         
     print("Computation time = ",endT-startT,' sec.')
-        

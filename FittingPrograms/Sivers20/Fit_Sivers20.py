@@ -29,7 +29,7 @@ harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539])
-harpy.setNPparameters_SiversTMDPDF([0.25, 0., 0.1, 0.3, 0.4, 0.1, 0.3, 0.4,0.1, 0.3, 0.4])
+harpy.setNPparameters_SiversTMDPDF([5.2, 0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1])
 
 
 #%%
@@ -74,7 +74,12 @@ def cutFunc(p):
     if delta<0.3:
         pNew=copy.deepcopy(p)    
         pNew["process"]=pNew["weightProcess"]
-        normX, normX1=DataProcessor.harpyInterface.ComputeXSec(pNew,method="central")        
+        if p["type"]=="SIDIS":
+            normX, normX1=DataProcessor.harpyInterface.ComputeXSec(pNew,method="central")        
+        elif p["type"]=="DY":
+            normX, normX1=DataProcessor.harpyInterface.ComputeXSec(pNew)        
+        else:
+            print("Are you crazy?")
         p["thFactor"]=p["thFactor"]/normX        
     
 #    return delta<0.5 and p.qT_avarage<80
@@ -107,6 +112,13 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
 
 setSIDIS=theData.CutData(cutFunc) 
 
+theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
+                    'star.sivers.W+.dqT','star.sivers.W-.dqT',
+                    #'star.sivers.W+.dy','star.sivers.W-.dy',
+                    'star.sivers.Z']))
+
+setDY=theData.CutData(cutFunc) 
+
 print('Loaded ', setSIDIS.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setSIDIS.sets]), 'points.')
 print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 
@@ -114,39 +126,44 @@ print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 harpy.setNPparameters_TMDR([1.92819, 0.0390534])
 harpy.setNPparameters_uTMDPDF([0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0.])
 harpy.setNPparameters_uTMDFF([0.259499, 0.476235, 0.477143, 0.482977])
-harpy.setNPparameters_SiversTMDPDF([0.25, 0., 0.01, 0.3, 0.4, 0.01, 0.3, 0.4,0.01, 0.3, 0.4])
+#harpy.setNPparameters_SiversTMDPDF([0.23, 0., 0.5, 7, -0.1, -0.2, 6, -0.1, -0.03, 8, -0.2])
+harpy.setNPparameters_SiversTMDPDF([4.8, 0.8, 0.4, 18, -1.2, 1, 5.1, 0.5, -0.15, 1.09, -0.96])
 
 #%%
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
+
+DataProcessor.harpyInterface.PrintChi2Table(setDY)
+
     
 #%%
 #######################################
 # Minimisation
 #######################################
-totalN=setSIDIS.numberOfPoints
+totalN=setSIDIS.numberOfPoints+setDY.numberOfPoints
 
 def chi_2(x):
     startT=time.time()
     harpy.setNPparameters_SiversTMDPDF(x)
     print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
     
-    ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setSIDIS,method="central")
+    ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(setSIDIS,method="central")
+    ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
     
-    cc=ccDY2/totalN
+    cc=(ccSIDIS2+ccDY2)/totalN
     endT=time.time()
     print(':->',cc,'       t=',endT-startT)
-    return ccDY2
+    return ccSIDIS2+5*ccDY2
 
 #%%
 
 from iminuit import Minuit
 
 
-initialValues=(0.25, 0., 0.1, 0.3, 0.4, 0.1, 0.3, 0.4,0.1, 0.3, 0.4)
+initialValues=(0.23, 0.0, 0.5, 7, -0.1, -0.2, 6, -0.1, -0.03, 8, -0.2)
 
-initialErrors=(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1)
-searchLimits=((0,30),(0,30), None,(0.00001,None),None,None,(0.00001,None),None,None,(0.00001,None),None)
-parametersToMinimize=(False,  True, False, False, False, False, False, False,False, False, False)
+initialErrors=(0.1, 0.001, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1)
+searchLimits=((0,30),None, None,(0.00001,None),None,None,(0.00001,None),None,None,(0.00001,None),None)
+parametersToMinimize=(False,False, False, False, False, False, False, False,False, False, False)
 
 m = Minuit.from_array_func(chi_2, initialValues,
       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
@@ -185,3 +202,46 @@ print(m.params)
 
 SaveToLog("MINOS FINISHED",str(m.params))
 SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
+
+#%%
+
+print("{")
+for j in range(len(setSIDIS.sets)):
+    s=setSIDIS.sets[j]
+    YY=DataProcessor.harpyInterface.ComputeXSec(s,method="central")
+    print('{"'+s.name+'",{')
+    for i in range(s.numberOfPoints):
+        print("{"+"{:2.4f},{:2.4f},{:2.4f},{:2.4f},{:2.4f},{:2.4f},{:12.6f},{:12.6f},{:12.6f}".format(
+            s.points[i]["x"][0],s.points[i]["x"][1],
+            s.points[i]["z"][0],s.points[i]["z"][1],
+            s.points[i]["pT"][0],s.points[i]["pT"][1],
+            s.points[i]["xSec"],numpy.sqrt(numpy.sum(numpy.array(s.points[i]["uncorrErr"])**2)),
+            YY[i]
+            ),end="")
+        if i==s.numberOfPoints-1:
+            if j==len(setSIDIS.sets)-1:
+                print("}}}}")
+            else:
+                print("}}},")
+        else:
+            print("},")
+#%%
+print("{")
+for j in range(len(setDY.sets)):
+    s=setDY.sets[j]
+    YY=DataProcessor.harpyInterface.ComputeXSec(s)
+    print('{"'+s.name+'",{')
+    for i in range(s.numberOfPoints):
+        print("{"+"{:2.4f},{:2.4f},{:2.4f},{:2.4f},{:12.6f},{:12.6f},{:12.6f}".format(
+            s.points[i]["y"][0],s.points[i]["y"][1],
+            s.points[i]["qT"][0],s.points[i]["qT"][1],
+            s.points[i]["xSec"],numpy.sqrt(numpy.sum(numpy.array(s.points[i]["uncorrErr"])**2)),
+            YY[i]
+            ),end="")
+        if i==s.numberOfPoints-1:
+            if j==len(setSIDIS.sets)-1:
+                print("}}}}")
+            else:
+                print("}}},")
+        else:
+            print("},")
