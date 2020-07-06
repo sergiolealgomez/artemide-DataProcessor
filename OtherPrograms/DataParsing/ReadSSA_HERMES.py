@@ -6,21 +6,21 @@ This program collect all the data on the SIDIS and save in  "SIDISdata_uncut.pkl
 @author: vla18041
 """
 import sys
-#sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/")
-sys.path.append("/home/m/Github/artemide-DataProcessor/")
+sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/")
+#sys.path.append("/home/m/Github/artemide-DataProcessor/")
 import DataProcessor.Point
 import DataProcessor.DataSet
 import numpy
 
 ########### Alexey desktop
-#path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/data"
-#path_to_HERMES="/HERMES-SSA/"
-#path_to_save="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/Sivers/"
+path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/data"
+path_to_HERMES="/HERMES-SSA/"
+path_to_save="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/Sivers/"
 
 ########## Marcin laptop
-path_to_data="/home/m/Dropbox/Sivers/Data"
-path_to_HERMES="/HERMES09/"
-path_to_save="/home/m/Github/artemide-DataProcessor/DataLib/Sivers/"
+#path_to_data="/home/m/Dropbox/Sivers/Data"
+#path_to_HERMES="/HERMES09/"
+#path_to_save="/home/m/Github/artemide-DataProcessor/DataLib/Sivers/"
 
 totalData=[]
 
@@ -101,9 +101,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
@@ -156,13 +156,13 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -213,11 +213,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -265,9 +265,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
@@ -320,13 +320,13 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -378,11 +378,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -431,9 +431,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
@@ -486,13 +486,13 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -543,11 +543,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -595,9 +595,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
@@ -650,13 +650,13 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -707,11 +707,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -759,9 +759,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
@@ -814,13 +814,13 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
     p1["x"]=xBin[binN-1:binN+1]        
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -871,11 +871,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -940,9 +940,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[1.,2.]    
     p1["<z>"]=data_current[i][4]
@@ -997,11 +997,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[1.,2.]    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -1051,9 +1051,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[2.,2.*27.6*0.938*0.95*p1["x"][1]]    
     p1["<z>"]=data_current[i][4]
@@ -1108,11 +1108,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[2.,2.*27.6*0.938*0.95*p1["x"][1]]    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -1161,9 +1161,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[1.,2.]    
     p1["<z>"]=data_current[i][4]
@@ -1218,11 +1218,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[1.,2.]    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion
@@ -1272,9 +1272,9 @@ for i in range(len(data_current)):
     p1["process"]=proc_current
     p1["s"]=s_current
     p1["<pT>"]=data_current[i][5]    
-    p1["pT"]=[ptBin[0],ptBin[6]]
+    p1["pT"]=[ptBin[0],ptBin[7]]
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[2.,2.*27.6*0.938*0.95*p1["x"][1]]    
     p1["<z>"]=data_current[i][4]
@@ -1329,11 +1329,11 @@ for i in range(len(data_current)):
     p1["<pT>"]=data_current[i][5]    
     p1["pT"]=ptBin[binN-1:binN+1]        
     p1["<x>"]=data_current[i][2]    
-    p1["x"]=[xBin[0],xBin[6]]
+    p1["x"]=[xBin[0],xBin[7]]
     p1["<Q>"]=numpy.sqrt(data_current[i][1])
     p1["Q"]=[2.,2.*27.6*0.938*0.95*p1["x"][1]]    
     p1["<z>"]=data_current[i][4]
-    p1["z"]=[zBin[0],zBin[6]]       
+    p1["z"]=[zBin[0],zBin[7]]       
     p1["xSec"]=data_current[i][6]
     p1["M_target"]=M_proton
     p1["M_product"]=m_pion

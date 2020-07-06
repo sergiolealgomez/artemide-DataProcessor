@@ -74,7 +74,7 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.zgt01ls02.Q1-2.dpt',"SIDIS")
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.1<Q<2.dpt',"SIDIS")
 DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 1<Q<2 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
