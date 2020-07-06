@@ -18,20 +18,23 @@ import DataProcessor.harpyInterface
 import DataProcessor.DataMultiSet
 
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
+
 #%%
 #######################################
 #Initialize artemide
 #######################################
 import harpy
 path_to_constants=MAINPATH+"FittingPrograms/Sivers20/Constants-files/"
-#harpy.initialize(path_to_constants+"const-Sivers20_lo")
-harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
+harpy.initialize(path_to_constants+"const-Sivers20_lo")
+#harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539])
 harpy.setNPparameters_SiversTMDPDF([5.2, 0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1])
-
-
+#%%
+sys.__stdout__.write("test")
+sys.__stdout__.flush()
+sys.stdout.write("asd")
 #%%
 ### read the list of files and return the list of DataSets
 def loadThisData(listOfNames):    
@@ -71,7 +74,7 @@ def cutFunc(p):
         
         delta=p["<pT>"]/p["<z>"]/p["<Q>"]        
     
-    if delta<0.3:
+    if delta<0.6:
         pNew=copy.deepcopy(p)    
         pNew["process"]=pNew["weightProcess"]
         if p["type"]=="SIDIS":
@@ -83,7 +86,7 @@ def cutFunc(p):
         p["thFactor"]=p["thFactor"]/normX        
     
 #    return delta<0.5 and p.qT_avarage<80
-    return delta<0.3 , p
+    return delta<0.5 , p
 
 #%%
 ### Loading the data set
@@ -127,7 +130,7 @@ harpy.setNPparameters_TMDR([1.92819, 0.0390534])
 harpy.setNPparameters_uTMDPDF([0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0.])
 harpy.setNPparameters_uTMDFF([0.259499, 0.476235, 0.477143, 0.482977])
 #harpy.setNPparameters_SiversTMDPDF([0.23, 0., 0.5, 7, -0.1, -0.2, 6, -0.1, -0.03, 8, -0.2])
-harpy.setNPparameters_SiversTMDPDF([4.8, 0.8, 0.4, 18, -1.2, 1, 5.1, 0.5, -0.15, 1.09, -0.96])
+harpy.setNPparameters_SiversTMDPDF([4.8, 0.0, 0.4, 18, -1.2, 1, 5.1, 0.5, -0.15, 1.09, -0.96])
 
 #%%
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
@@ -159,10 +162,10 @@ def chi_2(x):
 from iminuit import Minuit
 
 
-initialValues=(0.23, 0.0, 0.5, 7, -0.1, -0.2, 6, -0.1, -0.03, 8, -0.2)
+initialValues=(4.8, 0.0, 0.4, 18, -1.2, 1, 5.1, 0.5, -0.15, 1.09, -0.96)
 
 initialErrors=(0.1, 0.001, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1)
-searchLimits=((0,30),None, None,(0.00001,None),None,None,(0.00001,None),None,None,(0.00001,None),None)
+searchLimits=((0,30),(0,200), (-25,25),(0.01,20),(-50,50), (-25,25),(0.01,20),(-50,50), (-25,25),(0.01,20),(-50,50))
 parametersToMinimize=(False,False, False, False, False, False, False, False,False, False, False)
 
 m = Minuit.from_array_func(chi_2, initialValues,
