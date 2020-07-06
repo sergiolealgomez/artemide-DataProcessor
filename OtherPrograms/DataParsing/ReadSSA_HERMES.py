@@ -6,19 +6,21 @@ This program collect all the data on the SIDIS and save in  "SIDISdata_uncut.pkl
 @author: vla18041
 """
 import sys
-sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/")
+#sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/")
+sys.path.append("/home/m/Github/artemide-DataProcessor/")
 import DataProcessor.Point
 import DataProcessor.DataSet
 import numpy
 
 ########### Alexey desktop
-path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/data"
-path_to_HERMES="/HERMES-SSA/"
-path_to_save="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/Sivers/"
+#path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/data"
+#path_to_HERMES="/HERMES-SSA/"
+#path_to_save="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/Sivers/"
 
 ########## Marcin laptop
-#path_to_data="/home/m/Dropbox/Sivers/Data"
-#path_to_COMPASS="/COMPASS08/"
+path_to_data="/home/m/Dropbox/Sivers/Data"
+path_to_HERMES="/HERMES09/"
+path_to_save="/home/m/Github/artemide-DataProcessor/DataLib/Sivers/"
 
 totalData=[]
 
