@@ -1,0 +1,17 @@
+Name,compass16.sivers.h-.zgt02.Q2.5-4.dpt
+Comment,COMPASS16 SSA-Sivers h-, z>0.2, 2.5<Q<4 (differential in pt)
+Reference,1609.07374
+Process type,SIDIS
+Number of points,5
+Number of uncorr.errors,2
+Number of corr.errors,0
+Number of norm.errors,0
+List of norm.errors (relative),
+Total cross-section nomalized,False
+List of points 
+Point id,process id,weightProcess,s[GeV^2],<Q>[GeV],Qmin[GeV],Qmax[GeV],<x>,xMin,xMax,<z>,zMin,zMax,<pT>[GeV],pTMin[GeV],pTMax[GeV],xSec,Uncorr.Err.0,Uncorr.Err.1,Th.Factor,FiducialCuts,yMin,yMax,W2min[GeV^2],W2max[GeV^2],TargetMass[GeV],ProductMass[GeV]
+compass16.sivers.h-.zgt02.Q2.5-4.dpt.0,1 - 1 - 12040,1 - 1 - 2040,301.03984399999996,3.0446674695276656,1.0,12.18930678914925,0.132,0.022,0.55,0.32,0.2,1.0,0.21,0.1,0.3,0.017,0.012,0.013,1.0,True,0.1,0.9,10.0,10000.0,0.938,0.139
+compass16.sivers.h-.zgt02.Q2.5-4.dpt.0,1 - 1 - 12040,1 - 1 - 2040,301.03984399999996,3.047950130825634,1.0,12.18930678914925,0.13,0.022,0.55,0.33,0.2,1.0,0.4,0.3,0.5,0.03,0.011,0.012,1.0,True,0.1,0.9,10.0,10000.0,0.938,0.139
+compass16.sivers.h-.zgt02.Q2.5-4.dpt.0,1 - 1 - 12040,1 - 1 - 2040,301.03984399999996,3.056141357987225,1.0,12.18930678914925,0.124,0.022,0.55,0.35,0.2,1.0,0.61,0.5,0.75,0.002,0.012,0.013,1.0,True,0.1,0.9,10.0,10000.0,0.938,0.139
+compass16.sivers.h-.zgt02.Q2.5-4.dpt.0,1 - 1 - 12040,1 - 1 - 2040,301.03984399999996,3.0643106892089125,1.0,12.18930678914925,0.115,0.022,0.55,0.38,0.2,1.0,0.86,0.75,1.0,0.01,0.018,0.02,1.0,True,0.1,0.9,10.0,10000.0,0.938,0.139
+compass16.sivers.h-.zgt02.Q2.5-4.dpt.0,1 - 1 - 12040,1 - 1 - 2040,301.03984399999996,3.0773365106858237,1.0,12.18930678914925,0.1,0.022,0.55,0.42,0.2,1.0,1.28,1.0,10.0,0.004,0.023,0.026,1.0,True,0.1,0.9,10.0,10000.0,0.938,0.139

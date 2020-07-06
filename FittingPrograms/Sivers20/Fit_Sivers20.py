@@ -13,11 +13,13 @@ Created on Thu Jan 24 16:40:59 2019
 import sys
 import time
 import numpy
+#sys.path.append("/home/m/Github/artemide-DataProcessor")
 sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor")
 import DataProcessor.harpyInterface
 import DataProcessor.DataMultiSet
 
-MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
+MAINPATH="/home/m/Github/artemide-DataProcessor/"
+#MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
 #%%
 #######################################
@@ -32,14 +34,11 @@ harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539])
 harpy.setNPparameters_SiversTMDPDF([5.2, 0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1])
 #%%
-sys.__stdout__.write("test")
-sys.__stdout__.flush()
-sys.stdout.write("asd")
-#%%
 ### read the list of files and return the list of DataSets
 def loadThisData(listOfNames):    
     import DataProcessor.DataSet
     
+    #path_to_data="/home/m/Github/artemide-DataProcessor/DataLib/Sivers/"
     path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/Sivers/"
     
     
