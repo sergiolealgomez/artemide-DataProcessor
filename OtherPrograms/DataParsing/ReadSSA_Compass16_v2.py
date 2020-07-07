@@ -88,8 +88,8 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.1<Q<2.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 1<Q<2 (differential in pt)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.dpt',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -104,7 +104,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -143,23 +143,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.2<Q<2.5.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 2<Q<2.5 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -198,24 +187,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.2.5<Q<4.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 2.5<Q<4 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -254,24 +231,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.4<Q<9.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 4<Q<9 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -324,8 +289,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.1<Q<2.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 1<Q<2 (differential in x)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.dx',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2 (differential in x)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -340,7 +305,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -379,24 +344,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.2<Q<2.5.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 2<Q<2.5 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -435,25 +388,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.2.5<Q<4.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 2.5<Q<4 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -492,25 +433,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.4<Q<9.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 4<Q<9 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -563,8 +492,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.1<Q<2.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 1<Q<2 (differential in z)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.dz',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2 (differential in z)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -579,7 +508,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -618,24 +547,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.2<Q<2.5.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 2<Q<2.5 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -674,24 +591,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.2.5<Q<4.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 2.5<Q<4 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -730,24 +635,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.1<z<2.4<Q<9.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, 0.1<z<0.2, 4<Q<9 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -801,8 +694,8 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.1<Q<2.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 1<Q<2 (differential in pt)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.dpt',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -817,7 +710,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -856,24 +749,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.2<Q<2.5.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 2<Q<2.5 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -912,24 +793,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.2.5<Q<4.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 2.5<Q<4 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -968,24 +837,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.4<Q<9.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 4<Q<9 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1038,8 +895,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.1<Q<2.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 1<Q<2 (differential in x)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.dx',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1 (differential in x)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -1054,7 +911,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1093,24 +950,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.2<Q<2.5.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 2<Q<2.5 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1149,25 +994,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.2.5<Q<4.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 2.5<Q<4 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1206,25 +1039,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.4<Q<9.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 4<Q<9 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1277,8 +1098,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.1<Q<2.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 1<Q<2 (differential in z)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.dz',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1 (differential in z)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -1293,7 +1114,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1332,24 +1153,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.2<Q<2.5.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 2<Q<2.5 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1388,24 +1197,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.2.5<Q<4.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 2.5<Q<4 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1444,24 +1241,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>1.4<Q<9.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.1, 4<Q<9 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1515,8 +1300,8 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.1<Q<2.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 1<Q<2 (differential in pt)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.dpt',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -1531,7 +1316,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1570,24 +1355,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.2<Q<2.5.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 2<Q<2.5 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1626,24 +1399,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.2.5<Q<4.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 2.5<Q<4 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1682,24 +1443,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.4<Q<9.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 4<Q<9 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1752,8 +1501,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.1<Q<2.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 1<Q<2 (differential in x)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.dx',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2 (differential in x)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -1768,7 +1517,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1807,24 +1556,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.2<Q<2.5.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 2<Q<2.5 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1863,25 +1600,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.2.5<Q<4.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 2.5<Q<4 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1920,25 +1645,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.4<Q<9.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 4<Q<9 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -1991,8 +1704,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.1<Q<2.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 1<Q<2 (differential in z)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.dz',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2 (differential in z)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -2007,7 +1720,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2046,24 +1759,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.2<Q<2.5.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 2<Q<2.5 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2102,24 +1803,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.2.5<Q<4.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 2.5<Q<4 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2158,24 +1847,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h-.z>2.4<Q<9.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h-, z>0.2, 4<Q<9 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12111]
-proc_denominator=[1,1,2111]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2229,8 +1906,8 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.1<Q<2.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 1<Q<2 (differential in pt)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.dpt',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -2245,7 +1922,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2284,24 +1961,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.2<Q<2.5.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 2<Q<2.5 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2340,24 +2005,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.2.5<Q<4.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 2.5<Q<4 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2396,24 +2049,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.4<Q<9.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 4<Q<9 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2466,8 +2107,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.1<Q<2.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 1<Q<2 (differential in x)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.dx',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2 (differential in x)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -2482,7 +2123,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2521,24 +2162,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.2<Q<2.5.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 2<Q<2.5 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2577,25 +2206,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.2.5<Q<4.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 2.5<Q<4 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2634,25 +2251,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.4<Q<9.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 4<Q<9 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2705,8 +2310,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.1<Q<2.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 1<Q<2 (differential in z)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.dz',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2 (differential in z)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -2721,7 +2326,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2760,24 +2365,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.2<Q<2.5.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 2<Q<2.5 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2816,24 +2409,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.2.5<Q<4.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 2.5<Q<4 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2872,24 +2453,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.1<z<2.4<Q<9.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, 0.1<z<0.2, 4<Q<9 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2943,8 +2512,8 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.1<Q<2.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 1<Q<2 (differential in pt)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.dpt',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -2959,7 +2528,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -2998,24 +2567,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.2<Q<2.5.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 2<Q<2.5 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3054,24 +2611,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.2.5<Q<4.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 2.5<Q<4 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3110,24 +2655,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.4<Q<9.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 4<Q<9 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3180,8 +2713,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.1<Q<2.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 1<Q<2 (differential in x)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.dx',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1 (differential in x)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -3196,7 +2729,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3235,24 +2768,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.2<Q<2.5.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 2<Q<2.5 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3291,25 +2812,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.2.5<Q<4.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 2.5<Q<4 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3348,24 +2857,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.4<Q<9.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 4<Q<9 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3418,8 +2915,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.1<Q<2.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 1<Q<2 (differential in z)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.dz',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1 (differential in z)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -3434,7 +2931,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3473,24 +2970,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.2<Q<2.5.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 2<Q<2.5 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3529,24 +3014,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.2.5<Q<4.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 2.5<Q<4 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3585,24 +3058,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>1.4<Q<9.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.1, 4<Q<9 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3656,8 +3117,8 @@ for i in range(len(data_current)):
 
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.1<Q<2.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 1<Q<2 (differential in pt)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.dpt',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2 (differential in pt)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -3672,7 +3133,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3711,24 +3172,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.2<Q<2.5.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 2<Q<2.5 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3767,24 +3216,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.2.5<Q<4.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 2.5<Q<4 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3823,24 +3260,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.4<Q<9.dpt',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 4<Q<9 (differential in pt)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3893,8 +3318,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.1<Q<2.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 1<Q<2 (differential in x)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.dx',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2 (differential in x)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -3909,7 +3334,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -3948,24 +3373,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.2<Q<2.5.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 2<Q<2.5 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -4004,25 +3417,13 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.2.5<Q<4.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 2.5<Q<4 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -4061,24 +3462,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
     
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.4<Q<9.dx',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 4<Q<9 (differential in x)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -4131,8 +3520,8 @@ for i in range(len(data_current)):
     #k.spit("\t")
 
 print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.1<Q<2.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 1<Q<2 (differential in z)"
+DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.dz',"SIDIS")
+DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2 (differential in z)"
 DataCurrentSiv.reference="1609.07374"
 
 
@@ -4147,7 +3536,7 @@ Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -4186,24 +3575,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
 
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.2<Q<2.5.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 2<Q<2.5 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[4.,6.25]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -4242,24 +3619,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.2.5<Q<4.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 2.5<Q<4 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[6.25,16.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current
@@ -4298,24 +3663,12 @@ for i in range(len(data_current)):
     data_current[i]=[float(j) for j in data_current[i]]
     #k.spit("\t")
    
-print("Done.  =>     Create points & append to data set ...")
-DataCurrentSiv=DataProcessor.DataSet.DataSet('compass16.sivers.h+.z>2.4<Q<9.dz',"SIDIS")
-DataCurrentSiv.comment="COMPASS16 SSA-Sivers h+, z>0.2, 4<Q<9 (differential in z)"
-DataCurrentSiv.reference="1609.07374"
-
-
-proc_current=[1,1,12101]
-proc_denominator=[1,1,2101]
-s_current=2*160*0.938+(0.938)**2
-includeCuts=True
-cutParameters=[0.1,0.9,10.,10000.] #y, W^2 cuts
-
 Q2_current=[16.,81.]
 Q_current=[numpy.sqrt(Q2_current[0]),numpy.sqrt(Q2_current[1])]
 
 for i in range(len(data_current)):
     # makeup a point
-    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(int(data_current[0][0])))
+    p=DataProcessor.Point.CreateSIDISPoint(DataCurrentSiv.name+'.'+str(i))
     #print DataCurrent.name+'.'+str(i)
     p["process"]=proc_current
     p["s"]=s_current

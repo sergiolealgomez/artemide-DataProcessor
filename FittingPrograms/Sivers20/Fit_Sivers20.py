@@ -18,8 +18,8 @@ sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor")
 import DataProcessor.harpyInterface
 import DataProcessor.DataMultiSet
 
-MAINPATH="/home/m/Github/artemide-DataProcessor/"
-#MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
+#MAINPATH="/home/m/Github/artemide-DataProcessor/"
+MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
 #%%
 #######################################
@@ -85,7 +85,7 @@ def cutFunc(p):
         p["thFactor"]=p["thFactor"]/normX        
     
 #    return delta<0.5 and p.qT_avarage<80
-    return delta<0.5 , p
+    return delta<0.3 , p
 
 #%%
 ### Loading the data set
@@ -107,9 +107,33 @@ def cutFunc(p):
 #                     'hermes.sivers.pi+.Q<2.dz','hermes.sivers.k+.Q<2.dz',
 #                     'hermes.sivers.pi+.Q>2.dz','hermes.sivers.k+.Q>2.dz',                    
 #                     'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d']))
+
+# theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
+# 'compass16.sivers.h+.1<z<2.dpt',
+# 'compass16.sivers.h-.1<z<2.dpt',
+# 'compass16.sivers.h+.1<z<2.dx',
+# 'compass16.sivers.h-.1<z<2.dx',
+# 'compass16.sivers.h+.1<z<2.dz',
+# 'compass16.sivers.h-.1<z<2.dz',
+# 'compass16.sivers.h+.z>1.dpt' ,
+# 'compass16.sivers.h-.z>1.dpt' ,
+# 'compass16.sivers.h+.z>1.dx'  ,
+# 'compass16.sivers.h-.z>1.dx'  ,
+# 'compass16.sivers.h+.z>1.dz'  ,
+# 'compass16.sivers.h-.z>1.dz'  ,
+# 'compass16.sivers.h+.z>2.dpt' ,
+# 'compass16.sivers.h-.z>2.dpt' ,
+# 'compass16.sivers.h+.z>2.dx'  ,
+# 'compass16.sivers.h-.z>2.dx'  ,
+# 'compass16.sivers.h+.z>2.dz'  ,
+# 'compass16.sivers.h-.z>2.dz']))
+    
+
 theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
                     'compass.sivers.pi+.dpt', 'compass.sivers.pi-.dpt',
-                    'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',                   
+                    'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',
+                    'compass16.sivers.h+.1<z<2.dpt','compass16.sivers.h-.1<z<2.dpt',
+                    'compass16.sivers.h+.z>2.dpt' ,'compass16.sivers.h-.z>2.dpt',
                     'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d']))
 
 setSIDIS=theData.CutData(cutFunc) 
@@ -121,8 +145,11 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
 
 setDY=theData.CutData(cutFunc) 
 
-print('Loaded ', setSIDIS.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setSIDIS.sets]), 'points.')
-print('Loaded experiments are', [i.name for i in setSIDIS.sets])
+print('Loaded (SIDIS)', setSIDIS.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setSIDIS.sets]), 'points.')
+print('Loaded SIDIS experiments are', [i.name for i in setSIDIS.sets])
+
+print('Loaded (DY)', setDY.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setDY.sets]), 'points.')
+print('Loaded DY experiments are', [i.name for i in setDY.sets])
 
 #%%
 harpy.setNPparameters_TMDR([1.92819, 0.0390534])
