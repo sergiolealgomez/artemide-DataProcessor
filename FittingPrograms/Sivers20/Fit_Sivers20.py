@@ -30,7 +30,7 @@ path_to_constants=MAINPATH+"FittingPrograms/Sivers20/Constants-files/"
 harpy.initialize(path_to_constants+"const-Sivers20_lo")
 #harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
-harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.])
+harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.17, 0.48, 2.15])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539])
 harpy.setNPparameters_SiversTMDPDF([5.2, 0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1])
 #%%
@@ -73,7 +73,9 @@ def cutFunc(p):
         
         delta=p["<pT>"]/p["<z>"]/p["<Q>"]        
     
-    if delta<0.6:
+    deltaTEST=0.3
+    
+    if delta<deltaTEST:
         pNew=copy.deepcopy(p)    
         pNew["process"]=pNew["weightProcess"]
         if p["type"]=="SIDIS":
@@ -85,7 +87,7 @@ def cutFunc(p):
         p["thFactor"]=p["thFactor"]/normX        
     
 #    return delta<0.5 and p.qT_avarage<80
-    return delta<0.3 , p
+    return delta<deltaTEST, p
 
 #%%
 ### Loading the data set
@@ -141,7 +143,10 @@ setSIDIS=theData.CutData(cutFunc)
 theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
                     'star.sivers.W+.dqT','star.sivers.W-.dqT',
                     #'star.sivers.W+.dy','star.sivers.W-.dy',
-                    'star.sivers.Z']))
+                    'star.sivers.Z',
+                    'compass.sivers.piDY.dqT'
+                    #'compass.sivers.piDY.dQ','compass.sivers.piDY.dxF'
+                    ]))
 
 setDY=theData.CutData(cutFunc) 
 
@@ -153,7 +158,7 @@ print('Loaded DY experiments are', [i.name for i in setDY.sets])
 
 #%%
 harpy.setNPparameters_TMDR([1.92819, 0.0390534])
-harpy.setNPparameters_uTMDPDF([0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0.])
+harpy.setNPparameters_uTMDPDF([0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0.17, 0.48, 2.15])
 harpy.setNPparameters_uTMDFF([0.259499, 0.476235, 0.477143, 0.482977])
 #harpy.setNPparameters_SiversTMDPDF([0.23, 0., 0.5, 7, -0.1, -0.2, 6, -0.1, -0.03, 8, -0.2])
 harpy.setNPparameters_SiversTMDPDF([4.8, 0.0, 0.4, 18, -1.2, 1, 5.1, 0.5, -0.15, 1.09, -0.96])

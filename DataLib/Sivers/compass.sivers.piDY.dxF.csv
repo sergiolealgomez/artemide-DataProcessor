@@ -1,0 +1,15 @@
+Name,compass.sivers.piDY.dxF
+Comment,COMPASS A_T pionDY (differential in xF)
+Reference,1704.00488
+Process type,DY
+Number of points,3
+Number of uncorr.errors,1
+Number of corr.errors,0
+Number of norm.errors,2
+List of norm.errors (relative),0.05,0.08
+Total cross-section nomalized,False
+List of points 
+Point id,process id,weightProcess,s[GeV^2],<Q>[GeV],Qmin[GeV],Qmax[GeV],<y>,yMin,yMax,<qT>[GeV],qTMin[GeV],qTMax[GeV],xSec,Uncorr.Err.0,Th.Factor,FiducialCuts,kCut1[GeV],kCut2[GeV],etaMin,etaMax
+compass.sivers.piDY.dxF.0,2 - 2 - 10101,2 - 2 - 101,357.339165,5.26,4.3,8.5,0.09,-1.0,0.21,1.33,1e-07,5.0,-0.076,0.12,1.0,False,25.0,25.0,-1.0,1.0
+compass.sivers.piDY.dxF.1,2 - 2 - 10101,2 - 2 - 101,357.339165,5.33,4.3,8.5,0.31,0.21,0.41,1.26,1e-07,5.0,0.145,0.12,1.0,False,25.0,25.0,-1.0,1.0
+compass.sivers.piDY.dxF.2,2 - 2 - 10101,2 - 2 - 101,357.339165,5.43,4.3,8.5,0.56,0.41,1.0,1.13,1e-07,5.0,0.102,0.123,1.0,False,25.0,25.0,-1.0,1.0

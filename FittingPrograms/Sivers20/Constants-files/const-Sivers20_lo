@@ -43,13 +43,14 @@
  
 *B   : ---- uPDF sets----
 *p1  : total number of PDFs to initialize (0= initialization is skipped)
-           1
+           2
 *p2  : reference number for hadrons
-    1
+    1,2
 *p3  : LHAPDF set names for hadrons (line-by-line corresponding to reference number
  NNPDF31_nnlo_as_0118_1000
+ JAM18PionPDFnlo
 *p4  : list of initialization replicas
-    0
+    0,0
  
 *C   : ---- uFF sets----
 *p1  : total number of FFs to initialize (0= initialization is skipped)
@@ -153,13 +154,15 @@
  F
 *B   : ---- Parameters of NP model ----
 *p1  : Length of lambdaNP
-           7
+           9
 *p2  : Initialization parameters (in column)
    2.0000000000000000     
    0.0000000000000000     
    0.0000000000000000     
    0.0000000000000000     
    0.0000000000000000     
+   0.0000000000000000     
+   2.0000000000000000     
    0.0000000000000000     
    0.0000000000000000     
 *C   : ---- Numerical evaluation parameters ----
@@ -173,9 +176,9 @@
 *p2  : Include gluon TMDs into the grid
  F
 *p3  : total number of PDFs added to the grid (by default it coincides with number of initialized PDFs)
-           1
+           2
 *p4  : reference numbers for hadrons (by default it coincides with references for PDFs)
-    1
+    1,2
 *E   : ---- Parameters of grid ----
 *p1  : xGrid_Min the minimal value of x in grid (max=1), make sure that it is enough)
    1.0000000000000001E-005
