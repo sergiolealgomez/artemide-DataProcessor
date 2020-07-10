@@ -27,8 +27,8 @@ MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 #######################################
 import harpy
 path_to_constants=MAINPATH+"FittingPrograms/Sivers20/Constants-files/"
-harpy.initialize(path_to_constants+"const-Sivers20_lo")
-#harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
+#harpy.initialize(path_to_constants+"const-Sivers20_lo")
+harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.17, 0.48, 2.15])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539])
@@ -129,6 +129,9 @@ def cutFunc(p):
 # 'compass16.sivers.h-.z>2.dx'  ,
 # 'compass16.sivers.h+.z>2.dz'  ,
 # 'compass16.sivers.h-.z>2.dz']))
+
+# theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
+#     "jlab.sivers.pi+","jlab.sivers.pi-","jlab.sivers.k+","jlab.sivers.k-"]))
     
 
 theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
@@ -136,7 +139,8 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
                     'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',
                     'compass16.sivers.h+.1<z<2.dpt','compass16.sivers.h-.1<z<2.dpt',
                     'compass16.sivers.h+.z>2.dpt' ,'compass16.sivers.h-.z>2.dpt',
-                    'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d']))
+                    'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d',
+                    'jlab.sivers.pi+','jlab.sivers.pi-','jlab.sivers.k+']))
 
 setSIDIS=theData.CutData(cutFunc) 
 

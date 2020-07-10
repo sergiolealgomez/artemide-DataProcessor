@@ -171,10 +171,11 @@ print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 #harpy.setNPparameters([1.93, 0.0434,0.195, 9.117, 444., 2.12, -4.89,0.,0.,0.258, 0.478, 0.484, 0.459]) ##NNPDF+DSS
 #harpy.setNPparameters([2.2764,0.0223, 0.3237, 13.17, 355.4, 2.049, -10.43,0.,0.,0.264, 0.479,0.459,0.539]) ##HERA+DSS
 
-harpy.setNPparameters([1.92819, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 0.259499, 0.476235, 0.477143, 0.482977]) ##NNPDF+DSS (paper)
+#harpy.setNPparameters([1.92819, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 0.259499, 0.476235, 0.477143, 0.482977]) ##NNPDF+DSS (paper)
 #harpy.setNPparameters([1.92516, 0.0426578, 0.223809, 9.23868, 375.888, 2.14611, -4.97177, 0., 0., 0.233382, 0.478562, 0.47218, 0.511187]) ##NNPDF+DSS n3lo (paper)
 
-#harpy.setNPparameters([2.0, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 0.259499, 0.476235, 0.477143, 0.482977]) ##NNPDF+DSS (paper)
+##NNPDF+DSS (paper) M=0
+harpy.setNPparameters([2.00, 0.045, 0.194, 7.316, 593.347, 2.368, -3.544, 0., 0., 0.205, 0.480, 0.520, 0.401])
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,printDecomposedChi2=True)
@@ -203,9 +204,9 @@ def chi_2(x):
 from iminuit import Minuit
 
 #
-initialValues=(2.0, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 0.259499, 0.476235, 0.477143, 0.482977)
+initialValues=(2.00, 0.045, 0.194, 7.316, 590., 2.368, -3.544, 0., 0., 0.205, 0.480, 0.520, 0.401)
 
-initialErrors=(0.1,         0.05,       0.1,     1.0,      50,     0.5,      0.5,  1., 1.,    0.1,   0.1,  0.1,  0.2)
+initialErrors=(0.1,  0.05,  0.01,  1.0,   100,  0.1,   0.5,    1., 1., 0.1,   0.1,  0.1,    0.1)
 searchLimits=((1.,5.),   (0.,4.),  (0.,10.), (0.,10.),(0., 1000.),(0.,10.),None,None,None, (0.,5.),(0.,5.),(0.,5.),None)
 # True= FIX
 #parametersToMinimize=(False, False, True, True,True, True, True, True,True, True, True, True, True)
@@ -225,39 +226,38 @@ SaveToLog("MINIMIZATION STARTED",str(m.params))
 ####################################
 # Search for minimum
 ###################################
-m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-m.strategy=1
 
-m.migrad()
+# m.migrad()
 
-print(m.params)
+# print(m.params)
 
-SaveToLog("MINIMIZATION FINISHED",str(m.params))
-SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
+# SaveToLog("MINIMIZATION FINISHED",str(m.params))
+# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
 
-sys.exit()
 #%%
 ####################################
 # Hesse matrix
 ###################################
 
-m.hesse()
+# m.hesse()
 
-print(m.params)
+# print(m.params)
 
-SaveToLog("HESSE FINISHED",str(m.params))
-SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
+# SaveToLog("HESSE FINISHED",str(m.params))
+# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
+
+# sys.exit()
 #%%
 ####################################
 # Minos error-band estimation (VERY long)
 ###################################
 
-m.minos()
+# m.minos()
 
-print(m.params)
+# print(m.params)
 
-SaveToLog("MINOS FINISHED",str(m.params))
-SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
+# SaveToLog("MINOS FINISHED",str(m.params))
+# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
 
 #%%
 def MinForReplica():
@@ -268,20 +268,22 @@ def MinForReplica():
         harpy.setNPparameters(x)
         print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
         
-        ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
-        ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(setSIDIS)
+        ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(repDataDY)
+        ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(repDataSIDIS)
         
-        cc=(ccDY2+ccSIDIS2)/totalN
+        cc=(ccDY2+ccSIDIS2)/totalNnew
         endT=time.time()
         print(':->',cc,'       t=',endT-startT)
         return ccDY2+ccSIDIS2
     
-    repData=theData.CreateReplica()
+    repDataDY=setDY.GenerateReplica()
+    repDataSIDIS=setSIDIS.GenerateReplica()
+    totalNnew=repDataDY.numberOfPoints+repDataSIDIS.numberOfPoints
     
     localM = Minuit.from_array_func(repchi_2, initialValues,
       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
     
-    localM.tol=0.0001*repData.TotalNumberOfPoints*10000 ### the last 0.0001 is to compensate MINUIT def
+    localM.tol=0.0001*totalNnew*10000 ### the last 0.0001 is to compensate MINUIT def
     localM.set_strategy(1)
 
     localM.migrad()
@@ -292,8 +294,8 @@ def MinForReplica():
 #
 # Generate pseudo data and minimise   100 times
 #
-numOfReplicas=25
-REPPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19_m=0.txt"
+numOfReplicas=10
+REPPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19_REPLICAS_m=0.txt"
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')

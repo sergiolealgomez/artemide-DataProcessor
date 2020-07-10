@@ -1,0 +1,5 @@
+
+a*.txt
+nohup.out
+# Except this file
+!.gitignore
