@@ -32,11 +32,11 @@ harpy.initialize(path_to_constants+"const-Sivers20_nnlo")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.17, 0.48, 2.15])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539])
-harpy.setNPparameters_SiversTMDPDF([5.2, 0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1])
+harpy.setNPparameters_SiversTMDPDF([5.2, 0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1]) 
 #%%
 ### read the list of files and return the list of DataSets
 def loadThisData(listOfNames):    
-    import DataProcessor.DataSet
+    import DataProcessor.DataSet.
     
     #path_to_data="/home/m/Github/artemide-DataProcessor/DataLib/Sivers/"
     path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/Sivers/"

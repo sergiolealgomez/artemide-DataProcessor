@@ -50,7 +50,7 @@
  NNPDF31_nnlo_as_0118_1000
  JAM18PionPDFnlo
 *p4  : list of initialization replicas
-    0
+    0,0
  
 *C   : ---- uFF sets----
 *p1  : total number of FFs to initialize (0= initialization is skipped)
