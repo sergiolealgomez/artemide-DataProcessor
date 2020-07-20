@@ -1,6 +1,5 @@
 
 a*.txt
-b*.txt
 nohup.out
 # Except this file
 !.gitignore

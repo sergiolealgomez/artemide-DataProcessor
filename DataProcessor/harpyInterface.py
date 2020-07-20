@@ -167,7 +167,7 @@ def _ComputeXSec_Point(p,method="default"):
             raise Exception('The dictionary is not a point.')
     
        
-    return XX,[XX]
+    return XX
 
 def ComputeChi2(data,method="default"):
     """ Computes the chi^2 values for the given data    

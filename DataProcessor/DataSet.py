@@ -600,7 +600,7 @@ class DataSet:
             file.write(",")
             if includeWeightProc:
                 file.write(str(p["weightProcess"]).replace(","," -").replace("[","").replace("]",""))            
-            file.write(",")
+                file.write(",")            
             file.write(str(p["s"]))
             file.write(",")
             file.write(str(p["<Q>"]))
@@ -691,6 +691,10 @@ def LoadCSV(path):
     The dataSet that was restored from file.
 
     """
+    import os.path
+    if not os.path.exists(path):
+        raise FileNotFoundError('data-set-file '+path+' NOT FOUND')
+        
     file=open(path,"r")
     
     ## read header of
