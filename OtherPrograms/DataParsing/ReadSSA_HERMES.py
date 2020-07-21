@@ -1352,9 +1352,9 @@ DataCurrent.SaveToCSV(path_to_save+DataCurrent.name+".csv")
 
 #%%
 ##################################################################
-########   READING FILE PRELIMINARY!!!!   ###################################
+########   HERMES 3D PI+  ############################################
 ##################################################################
-f = open(path_to_data+path_to_HERMES+"HERMES_Sivers_pions_preliminary_A.Vladimirov.txt")
+f = open(path_to_data+path_to_HERMES+"SFA/hermesTMDs_data__pip_SFA_3D.txt")
 
 data_from_f=[]
 
@@ -1366,9 +1366,7 @@ f.close()
 print("Done.  =>     Convert to numbers ...")
 
 #%%
-
-###### POSITIVE PIONS PI+ ######
-data_current=data_from_f[15:79]
+data_current=data_from_f[86:150]
 
 for i in range(len(data_current)):
     data_current[i]=data_current[i].split()
@@ -1380,7 +1378,7 @@ for i in range(len(data_current)):
 print("Done.  =>     Create points & append to data set ...")
 DataCurrent=DataProcessor.DataSet.DataSet('hermes.sivers.pi+.3d',"SIDIS")
 DataCurrent.comment="HERMESS SSA-Sivers pi+ (3d-data). The data MUST be evaluated at a point"
-DataCurrent.reference="PRELIMINARY"
+DataCurrent.reference="2007.07755"
 
 
 proc_current=[1,1,12001]
@@ -1422,7 +1420,21 @@ DataCurrent.SaveToCSV(path_to_save+DataCurrent.name+".csv")
 
 
 #%%
-###### POSITIVE PIONS PI- ######
+##################################################################
+########   HERMES 3D PI-  ############################################
+##################################################################
+f = open(path_to_data+path_to_HERMES+"SFA/hermesTMDs_data__pim_SFA_3D.txt")
+
+data_from_f=[]
+
+for line in f:    
+    data_from_f.append(line.rstrip('\n'))
+
+f.close()
+
+print("Done.  =>     Convert to numbers ...")
+
+#%%
 data_current=data_from_f[86:150]
 
 for i in range(len(data_current)):
@@ -1432,15 +1444,151 @@ for i in range(len(data_current)):
     data_current[i][2]=[float(j) for j in data_current[i][2].split("<Pt<")]
     data_current[i][3:12]=[float(j) for j in data_current[i][3:12]]
 
-
 print("Done.  =>     Create points & append to data set ...")
 DataCurrent=DataProcessor.DataSet.DataSet('hermes.sivers.pi-.3d',"SIDIS")
 DataCurrent.comment="HERMESS SSA-Sivers pi- (3d-data). The data MUST be evaluated at a point"
-DataCurrent.reference="PRELIMINARY"
+DataCurrent.reference="2007.07755"
 
 
 proc_current=[1,1,12021]
 proc_denominator=[1,1,2021]
+s_current=2*27.6*0.938+(0.938)**2
+includeCuts=True
+cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
+
+for i in range(len(data_current)):
+    # makeup a point
+    p1=DataProcessor.Point.CreateSIDISPoint(DataCurrent.name+'.'+str(int(i)))
+    #print DataCurrent.name+'.'+str(i)
+    p1["process"]=proc_current
+    p1["s"]=s_current
+    p1["<pT>"]=data_current[i][7]    
+    p1["pT"]=data_current[i][2]
+    p1["<x>"]=data_current[i][4]    
+    p1["x"]=data_current[i][0]
+    p1["<Q>"]=numpy.sqrt(data_current[i][3])
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
+    p1["<z>"]=data_current[i][6]
+    p1["z"]=data_current[i][1]        
+    p1["xSec"]=data_current[i][9]
+    p1["M_target"]=M_proton
+    p1["M_product"]=m_pion
+    p1["includeCuts"]=includeCuts
+    p1["cutParams"]=cutParameters    
+    p1["thFactor"]=1.         ### tobe updated
+    p1["uncorrErr"].append(data_current[i][10])
+    p1["uncorrErr"].append(data_current[i][11])
+    p1["weightProcess"]=proc_denominator
+    #
+    DataCurrent.AddPoint(p1)    
+
+print("Done.  ")
+
+DataCurrent.SaveToCSV(path_to_save+DataCurrent.name+".csv")
+
+
+#%%
+##################################################################
+########   HERMES 3D K+  ############################################
+##################################################################
+f = open(path_to_data+path_to_HERMES+"SFA/hermesTMDs_data__kp_SFA_3D.txt")
+
+data_from_f=[]
+
+for line in f:    
+    data_from_f.append(line.rstrip('\n'))
+
+f.close()
+
+print("Done.  =>     Convert to numbers ...")
+
+#%%
+data_current=data_from_f[86:150]
+
+for i in range(len(data_current)):
+    data_current[i]=data_current[i].split()
+    data_current[i][0]=[float(j) for j in data_current[i][0].split("<x<")]
+    data_current[i][1]=[float(j) for j in data_current[i][1].split("<z<")]
+    data_current[i][2]=[float(j) for j in data_current[i][2].split("<Pt<")]
+    data_current[i][3:12]=[float(j) for j in data_current[i][3:12]]
+
+print("Done.  =>     Create points & append to data set ...")
+DataCurrent=DataProcessor.DataSet.DataSet('hermes.sivers.k+.3d',"SIDIS")
+DataCurrent.comment="HERMESS SSA-Sivers k+ (3d-data). The data MUST be evaluated at a point"
+DataCurrent.reference="2007.07755"
+
+
+proc_current=[1,1,12002]
+proc_denominator=[1,1,2002]
+s_current=2*27.6*0.938+(0.938)**2
+includeCuts=True
+cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
+DataCurrent.normErr.append(scaleUncertanty)
+
+for i in range(len(data_current)):
+    # makeup a point
+    p1=DataProcessor.Point.CreateSIDISPoint(DataCurrent.name+'.'+str(int(i)))
+    #print DataCurrent.name+'.'+str(i)
+    p1["process"]=proc_current
+    p1["s"]=s_current
+    p1["<pT>"]=data_current[i][7]    
+    p1["pT"]=data_current[i][2]
+    p1["<x>"]=data_current[i][4]    
+    p1["x"]=data_current[i][0]
+    p1["<Q>"]=numpy.sqrt(data_current[i][3])
+    p1["Q"]=Qbounds(p1["x"][0],p1["x"][1])    
+    p1["<z>"]=data_current[i][6]
+    p1["z"]=data_current[i][1]        
+    p1["xSec"]=data_current[i][9]
+    p1["M_target"]=M_proton
+    p1["M_product"]=m_pion
+    p1["includeCuts"]=includeCuts
+    p1["cutParams"]=cutParameters    
+    p1["thFactor"]=1.         ### tobe updated
+    p1["uncorrErr"].append(data_current[i][10])
+    p1["uncorrErr"].append(data_current[i][11])
+    p1["weightProcess"]=proc_denominator
+    #
+    DataCurrent.AddPoint(p1)    
+
+print("Done.  ")
+
+DataCurrent.SaveToCSV(path_to_save+DataCurrent.name+".csv")
+
+#%%
+##################################################################
+########   HERMES 3D K-  ############################################
+##################################################################
+f = open(path_to_data+path_to_HERMES+"SFA/hermesTMDs_data__km_SFA_3D.txt")
+
+data_from_f=[]
+
+for line in f:    
+    data_from_f.append(line.rstrip('\n'))
+
+f.close()
+
+print("Done.  =>     Convert to numbers ...")
+
+#%%
+data_current=data_from_f[86:150]
+
+for i in range(len(data_current)):
+    data_current[i]=data_current[i].split()
+    data_current[i][0]=[float(j) for j in data_current[i][0].split("<x<")]
+    data_current[i][1]=[float(j) for j in data_current[i][1].split("<z<")]
+    data_current[i][2]=[float(j) for j in data_current[i][2].split("<Pt<")]
+    data_current[i][3:12]=[float(j) for j in data_current[i][3:12]]
+
+print("Done.  =>     Create points & append to data set ...")
+DataCurrent=DataProcessor.DataSet.DataSet('hermes.sivers.k-.3d',"SIDIS")
+DataCurrent.comment="HERMESS SSA-Sivers k- (3d-data). The data MUST be evaluated at a point"
+DataCurrent.reference="2007.07755"
+
+
+proc_current=[1,1,12022]
+proc_denominator=[1,1,2022]
 s_current=2*27.6*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.95,10.,10000.] #y, W^2 cuts
