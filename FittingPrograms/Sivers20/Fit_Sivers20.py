@@ -86,9 +86,9 @@ def cutFunc(p):
         pNew=copy.deepcopy(p)    
         pNew["process"]=pNew["weightProcess"]
         if p["type"]=="SIDIS":
-            normX, normX1=DataProcessor.harpyInterface.ComputeXSec(pNew,method="central")        
+            normX=DataProcessor.harpyInterface.ComputeXSec(pNew,method="central")        
         elif p["type"]=="DY":
-            normX, normX1=DataProcessor.harpyInterface.ComputeXSec(pNew)        
+            normX=DataProcessor.harpyInterface.ComputeXSec(pNew)        
         else:
             print("Are you crazy?")
         p["thFactor"]=p["thFactor"]/normX        
@@ -223,14 +223,14 @@ m = Minuit.from_array_func(chi_2, initialValues,
 m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 m.strategy=1
 
-SaveToLog("MINIMIZATION STARTED",str(m.params))
+#SaveToLog("MINIMIZATION STARTED",str(m.params))
 #%%
 
 
 # m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 # m.strategy=1
 
-# m.migrad()
+m.migrad()
 
 # print(m.params)
 
