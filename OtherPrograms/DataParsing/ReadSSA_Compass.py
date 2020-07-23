@@ -37,7 +37,7 @@ def Qbounds(xMin,xMax):
     WM2max=10000.-(0.938)**2  ## no upper limit
     yMin=0.1
     yMax=0.9
-    sM2=2*160*0.938
+    sM2=2.*160.*0.938
     
     if xMax<1:
         return [numpy.sqrt(numpy.max([Q2min,xMin*yMin*sM2, xMin/(1-xMin)*WM2min])),
@@ -85,7 +85,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12011]
 proc_denominator=[1,1,2011]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -163,7 +163,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12011]
 proc_denominator=[1,1,2011]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -239,7 +239,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12011]
 proc_denominator=[1,1,2011]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -317,7 +317,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12031]
 proc_denominator=[1,1,2031]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -393,7 +393,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12031]
 proc_denominator=[1,1,2031]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -469,7 +469,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12031]
 proc_denominator=[1,1,2031]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -550,7 +550,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12012]
 proc_denominator=[1,1,2012]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -626,7 +626,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12012]
 proc_denominator=[1,1,2012]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -702,7 +702,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12012]
 proc_denominator=[1,1,2012]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -784,7 +784,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12032]
 proc_denominator=[1,1,2032]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -860,7 +860,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12032]
 proc_denominator=[1,1,2032]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -936,7 +936,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12032]
 proc_denominator=[1,1,2032]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1013,7 +1013,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12013]
 proc_denominator=[1,1,2013]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1089,7 +1089,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12013]
 proc_denominator=[1,1,2013]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1165,7 +1165,7 @@ DataCurrentCol.reference="0802.2160"
 
 proc_current=[1,1,12013]
 proc_denominator=[1,1,2013]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1254,7 +1254,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1327,7 +1327,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1400,7 +1400,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1475,7 +1475,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1549,7 +1549,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1622,7 +1622,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1699,7 +1699,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1772,7 +1772,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1845,7 +1845,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1924,7 +1924,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -1997,7 +1997,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -2070,7 +2070,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -2144,7 +2144,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -2218,7 +2218,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 
@@ -2291,7 +2291,7 @@ DataCurrentCol.reference="0802.2160"
 
 
 proc_current=[1,1,12001]
-s_current=2*160*0.938+(0.938)**2
+s_current=2.*160.*0.938+(0.938)**2
 includeCuts=True
 cutParameters=[0.1,0.9,25.,10000.] #y, W^2 cuts
 

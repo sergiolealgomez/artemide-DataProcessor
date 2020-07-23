@@ -28,6 +28,12 @@ def ReadRepFile(path):
     ### it corresponds to the logical way I saved it in the fortran
     ### the line start with *?? indcate that the next line is the variable
     
+    ### search for version
+    while not listFromF[0].startswith("*V   "):
+        listFromF.pop(0)
+    listFromF.pop(0)
+    ver=int(listFromF.pop(0))
+    
     ### search for name entry
     while not listFromF[0].startswith("*A   "):
         listFromF.pop(0)
@@ -75,14 +81,25 @@ def ReadRepFile(path):
     rSet._uTMDFFstart=int(line[0])-2
     rSet._uTMDFFend=int(line[1])-1
     
-    ## TMDFF size
-    while not listFromF[0].startswith("*10  "):
+    ## lpTMDPDF size
+    while not listFromF[0].startswith("*11  "):
         listFromF.pop(0)
     listFromF.pop(0)
     
     line=(listFromF.pop(0)).split(",")
     rSet._lpTMDPDFstart=int(line[0])-2
     rSet._lpTMDPDFend=int(line[1])-1
+    
+    ## SiversPDF appeared only in 15
+    if(ver>=15):
+        ## SiversPDF size
+        while not listFromF[0].startswith("*12  "):
+            listFromF.pop(0)
+        listFromF.pop(0)
+        
+        line=(listFromF.pop(0)).split(",")
+        rSet._SiversPDFstart=int(line[0])-2
+        rSet._SiversPDFend=int(line[1])-1
     
     ### search for number of replicas
     while not listFromF[0].startswith("*C   "):
@@ -127,11 +144,13 @@ class ArtemideReplicaSet:
         self._uTMDPDFstart=0
         self._uTMDFFstart=0
         self._lpTMDPDFstart=0
+        self._SiversPDFstart=0
         
         self._TMDRend=0
         self._uTMDPDFend=0
         self._uTMDFFend=0
         self._lpTMDPDFend=0
+        self._SiversPDFend=0
         
         ### replica suggested for the initialization
         self.initialReplica=[]
@@ -177,8 +196,26 @@ class ArtemideReplicaSet:
             harpy.setNPparameters_uTMDFF(r[self._uTMDFFstart:self._uTMDFFend])
         if(self._lpTMDPDFend>self._lpTMDPDFstart+1):
             harpy.setNPparameters_lpTMDPDF(r[self._lpTMDPDFstart:self._lpTMDPDFend])
+        if(self._SiversPDFend>self._SiversPDFstart+1):
+            harpy.setNPparameters_SiversTMDPDF(r[self._SiversPDFstart:self._SiversPDFend])
             
     def GetReplica(self,num,part="full"):
+        """
+        Returns the values of parameters for the numbers replica
+
+        Parameters
+        ----------
+        num : int
+            Number of the replica (-1 = initial, 0 = mean, ...)
+        part : string, optional
+            Specification which part of the replica to return. The default is "full".
+            Possible values: 'full', 'TMDR', 'uTMDPDF', 'uTMDFF', 'lpTMDPDF', 'SiversTMDPDF', etc
+
+        Returns
+        -------
+        array of floats
+
+        """
         if(num==0):
             r=self.meanReplica
         elif(num==-1):
@@ -196,5 +233,7 @@ class ArtemideReplicaSet:
             return r[self._uTMDFFstart:self._uTMDFFend]
         elif(part=="lpTMDPDF"):
             return r[self._lpTMDPDFstart:self._lpTMDPDFend]
+        elif(part=="SiversTMDPDF"):
+            return r[self._SiversPDFstart:self._SiversTMDPDFend]
         else:
             raise ValueError("part should correspond to a TMD")

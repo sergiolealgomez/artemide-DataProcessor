@@ -283,7 +283,7 @@
 *p1  : Order of coefficient function
  NNLO
 *p2  : Use the exact values of x1 and x2 (include qT/Q correction)
- T
+ F
 *p3  : Use resummation of pi^2-corrections in hard coefficient
  F
 *B   : ---- Numerical evaluation parameters ----
@@ -312,7 +312,7 @@
 *p4  : Use product mass corrections in kinematics
  F
 *p5  : Use transverse momentum corrections in x1 and z1
- T
+ F
 *B   : ---- Numerical evaluation parameters ----
 *p1  : Tolerance (relative tolerance for bin-integration routines, except pt-integration)
    1.0000000000000000E-003
