@@ -16,6 +16,7 @@ import numpy
 sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor")
 import DataProcessor.harpyInterface
 import DataProcessor.DataMultiSet
+import DataProcessor.ArtemideReplicaSet
 
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 #%%
@@ -25,9 +26,9 @@ MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 import harpy
 path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"
 #harpy.initialize(path_to_constants+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo")
-#harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_m=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0")
+harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_m=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0")
 #harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_all=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_all=0")
-harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_m=0+fv/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0+fv")
+#harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_m=0+fv/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0+fv")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539]) 
@@ -60,17 +61,6 @@ def loadThisDataSIDIS(listOfNames):
         dataCollection.append(loadedData)   
 
     return dataCollection
-
-#%%
-#################### LOG save function
-LOGPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19(DY+SIDIS)["+time.ctime()+"].log"
-def SaveToLog(logTitle,text):
-    with open(LOGPATH, 'a') as file:
-        file.write(time.ctime())
-        file.write(' --> '+logTitle+'\n')
-        file.write(text)
-        file.write('\n \n \n')
-
 #%%
 ##################Cut function
 def cutFunc(p):
@@ -179,7 +169,8 @@ print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 #harpy.setNPparameters([1.92516, 0.0426578, 0.223809, 9.23868, 375.888, 2.14611, -4.97177, 0., 0., 0.233382, 0.478562, 0.47218, 0.511187]) ##NNPDF+DSS n3lo (paper)
 
 ##NNPDF+DSS  M=0
-#harpy.setNPparameters([2., 0.0405, 0.188, 7.46, 532., 2.27, -2.59, 0., 0.,0.198, 0.473, 0.509, 0.413])
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_m=0.rep")
+rSet.SetReplica(0)
 ##NNPDF+DSS  all=0
 #harpy.setNPparameters([2., 0.044, 0.187, 5.936, 647., 2.518, -2.94, 0., 0.,0.283, 0.463, 0.446, 0.528])
 
@@ -187,132 +178,16 @@ DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,printDecomposedChi2=True)
     
 #%%
-#######################################
-# Minimisation
-#######################################
-totalN=setDY.numberOfPoints+setSIDIS.numberOfPoints
-
-def chi_2(x):
-    startT=time.time()
-    harpy.setNPparameters(x)
-    print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
-    
+######################################
+# Distribution of chi^2 over replicas
+#####################################
+SAVEPATH="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/FIGURES_DY+SIDIS_2019/LOGS/SV19_nnlo_m=0_chi2.txt"
+for r in range(rSet.numberOfReplicas):
+    rSet.SetReplica(r+1)
     ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
-    ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(setSIDIS)
-    
-    cc=(ccDY2+ccSIDIS2)/totalN
-    endT=time.time()
-    print(':->',cc,'       t=',endT-startT)
-    return ccDY2+ccSIDIS2
-
-#%%
-
-from iminuit import Minuit
-
-#
-initialValues=(2., 0.0405, 0.188, 7.46, 532., 2.27, -2.59, 0., 0.,0.198, 0.473, 0.509, 0.413)#M=0
-initialValues=(2., 0.044, 0.187, 5.936, 647., 2.518, -2.94, 0., 0.,0.283, 0.463, 0.446, 0.528)#all=0
-
-initialErrors=(0.1,  0.05,  0.01,  1.0,   100,  0.1,   0.5,    1., 1., 0.1,   0.1,  0.1,    0.1)
-searchLimits=((1.,5.),   (0.,4.),  (0.,10.), (0.,10.),(0., 1000.),(0.,10.),None,None,None, (0.,5.),(0.,5.),(0.,5.),None)
-#initialErrors=(0.1,  0.05,  0.01,  1.0,   100,  0.1,   0.5,    1., 1., 0.1,   0.1,  0.1,    0.1,0.1,   0.1,  0.1,    0.1)
-#searchLimits=((1.,5.),   (0.,4.),  (0.,10.), (0.,10.),(0., 1000.),(0.,10.),None,None,None,
-#              (0.,5.),(0.,5.),(0.,5.),None,(0.,5.),(0.,5.),(0.,5.),None)
-# True= FIX
-#parametersToMinimize=(True, False, False, False,False, False, False, True,True, False, False, False, False)
-parametersToMinimize=(True, False, False, False,False, False, False, True,True, False, False, False, False, False, False, False, False)
-
-
-m = Minuit.from_array_func(chi_2, initialValues,
-      error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
-
-#m.get_param_states()
-
-m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-m.strategy=1
-
-SaveToLog("MINIMIZATION STARTED",str(m.params))
-#%%
-####################################
-# Search for minimum
-###################################
-
-# m.migrad()
-
-# print(m.params)
-
-# SaveToLog("MINIMIZATION FINISHED",str(m.params))
-# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
-
-#%%
-####################################
-# Hesse matrix
-###################################
-
-# m.hesse()
-
-# print(m.params)
-
-# SaveToLog("HESSE FINISHED",str(m.params))
-# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
-
-# sys.exit()
-#%%
-####################################
-# Minos error-band estimation (VERY long)
-###################################
-
-# m.minos()
-
-# print(m.params)
-
-# SaveToLog("MINOS FINISHED",str(m.params))
-# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
-
-#%%
-def MinForReplica():
-    
-    
-    def repchi_2(x):        
-        startT=time.time()
-        harpy.setNPparameters(x)
-        print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
-        
-        ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(repDataDY)
-        ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(repDataSIDIS)
-        
-        cc=(ccDY2+ccSIDIS2)/totalNnew
-        endT=time.time()
-        print(':->',cc,'       t=',endT-startT)
-        return ccDY2+ccSIDIS2
-    
-    repDataDY=setDY.GenerateReplica()
-    repDataSIDIS=setSIDIS.GenerateReplica()
-    totalNnew=repDataDY.numberOfPoints+repDataSIDIS.numberOfPoints
-    
-    localM = Minuit.from_array_func(repchi_2, initialValues,
-      error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
-    
-    localM.tol=0.0001*totalNnew*10000 ### the last 0.0001 is to compensate MINUIT def
-    localM.set_strategy(1)
-
-    localM.migrad()
-    
-    return [localM.fval,localM.values.values()]
-
-#%%
-#
-# Generate pseudo data and minimise   100 times
-#
-numOfReplicas=5
-REPPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19_REPLICAS_all=0.txt"
-for i in range(numOfReplicas):
-    print('---------------------------------------------------------------')
-    print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')
-    print('---------------------------------------------------------------')
-    repRes=MinForReplica()
-    print(repRes)
-    f=open(REPPATH,"a+")
-    print('SAVING >>  ',f.name)
-    f.write(str(repRes)+"\n")
+    ccSIDIS2,cc4=DataProcessor.harpyInterface.ComputeChi2(setSIDIS)
+    print('SAVING >>  ',r)
+    f=open(SAVEPATH,"a+")    
+    f.write(str([r,ccDY2,ccSIDIS2,cc3,cc4])+"\n")
     f.close()
+    

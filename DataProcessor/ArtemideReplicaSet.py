@@ -81,25 +81,32 @@ def ReadRepFile(path):
     rSet._uTMDFFstart=int(line[0])-2
     rSet._uTMDFFend=int(line[1])-1
     
-    ## lpTMDPDF size
-    while not listFromF[0].startswith("*11  "):
+    if(ver>=3):
+        ## lpTMDPDF size
+        while not listFromF[0].startswith("*11  "):
+            listFromF.pop(0)
         listFromF.pop(0)
-    listFromF.pop(0)
+        
+        line=(listFromF.pop(0)).split(",")
+        rSet._lpTMDPDFstart=int(line[0])-2
+        rSet._lpTMDPDFend=int(line[1])-1   
+    else:
+        rSet._lpTMDPDFstart=-2
+        rSet._lpTMDPDFend=-1   
     
-    line=(listFromF.pop(0)).split(",")
-    rSet._lpTMDPDFstart=int(line[0])-2
-    rSet._lpTMDPDFend=int(line[1])-1
-    
-    ## SiversPDF appeared only in 15
+    ## SiversTMDPDF appeared only in 15
     if(ver>=15):
-        ## SiversPDF size
+        ## SiversTMDPDF size
         while not listFromF[0].startswith("*12  "):
             listFromF.pop(0)
         listFromF.pop(0)
         
         line=(listFromF.pop(0)).split(",")
-        rSet._SiversPDFstart=int(line[0])-2
-        rSet._SiversPDFend=int(line[1])-1
+        rSet._SiversTMDPDFstart=int(line[0])-2
+        rSet._SiversTMDPDFend=int(line[1])-1
+    else:
+        rSet._SiversTMDPDFstart=-2
+        rSet._SiversTMDPDFend=-1
     
     ### search for number of replicas
     while not listFromF[0].startswith("*C   "):
@@ -144,13 +151,13 @@ class ArtemideReplicaSet:
         self._uTMDPDFstart=0
         self._uTMDFFstart=0
         self._lpTMDPDFstart=0
-        self._SiversPDFstart=0
+        self._SiversTMDPDFstart=0
         
         self._TMDRend=0
         self._uTMDPDFend=0
         self._uTMDFFend=0
         self._lpTMDPDFend=0
-        self._SiversPDFend=0
+        self._SiversTMDPDFend=0
         
         ### replica suggested for the initialization
         self.initialReplica=[]
@@ -196,8 +203,8 @@ class ArtemideReplicaSet:
             harpy.setNPparameters_uTMDFF(r[self._uTMDFFstart:self._uTMDFFend])
         if(self._lpTMDPDFend>self._lpTMDPDFstart+1):
             harpy.setNPparameters_lpTMDPDF(r[self._lpTMDPDFstart:self._lpTMDPDFend])
-        if(self._SiversPDFend>self._SiversPDFstart+1):
-            harpy.setNPparameters_SiversTMDPDF(r[self._SiversPDFstart:self._SiversPDFend])
+        if(self._SiversTMDPDFend>self._SiversTMDPDFstart+1):
+            harpy.setNPparameters_SiversTMDPDF(r[self._SiversTMDPDFstart:self._SiversTMDPDFend])
             
     def GetReplica(self,num,part="full"):
         """
@@ -234,6 +241,6 @@ class ArtemideReplicaSet:
         elif(part=="lpTMDPDF"):
             return r[self._lpTMDPDFstart:self._lpTMDPDFend]
         elif(part=="SiversTMDPDF"):
-            return r[self._SiversPDFstart:self._SiversTMDPDFend]
+            return r[self._SiversTMDPDFstart:self._SiversTMDPDFend]
         else:
             raise ValueError("part should correspond to a TMD")
