@@ -3,6 +3,8 @@
 """
 Created on Thu Jan 24 16:40:59 2019
 
+SIDIS only fit with separation of pi and kaon TMDFF
+
 @author: vla18041
 """
 
@@ -18,63 +20,18 @@ import DataProcessor.harpyInterface
 import DataProcessor.DataMultiSet
 
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
-logFile=MAINPATH+"FittingPrograms/LOGS/"+"SV19[main].log"
-
-#%%
-#######################################
-# LOG save function
-#######################################
-savedTime=time.time()
-def SaveToLog(text):
-    global savedTime,logFile
-    newTime=time.time()
-    
-    import socket
-    PCname=socket.gethostname()
-    
-    passedTime=newTime-savedTime
-    hours=int(passedTime/3600)
-    minutes=int((passedTime-hours*3600)/60)
-    seconds=int(passedTime-hours*3600-minutes*60)
-    
-    with open(logFile, 'a') as file:
-        file.write(PCname+ ' : ' + time.ctime()+' :  [+'+str(hours)+':'+str(minutes)+':'+str(seconds)+' ]\n')
-        file.write(' --> '+text+'\n')
-        file.write('\n')
-    savedTime=time.time()
-
 #%%
 #######################################
 #Initialize artemide
 #######################################
 import harpy
-path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo"
-#path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0"
-#path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo_all=0"
-
-SaveToLog('Initialization with : \n'+path_to_constants)
-
-harpy.initialize(path_to_constants)
-
+path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"
+harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_piK/const-DY+SIDIS_NNPDF31+DSS_nnlo_piK")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.])
-harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539]) 
+harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539,0.264,0.479,0.459,0.539]) 
 
 #%%
-### read the list of files and return the list of DataSets
-def loadThisDataDY(listOfNames):    
-    import DataProcessor.DataSet
-    
-    path_to_data="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/DataLib/unpolDY/"
-    
-    
-    dataCollection=[]
-    for name in listOfNames:
-        loadedData=DataProcessor.DataSet.LoadCSV(path_to_data+name+".csv")
-        dataCollection.append(loadedData)   
-
-    return dataCollection
-
 def loadThisDataSIDIS(listOfNames):    
     import DataProcessor.DataSet
     
@@ -87,6 +44,16 @@ def loadThisDataSIDIS(listOfNames):
         dataCollection.append(loadedData)   
 
     return dataCollection
+
+#%%
+#################### LOG save function
+LOGPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19(SIDIS-piK)["+time.ctime()+"].log"
+def SaveToLog(logTitle,text):
+    with open(LOGPATH, 'a') as file:
+        file.write(time.ctime())
+        file.write(' --> '+logTitle+'\n')
+        file.write(text)
+        file.write('\n \n \n')
 
 #%%
 ##################Cut function
@@ -157,20 +124,6 @@ def cutFunc(p):
     return (delta<0.1 or (delta<0.25 and par/err*delta**2<1)) , p
 
 #%%
-### Loading the DY data set
-theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisDataDY([
-                          'CDF1', 'CDF2', 'D01', 'D02', 'D02m', 
-                          'A7-00y10', 'A7-10y20','A7-20y24', 
-                          'A8-00y04', 'A8-04y08', 'A8-08y12', 'A8-12y16', 'A8-16y20', 'A8-20y24', 
-                          'A8-46Q66', 'A8-116Q150', 
-                          'CMS7', 'CMS8', 
-                          'LHCb7', 'LHCb8', 'LHCb13', 
-                          'PHE200', 'E228-200', 'E228-300', 'E228-400', 
-                          'E772',
-                          'E605']))
-
-setDY=theData.CutData(cutFunc) 
-
 ### Loading the SIDIS data set
 theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisDataSIDIS([
                       'hermes.p.vmsub.zxpt.pi+','hermes.p.vmsub.zxpt.pi-',
@@ -181,63 +134,53 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisDataSIDIS([
 
 setSIDIS=theData.CutData(cutFunc) 
 
-print('Loaded ', setDY.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setDY.sets]), 'points.')
-print('Loaded experiments are', [i.name for i in setDY.sets])
-
 print('Loaded ', setSIDIS.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setSIDIS.sets]), 'points.')
 print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 
-SaveToLog('Loaded '+ str(setDY.numberOfSets) + ' data sets with '+str(sum([i.numberOfPoints for i in setDY.sets])) + ' points. \n'
-+'Loaded experiments are '+str([i.name for i in setDY.sets]))
-
 #%%
 
-#harpy.setNPparameters([1.93, 0.0434,0.195, 9.117, 444., 2.12, -4.89,0.,0.,0.258, 0.478, 0.484, 0.459]) ##NNPDF+DSS
-#harpy.setNPparameters([2.2764,0.0223, 0.3237, 13.17, 355.4, 2.049, -10.43,0.,0.,0.264, 0.479,0.459,0.539]) ##HERA+DSS
-
-harpy.setNPparameters([1.92819, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 0.259499, 0.476235, 0.477143, 0.482977]) ##NNPDF+DSS (paper)
+#harpy.setNPparameters([1.92819, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 0.259499, 0.476235, 0.477143, 0.482977]) ##NNPDF+DSS (paper)
 #harpy.setNPparameters([1.92516, 0.0426578, 0.223809, 9.23868, 375.888, 2.14611, -4.97177, 0., 0., 0.233382, 0.478562, 0.47218, 0.511187]) ##NNPDF+DSS n3lo (paper)
 
-##NNPDF+DSS  M=0
-#harpy.setNPparameters([2., 0.0405, 0.188, 7.46, 532., 2.27, -2.59, 0., 0.,0.198, 0.473, 0.509, 0.413])
-##NNPDF+DSS  all=0
-#harpy.setNPparameters([2., 0.044, 0.187, 5.936, 647., 2.518, -2.94, 0., 0.,0.283, 0.463, 0.446, 0.528])
+##NNPDF+DSS (paper) pi/K
+harpy.setNPparameters([1.92819, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 
+                          0.259499, 0.476235, 0.477143, 0.482977, 
+                          0.259499, 0.476235, 0.477143, 0.482977]) 
 
-DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,printDecomposedChi2=True)
     
 #%%
 #######################################
 # Minimisation
 #######################################
-totalN=setDY.numberOfPoints+setSIDIS.numberOfPoints
+totalN=setSIDIS.numberOfPoints
 
 def chi_2(x):
     startT=time.time()
     harpy.setNPparameters(x)
     print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
-    
-    ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
     ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(setSIDIS)
     
-    cc=(ccDY2+ccSIDIS2)/totalN
+    cc=ccSIDIS2/totalN
     endT=time.time()
     print(':->',cc,'       t=',endT-startT)
-    return ccDY2+ccSIDIS2
+    return ccSIDIS2
 
 #%%
 
 from iminuit import Minuit
 
-#
-initialValues=(2., 0.0405, 0.188, 7.46, 532., 2.27, -2.59, 0., 0.,0.198, 0.473, 0.509, 0.413)#M=0
-#initialValues=(2., 0.044, 0.187, 5.936, 647., 2.518, -2.94, 0., 0.,0.283, 0.463, 0.446, 0.528)#all=0
+initialValues=(1.92819, 0.0390534, 0.198279, 9.29836, 431.647, 2.11829, -4.44162, 0., 0., 
+                          0.259499, 0.476235, 0.477143, 0.482977, 
+                          0.259499, 0.476235, 0.477143, 0.482977)#pi/K-separation
 
-initialErrors=(0.1,  0.05,  0.01,  1.0,   100,  0.1,   0.5,    1., 1., 0.1,   0.1,  0.1,    0.1)
-searchLimits=((1.,5.),   (0.,4.),  (0.,10.), (0.,10.),(0., 1000.),(0.,10.),None,None,None, (0.,5.),(0.,5.),(0.,5.),None)
+initialErrors=(0.1,  0.05,  0.01,  1.0,   100,  0.1,   0.5,    1., 1., 0.1,   0.1,  0.1,    0.1,0.1,   0.1,  0.1,    0.1)
 
+searchLimits=((1.,5.),   (0.,4.),  (0.,10.), (0.,10.),(0., 1000.),(0.,10.),None,None,None,
+              (0.,5.),(0.,5.),(0.,5.),None,(0.,5.),(0.,5.),(0.,5.),None)
 # True= FIX
-parametersToMinimize=(True, False, False, False,False, False, False, True,True, False, False, False, False)
+parametersToMinimize=(True, True, True,True,True,True,True,True,True, False, False, False, False, False, False, False, False)
+
 
 m = Minuit.from_array_func(chi_2, initialValues,
       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
@@ -247,7 +190,7 @@ m = Minuit.from_array_func(chi_2, initialValues,
 m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 m.strategy=1
 
-SaveToLog("MINIMIZATION STARTED",str(m.params))
+# SaveToLog("MINIMIZATION STARTED",str(m.params))
 #%%
 ####################################
 # Search for minimum
@@ -294,17 +237,15 @@ def MinForReplica():
         harpy.setNPparameters(x)
         print('np set =',["{:8.3f}".format(i) for i in x], end =" ")    
         
-        ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(repDataDY)
         ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(repDataSIDIS)
         
-        cc=(ccDY2+ccSIDIS2)/totalNnew
+        cc=(ccSIDIS2)/totalNnew
         endT=time.time()
         print(':->',cc,'       t=',endT-startT)
-        return ccDY2+ccSIDIS2
+        return ccSIDIS2
     
-    repDataDY=setDY.GenerateReplica()
     repDataSIDIS=setSIDIS.GenerateReplica()
-    totalNnew=repDataDY.numberOfPoints+repDataSIDIS.numberOfPoints
+    totalNnew=repDataSIDIS.numberOfPoints
     
     localM = Minuit.from_array_func(repchi_2, initialValues,
       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
@@ -320,21 +261,15 @@ def MinForReplica():
 #
 # Generate pseudo data and minimise   100 times
 #
-numOfReplicas=20
-REPPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19_REPLICAS_main.txt"
+numOfReplicas=10
+REPPATH=MAINPATH+"FittingPrograms/LOGS/"+"SV19_REPLICAS_SIDIS_piK.txt"
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')
     print('---------------------------------------------------------------')
-    SaveToLog("Start computation of replica "+str(i) +"/"+ str(numOfReplicas))
     repRes=MinForReplica()
-    SaveToLog("Minimization for replica "+str(i) +"/"+ str(numOfReplicas)+" finished.")
     print(repRes)
     f=open(REPPATH,"a+")
     print('SAVING >>  ',f.name)
     f.write(str(repRes)+"\n")
     f.close()
-    
-#%%
-SaveToLog("Computation finished correctly ("+int(numOfReplicas)+" replicas computed) +\n "
-          +"----------------------------------------------------------------------------------")
