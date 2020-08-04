@@ -19,6 +19,9 @@ import sys
 #sys.path.append(PathToHarpy)
 sys.path.append(PathToDataProcessor)
 
+
+numOfReplicas=10
+
 #%%
 #######################################
 # importing libraries
@@ -246,7 +249,6 @@ def MinForReplica():
 # It generates replica of data take random PDF and minimize it
 # Save to log.
 #######################################
-numOfReplicas=10
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')
