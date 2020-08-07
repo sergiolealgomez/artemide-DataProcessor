@@ -181,7 +181,7 @@ harpy.setNPparameters_SiversTMDPDF([-0.032751, 1.95094, 0., 0., 0., 1.92258, -1.
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY)
-  
+
 #%%
 #######################################
 # Minimisation
@@ -439,7 +439,7 @@ def MinForReplica():
 # Generate pseudo data and minimise   100 times
 #
 numOfReplicas=100
-REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"COSH-MODEL2-hermes+compass-replicas.txt"
+REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"COSH-MODEL2-hermes+compass-replicas+++.txt"
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')
