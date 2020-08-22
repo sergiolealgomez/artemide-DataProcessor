@@ -20,7 +20,7 @@ import sys
 sys.path.append(PathToDataProcessor)
 
 
-numOfReplicas=10
+numOfReplicas=50
 
 #%%
 #######################################

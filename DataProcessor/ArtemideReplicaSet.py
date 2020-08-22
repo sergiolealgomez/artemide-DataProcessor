@@ -170,7 +170,7 @@ class ArtemideReplicaSet:
         return "<ArtemideReplicaSet: %s with %s replicas>" % (self.name, self.numberOfReplicas)
     
     
-    def SetReplica(self,num=0):
+    def SetReplica(self,num=0,part='full'):
         """
         Set the replica according to the list
 
@@ -180,6 +180,10 @@ class ArtemideReplicaSet:
               0  = mean replica
               1.... = replica from list
             The default is 0.
+        
+        part : string, optional
+            Specification which part of the replica to be set. The default is "full".
+            Possible values: 'full', 'TMDR', 'uTMDPDF', 'uTMDFF', 'lpTMDPDF', 'SiversTMDPDF', etc
 
         Returns
         -------
@@ -195,15 +199,43 @@ class ArtemideReplicaSet:
         else:
             r=self.replicaList[num-1]
         
-        if(self._TMDRend>self._TMDRstart+1):
+        ## resolvinf the part-condition
+        if(part=="full"):
+            doTMDR=True
+            douTMDPDF=True
+            douTMDFF=True
+            dolpTMDPDF=True
+            doSiversTMDPDF=True
+        else:
+            doTMDR=False
+            douTMDPDF=False
+            douTMDFF=False
+            dolpTMDPDF=False
+            doSiversTMDPDF=False
+            
+            if(part=='TMDR'):
+                doTMDR=True
+            if(part=='uTMDPDF'):
+                douTMDPDF=True
+            if(part=='uTMDFF'):
+                douTMDFF=True
+            if(part=='lpTMDPDF'):
+                dolpTMDPDF=True
+            if(part=='SiversTMDPDF'):
+                doSiversTMDPDF=True
+            
+        
+            
+        
+        if(doTMDR and self._TMDRend>self._TMDRstart+1):
             harpy.setNPparameters_TMDR(r[self._TMDRstart:self._TMDRend])
-        if(self._uTMDPDFend>self._uTMDPDFstart+1):
+        if(douTMDPDF and self._uTMDPDFend>self._uTMDPDFstart+1):
             harpy.setNPparameters_uTMDPDF(r[self._uTMDPDFstart:self._uTMDPDFend])
-        if(self._uTMDFFend>self._uTMDFFstart+1):
+        if(douTMDFF and self._uTMDFFend>self._uTMDFFstart+1):
             harpy.setNPparameters_uTMDFF(r[self._uTMDFFstart:self._uTMDFFend])
-        if(self._lpTMDPDFend>self._lpTMDPDFstart+1):
+        if(dolpTMDPDF and self._lpTMDPDFend>self._lpTMDPDFstart+1):
             harpy.setNPparameters_lpTMDPDF(r[self._lpTMDPDFstart:self._lpTMDPDFend])
-        if(self._SiversTMDPDFend>self._SiversTMDPDFstart+1):
+        if(doSiversTMDPDF and self._SiversTMDPDFend>self._SiversTMDPDFstart+1):
             harpy.setNPparameters_SiversTMDPDF(r[self._SiversTMDPDFstart:self._SiversTMDPDFend])
             
     def GetReplica(self,num,part="full"):
