@@ -17,6 +17,7 @@ import numpy
 sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor")
 import DataProcessor.harpyInterface
 import DataProcessor.DataMultiSet
+import DataProcessor.ArtemideReplicaSet
 
 #MAINPATH="/home/m/Github/artemide-DataProcessor/"
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
@@ -137,7 +138,7 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
                     'star.sivers.W+.dqT','star.sivers.W-.dqT',
                     #'star.sivers.W+.dy','star.sivers.W-.dy',
                     'star.sivers.Z',
-                    #'compass.sivers.piDY.dqT'
+                    'compass.sivers.piDY.dqT'
                     #'compass.sivers.piDY.dQ','compass.sivers.piDY.dxF'
                     ]))
 
@@ -157,9 +158,12 @@ harpy.setNPparameters_TMDR([2., 0.0396753])
 harpy.setNPparameters_uTMDPDF([0.185239, 6.22706, 580.946, 2.44166, -2.53161, 0.,  0.17, 0.48, 2.15])
 harpy.setNPparameters_uTMDFF([0.279443, 0.460015, 0.435955, 0.551302])
 ##
-harpy.setNPparameters_SiversTMDPDF([0.273017, 0, 0, 0, 0, 0.441356, 3.67833, -0.0293915, -0.88319, 2.30773, 11.2635, 0.051581, -8.06753, 7.96587])
+harpy.setNPparameters_SiversTMDPDF([0.010, 26.285, -38.424,  0.000, 0.000, 0.230, 0.832, 0.000, 6.438, 3.279, 0.000,-6.020, 6.209, 0.000])
 
 #%%
+# rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model4.rep")
+# rSet.SetReplica()
+
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY)
@@ -189,20 +193,20 @@ from iminuit import Minuit
 
 
 #initialValues=(7.861, 4.929, 0.000, 0.000, 0.000, 0.268, 0.367, -2.386, 0.974, 0.1517, -1.5301, -0.4305, 0.010, -1.0857)
-initialValues=(0.273017, 0, 0, 0, 0, 
-               0.441356, 3.67833, -0.0293915, 
-               -0.88319, 2.30773, 11.2635, 
-               0.051581, -8.06753, 7.96587)
+initialValues=(0.010, 26.285, -38.424,  0.000, 0.000,
+               0.230, 0.832, 0.000,
+               6.438, 3.279, 0.000,
+               -6.020, 6.209, 0.000)
 
 initialErrors=(0.1, 0.1, 0.1,0.1,0.1,0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1)
-searchLimits=(None,None, None, None,None,
-             None,None,(-0.99,None), 
-             None,None,(-0.99,None), 
-             None,None,(-0.99,None))
-parametersToMinimize=(False,True,True,True,True, 
-                      False, False, False, 
-                      False, False, False,
-                      False, False, False)
+searchLimits=((0.01,None),(0.01,None), None, None,None,
+             None,(-0.99,None), None,
+             None,(-0.99,None), None,
+             None,(-0.99,None), None)
+parametersToMinimize=(False,False,False,True,True, 
+                      False, False, True, 
+                      False, False, True,
+                      False, False, True)
 
 
 m = Minuit.from_array_func(chi_2, initialValues,
@@ -220,7 +224,7 @@ m.strategy=1
 # m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 # m.strategy=1
 
-#m.migrad()
+# m.migrad()
 
 # print(m.params)
 # sys.exit()
@@ -287,19 +291,20 @@ m.strategy=1
 #             print("},")
 
 #%%
-##### JOINED PLOT without bins
+# #### JOINED PLOT without bins
+
 # print("{")
 # for j in range(len(setSIDIS.sets)):
 #     s=setSIDIS.sets[j]
 #     YY=DataProcessor.harpyInterface.ComputeXSec(s,method="central")
 #     print('{"'+s.name+'",{')
 #     for i in range(s.numberOfPoints):
-#         print("{"+"{:2.4f},{:2.4f},{:2.4f},{:12.6f},{:12.6f},{:12.6f}".format(
+#         print("{"+"{:2.4f},{:2.4f},{:2.4f},{:12.6f},{:12.6f},{:12.6f},{:12.6f}".format(
 #             s.points[i]["<x>"],
 #             s.points[i]["<z>"],
 #             s.points[i]["<pT>"],
 #             s.points[i]["xSec"],numpy.sqrt(numpy.sum(numpy.array(s.points[i]["uncorrErr"])**2)),
-#             YY[i]
+#             YY[i], YY[i]*0.03
 #             ),end="")
 #         if i==s.numberOfPoints-1:
 #             print("}}},")                
@@ -310,12 +315,12 @@ m.strategy=1
 #     YY=DataProcessor.harpyInterface.ComputeXSec(s)
 #     print('{"'+s.name+'",{')
 #     for i in range(s.numberOfPoints):
-#         print("{"+"{:4d},{:4d},{:2.4f},{:12.6f},{:12.6f},{:12.6f}".format(
+#         print("{"+"{:4d},{:4d},{:2.4f},{:12.6f},{:12.6f},{:12.6f},{:12.6f}".format(
 #             -1,
 #             -1,
 #             s.points[i]["<qT>"],
 #             s.points[i]["xSec"],numpy.sqrt(numpy.sum(numpy.array(s.points[i]["uncorrErr"])**2)),
-#             YY[i]
+#             YY[i], YY[i]*0.03
 #             ),end="")
 #         if i==s.numberOfPoints-1:
 #             if j==len(setDY.sets)-1:
@@ -323,12 +328,10 @@ m.strategy=1
 #             else:
 #                 print("}}},")                
 #         else:
-#             print("},")
-            
+#             print("},")       
 #%%
-# ##### JOINED PLOT without bins over replicas
+# #### JOINED PLOT without bins over replicas
 # print("{")
-# import DataProcessor.ArtemideReplicaSet
 # rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model3.rep")
 
 # for j in range(len(setSIDIS.sets)):
@@ -420,8 +423,8 @@ def MinForReplica():
 #
 # Generate pseudo data and minimise   100 times
 #
-numOfReplicas=100
-REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"COSH-MODEL3-final-replicas.txt"
+numOfReplicas=50
+REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"COSH-MODEL5-final-replicas.txt"
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')

@@ -178,7 +178,7 @@ class DataSet:
         if not silent:
             print('Set ',self.name,' finalized. (',self.numberOfPoints,' points)')
 
-    def CutData(self,cutFunction,addName=""):
+    def CutData(self,cutFunction,addName="",computeCovarianceMatrix = True):
         """
         Create an instance of DataSet, which contains all points of the original one after 
         application of cutFunction. New set has name=name+addName
@@ -191,6 +191,11 @@ class DataSet:
         addName : string, optional
             addendant to the name of the new sets (includind the subsets)
             Default values is ""
+        
+        computeCovarianceMatrix : bool, optional
+            State is covariance matrix should be computed.
+            Switching it False, can improve performace
+            The default is True.
 
         Returns
         -------
@@ -216,7 +221,7 @@ class DataSet:
             if pPass:
                 dNew.AddPoint(pAdd)
         
-        dNew.FinalizeSet()    
+        dNew.FinalizeSet(computeCovarianceMatrix)    
         
         return dNew       
                 
@@ -482,13 +487,13 @@ class DataSet:
             dNew.normErr=[]
 
         ## RND for correlated errors
-        corrRND=[numpy.random.normal() for i in range(self.numOfCorrErr)]
+        corrRND=[numpy.random.normal() for i in range(self.numOfCorrErr)]        
         
         # this is common rescaling factor due to norm uncerantity
-        # it is 1+ rand * normErr, because normErr are given relative to xSec (in %)
+        # it is prod(1+ rand * normErr), because normErr are given relative to xSec (in %)
         resFactor=1.
         for err in self.normErr:
-            resFactor+=numpy.random.normal()*err
+            resFactor=resFactor*(1.+numpy.random.normal()*err)
         
         # populate with points
         # the only fields to update are xSec and errors
@@ -506,11 +511,7 @@ class DataSet:
             # multiply by norm-error-distirbution
             pNew["xSec"]=pNew["xSec"]*resFactor
             
-            ### if initial or final xSec<=0 we set the result to zero.
-            # such situation happens for some very bad sets of data
-            if(pNew["xSec"]<0. or p["xSec"]<=0.0):
-                pNew["xSec"]=0.0
-            
+
             ##the point-errors should be rescaled by normalization factor
             pNew["uncorrErr"]=[]
             for err in p["uncorrErr"]:
@@ -698,7 +699,7 @@ def LoadCSV(path):
     file=open(path,"r")
     
     ## read header of
-    line=file.readline()    
+    line=file.readline()
     line=line.split(",")
     name=line[1].replace("\n","")
     

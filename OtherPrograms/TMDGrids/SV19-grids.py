@@ -147,7 +147,7 @@ print('Dump time : ',endTime-startTime,' sec.')
 #######################################
 # Now do it for each replica!
 #######################################
-for r in range(2):#rSet.numberOfReplicas):
+for r in range(rSet.numberOfReplicas):
     rSet.SetReplica(num=r+1,part="uTMDPDF")
     print("Doing replica : ",str(r+1),"/",str(rSet.numberOfReplicas))
     startTime=time.time()
