@@ -161,8 +161,8 @@ harpy.setNPparameters_uTMDFF([0.279443, 0.460015, 0.435955, 0.551302])
 harpy.setNPparameters_SiversTMDPDF([0.010, 26.285, -38.424,  0.000, 0.000, 0.230, 0.832, 0.000, 6.438, 3.279, 0.000,-6.020, 6.209, 0.000])
 
 #%%
-# rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model4.rep")
-# rSet.SetReplica()
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model5case1.rep")
+rSet.SetReplica()
 
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
 
@@ -193,19 +193,19 @@ from iminuit import Minuit
 
 
 #initialValues=(7.861, 4.929, 0.000, 0.000, 0.000, 0.268, 0.367, -2.386, 0.974, 0.1517, -1.5301, -0.4305, 0.010, -1.0857)
-initialValues=(0.010, 26.285, -38.424,  0.000, 0.000,
-               0.230, 0.832, 0.000,
-               6.438, 3.279, 0.000,
-               -6.020, 6.209, 0.000)
+initialValues=(0.0646404, 30.8012, -53.3986, 0., 0.,
+               0.301654, 0.777669, 0.,
+               10.403, 3.45964, 0.,
+               -6.3572, 6.10669, 0.)
 
 initialErrors=(0.1, 0.1, 0.1,0.1,0.1,0.1, 0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1)
-searchLimits=((0.01,None),(0.01,None), None, None,None,
+searchLimits=((0.0001,None),(0.01,None), None, None,None,
              None,(-0.99,None), None,
              None,(-0.99,None), None,
              None,(-0.99,None), None)
 parametersToMinimize=(False,False,False,True,True, 
-                      False, False, True, 
-                      False, False, True,
+                      False, False, False, 
+                      False, False, False,
                       False, False, True)
 
 
@@ -332,7 +332,7 @@ m.strategy=1
 #%%
 # #### JOINED PLOT without bins over replicas
 # print("{")
-# rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model3.rep")
+# rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model5case1.rep")
 
 # for j in range(len(setSIDIS.sets)):
 #     s=setSIDIS.sets[j]
@@ -424,7 +424,7 @@ def MinForReplica():
 # Generate pseudo data and minimise   100 times
 #
 numOfReplicas=50
-REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"COSH-MODEL5-final-replicas.txt"
+REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model5case2-replicas.txt"
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')

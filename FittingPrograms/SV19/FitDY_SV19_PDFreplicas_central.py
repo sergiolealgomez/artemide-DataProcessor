@@ -19,8 +19,9 @@ import sys
 #sys.path.append(PathToHarpy)
 sys.path.append(PathToDataProcessor)
 
-
-numOfReplicas=50
+#### Starting and final replica (included)
+StartReplica=1
+FinalReplica=3
 
 #%%
 #######################################
@@ -230,7 +231,7 @@ def MinForReplica():
         print(':->',cc,'       t=',endT-startT)
         return ccDY2
     
-    repDataDY=setDY.GenerateReplica()
+    repDataDY=setDY
     
     localM = Minuit.from_array_func(repchi_2, initialValues,
       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
@@ -249,31 +250,30 @@ def MinForReplica():
 # It generates replica of data take random PDF and minimize it
 # Save to log.
 #######################################
-for i in range(numOfReplicas):
+for i in range(StartReplica,FinalReplica+1):
     print('---------------------------------------------------------------')
-    print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')
+    print('------------REPLICA ',i,' from [',StartReplica,' , ',FinalReplica,']------------------')
     print('---------------------------------------------------------------')
     
     ## reset PDF
-    harpy.setNPparameters(initializationArray)
-    numPDF=numpy.random.randint(1,1001)
-    harpy.setPDFreplica(numPDF)
-    SaveToLog("Start computation of replica "+str(i) +"/"+ str(numOfReplicas)+" with PDF replica "+str(numPDF))
+    harpy.setNPparameters(initializationArray)    
+    harpy.setPDFreplica(i)
+    SaveToLog("Start computation of replica "+str(i) +"in ["+ str(StartReplica)+','+str(FinalReplica)+"]")
     
     ## got to pseudo-data and minimization
     repRes=MinForReplica()
     print(repRes)
-    SaveToLog("Minimization for replica "+str(i) +"/"+ str(numOfReplicas)+" finished.")
+    SaveToLog("Minimization for replica "+str(i) +"in ["+ str(StartReplica)+','+str(FinalReplica)+"] finished.")    
     
     ## compute the chi2 for true data
     mainDY, mainDY2 =DataProcessor.harpyInterface.ComputeChi2(setDY)    
-    SaveToLog("Central chi^2 for "+str(i) +"/"+ str(numOfReplicas)+" computed. \n Saving to log >> "+replicaFile)
+    SaveToLog("Central chi^2 for "+str(i) +"in ["+ str(StartReplica)+','+str(FinalReplica)+" computed. \n Saving to log >> "+replicaFile)
     
     ## save to file
     f=open(replicaFile,"a+")
     print('SAVING >>  ',f.name)
     ### [total chi^2(cenral), total chi^2 (pseudo data), list of chi^2 for experiments(central), number of PDF, list of NP-parameters]
-    f.write(str([mainDY,repRes[0],mainDY2,numPDF,repRes[1]])+"\n")
+    f.write(str([mainDY,repRes[0],mainDY2,i,repRes[1]])+"\n")
     f.close()
     
 #%%
@@ -281,5 +281,5 @@ for i in range(numOfReplicas):
 # Finalizing log
 #######################################
 print('Computation finished')
-SaveToLog("Computation finished correctly ("+int(numOfReplicas)+" replicas computed) +\n "
+SaveToLog("Computation finished correctly (["+ str(StartReplica)+','+str(FinalReplica)+"] range of replicas computed) +\n "
           +"----------------------------------------------------------------------------------")
