@@ -40,7 +40,7 @@ import DataProcessor.DataMultiSet
 import socket
 PCname=socket.gethostname()
 
-replicaFile=PathToLog+"SV19_NNPDF31_PDFreplica.txt"
+replicaFile=PathToLog+"SV19_NNPDF31_PDFreplica_central.txt"
 logFile=PathToLog+PCname+".log"
 
 #%%
