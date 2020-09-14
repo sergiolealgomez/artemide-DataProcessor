@@ -170,8 +170,23 @@ def _ComputeXSec_Point(p,method="default"):
     return XX
 
 def ComputeChi2(data,method="default"):
-    """ Computes the chi^2 values for the given data    
+    """
+    Computes the chi^2 values for the given data    
     data can be: DataSet or DataMultiSet
+
+    Parameters
+    ----------
+    data : DataSet or DataMultiSet
+        The data-set for which the chi2 computed
+    method : string
+        method for computation of xSec(see). The default is "default".
+
+    Returns
+    -------
+    float , [float,float,...]
+        The first number is chi^2 for total data-set
+        The second array is the list of chi^2 for each experiment in the data set
+
     """
     YY=ComputeXSec(data,method)
     
@@ -179,8 +194,10 @@ def ComputeChi2(data,method="default"):
     
     if isinstance(data,DataSet.DataSet):
         return ZZ, [ZZ]
-    else:
+    elif isinstance(data,DataMultiSet.DataMultiSet):
         return ZZ
+    else:
+        raise ValueError("data-argument maust be DataSet or DataMultiSet")
 
 def PrintChi2Table(data,method="default",printSysShift=True,printDecomposedChi2=False):
     """

@@ -30,7 +30,10 @@ normErr         = list of normalization errors
 
 isNormalized  = the set is considered normalized, 
                 i.e. the theory computation will be normalized to the data
-normalizationMethod = the method to normalize hte data to the theory
+normalizationMethod = the method to normalize the data to the theory
+                currently the following methods of normalization are realised:
+                    'integral'  normalize to the partial (bin-by-bin) integral of the data
+                    'bestChi2'  normalize to such that the chi^2 is minimal
 
 V             = covariance matrix
 invV          = inverse covariance matrix
@@ -84,6 +87,7 @@ class DataSet:
         
         self.V=[] # covariance matrix 
         self.invV=[] # inverse covariance matrix
+        self.L=[] # Cholesky decomposition of covariant matrix
         self.matrixA=[] # matrix of systemtic shifts
         self.matrixAinverse=[]
         
@@ -166,6 +170,7 @@ class DataSet:
             self._computeListOfCorrErrors()
             self._computeListOfVariances()
             self._CalculateV()
+            self._CholeskyDecompositionForV()
             self.invV=numpy.linalg.inv(self.V)
             self._CalculateA()
             self.matrixAinverse=numpy.linalg.inv(self.matrixA)
@@ -281,7 +286,46 @@ class DataSet:
                 dummy[i]+=err**2
             
         self._listOfVariances=dummy
-      
+    
+    def _CholeskyDecompositionForV(self):
+        """
+        Compute Cholesky decomposition for covariance matrix
+
+        Returns
+        -------
+        None.
+
+        """
+        ### code is taken from Rosseta project
+        self.L = [[0.0] * len(self.V) for _ in range(len(self.V))]
+        for i, (Ai, Li) in enumerate(zip(self.V, self.L)):
+            for j, Lj in enumerate(self.L[:i+1]):
+                s = sum(Li[k] * Lj[k] for k in range(j))
+                Li[j] = numpy.sqrt(Ai[i] - s) if (i == j) else \
+                          (1.0 / Lj[j] * (Ai[j] - s))
+                          
+    def _MultiplyByLInv(self,a):
+        """
+        Returns the product L^({)-1)*a,
+        where L is Choletsky decomposed part of the matrix, a is an array.
+        Computation by 
+
+        Parameters
+        ----------
+        a : list of floats            
+
+        Returns
+        -------
+        L^(-1)*a
+
+        """
+        x=[]
+        for i in range(self.numberOfPoints):
+            x.append((a[i]-numpy.sum([self.L[i][j]*x[j] for j in range(len(x))]))/self.L[i][i])
+            
+        return x
+        
+        
     def _CalculateA(self):
         """ Evaluate the matrix A which is needed for the estimation of systematic shifts.
         
@@ -327,13 +371,17 @@ class DataSet:
         for i in range(self.numberOfPoints):
             res.append(theoryPrediction[i]*self.points[i]["thFactor"])
         
-        ##if nessecary normalize
+        ##if necessary normalize
         if self.isNormalized:
             if self.normalizationMethod=="integral":
                 ### normalization by bin-by-bin area
                 normTh=sum([(self.points[i]["qT"][1]-self.points[i]["qT"][0])*res[i] for i in range(self.numberOfPoints)])
                 norm=self._normExp/normTh       
                 return [v*norm for v in res]
+            elif self.normalizationMethod=="bestChi2":                
+                ### normalization by best chi^2 value
+                normTh=self.FindBestNorm(res)                
+                return [v*normTh for v in res]
         else:
             return res                  
     
@@ -353,7 +401,9 @@ class DataSet:
 
         """
         diffX=[(theoryPrediction[i]-self.points[i]["xSec"]) for i in range(self.numberOfPoints)]
-        return numpy.matmul(diffX,numpy.matmul(self.invV,diffX))
+        ##return numpy.matmul(diffX,numpy.matmul(self.invV,diffX))
+        Lx=self._MultiplyByLInv(diffX)
+        return numpy.dot(Lx,Lx)
     
     def DetermineSystematicShift(self,theoryPrediction):
         """
@@ -457,6 +507,27 @@ class DataSet:
             chiL+=lambd[i]**2
         
         return [chiD,chiL,chiD+chiL]
+    
+    def FindBestNorm(self,theoryPrediction):
+        """
+        Evaluate the best common norm for the theory that minimizes the chi^2
+        It is equl to n=(t V^{-1} xSec)/(t V^{-1} t), 
+        where t is theory prediction, xSec is experimental values, and V is covariance matrix
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+             List theory predictions (matched) to be compared to the data
+
+        Returns
+        -------
+        Float, values of norm
+
+        """
+        Ls=self._MultiplyByLInv([p["xSec"] for p in self.points])
+        Lt=self._MultiplyByLInv(theoryPrediction)
+        return numpy.dot(Ls,Lt)/numpy.dot(Lt,Lt)
+        
 
         
     def GenerateReplica(self,includeNormInV=True):

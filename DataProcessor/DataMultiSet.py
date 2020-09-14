@@ -143,6 +143,27 @@ class DataMultiSet:
             res.append(self.sets[i].DecomposeChi2(matchedTheory[self._i1[i]:self._i2[i]]))
         return res
     
+    def FindBestNorm(self,theoryPrediction):
+        """
+        Evaluate the best common norm for the theory that minimizes the chi^2
+        It is equl to n=(t V^{-1} xSec)/(t V^{-1} t), 
+        where t is theory prediction, xSec is experimental values, and V is covariance matrix
+
+        Parameters
+        ----------
+        theoryPrediction : list of floats
+             List theory predictions (matched) to be compared to the data
+
+        Returns
+        -------
+        Float, values of norm
+
+        """
+        res=[]
+        for i in range(self.numberOfSets):
+            res.append(self.sets[i].FindBestNorm(theoryPrediction[self._i1[i]:self._i2[i]]))
+        return res
+    
     def CutData(self,cutFunction,addName=""):
         """ Create an instance of DataMultiSet, which contains all sets after 
             application of CutData to each. New multiset has name=name+addName

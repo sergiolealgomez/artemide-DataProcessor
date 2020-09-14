@@ -207,7 +207,7 @@ from iminuit import Minuit
 
 initialValues=(2.00,      0.039,      0.27,     8.9,      350.,     2.5,    -5.92, 0.,  0.)
 initialErrors=(0.1,       0.01,       0.05,     0.2,      50.,      0.05,   0.05,  0.1, 0.1)
-searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,16.0),(0.,1000),(0.,5),  None,   None, None)
+searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,16.0),(0.,1000),(0.,5),  (-15,5),   None, None)
 
 parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, True, True)
 
