@@ -185,7 +185,8 @@ print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 #%%
 for s in setDY.sets:
     if s.isNormalized:
-        s.normalizationMethod="bestChi2"
+        #s.normalizationMethod="bestChi2"
+        s.normalizationMethod="integral"
 
 #%%
 

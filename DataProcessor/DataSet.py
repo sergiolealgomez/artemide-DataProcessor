@@ -526,6 +526,7 @@ class DataSet:
         """
         Ls=self._MultiplyByLInv([p["xSec"] for p in self.points])
         Lt=self._MultiplyByLInv(theoryPrediction)
+        print(self.name,'  ',numpy.dot(Ls,Ls),'  ',numpy.dot(Ls,Lt),'  ',numpy.dot(Lt,Lt))
         return numpy.dot(Ls,Lt)/numpy.dot(Lt,Lt)
         
 
