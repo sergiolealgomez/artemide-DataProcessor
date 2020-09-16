@@ -19,6 +19,9 @@ import sys
 #sys.path.append(PathToHarpy)
 sys.path.append(PathToDataProcessor)
 
+## if this trigger is ON the LHC data will be fit only by shape
+useNormalizedLHCdata=True
+
 #### Starting and final replica (included)
 StartReplica=1
 FinalReplica=3
@@ -40,7 +43,7 @@ import DataProcessor.DataMultiSet
 import socket
 PCname=socket.gethostname()
 
-replicaFile=PathToLog+"SV19_NNPDF31_PDFreplica_central.txt"
+replicaFile=PathToLog+"SV19_NNPDF31_PDFreplica_norm.txt"
 logFile=PathToLog+PCname+".log"
 
 #%%
@@ -165,8 +168,14 @@ def cutFunc(p):
 #######################################
 theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData(['CDF1', 'CDF2', 'D01', 'D02', 'D02m', 
                       'A7-00y10', 'A7-10y20','A7-20y24', 
-                      'A8-00y04', 'A8-04y08', 'A8-08y12', 'A8-12y16', 'A8-16y20', 'A8-20y24', 
-                      'A8-46Q66', 'A8-116Q150', 
+                      'A8-00y04-norm' if useNormalizedLHCdata else 'A8-00y04',
+                      'A8-04y08-norm' if useNormalizedLHCdata else 'A8-04y12',
+                      'A8-08y12-norm' if useNormalizedLHCdata else 'A8-08y12',
+                      'A8-12y16-norm' if useNormalizedLHCdata else 'A8-12y16',
+                      'A8-16y20-norm' if useNormalizedLHCdata else 'A8-16y20',
+                      'A8-20y24-norm' if useNormalizedLHCdata else 'A8-20y24',
+                      'A8-16y20-norm' if useNormalizedLHCdata else 'A8-16y20',
+                      'A8-116Q150-norm' if useNormalizedLHCdata else 'A8-116Q150',
                       'CMS7', 'CMS8', 
                       'LHCb7', 'LHCb8', 'LHCb13', 
                       'PHE200', 'E228-200', 'E228-300', 'E228-400', 
@@ -181,6 +190,14 @@ print('Loaded experiments are', [i.name for i in setDY.sets])
 SaveToLog('Loaded '+ str(setDY.numberOfSets) + ' data sets with '+str(sum([i.numberOfPoints for i in setDY.sets])) + ' points. \n'
 +'Loaded experiments are '+str([i.name for i in setDY.sets]))
 
+#%%
+if useNormalizedLHCdata:
+    for s in setDY.sets:
+        if s.name[0:4]=='LHCb':
+            s.isNormalized=True
+            
+        if s.isNormalized:
+            s.normalizationMethod='bestChi2'
 #%%
 #######################################
 # Main chi2 formula
@@ -211,6 +228,21 @@ searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,16.0),(0.,1000),(0.,5),  (-1
 
 parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, True, True)
 
+
+#%%
+
+m = Minuit.from_array_func(chi_2, initialValues,
+      error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
+
+#m.get_param_states()
+
+m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
+m.strategy=1
+m.migrad()
+
+print(m.params)
+
+sys.exit()
 #%%
 #######################################
 # Generate replica of data and compute chi2
