@@ -199,6 +199,10 @@ if useNormalizedLHCdata:
         if s.isNormalized:
             s.normalizationMethod='bestChi2'
 #%%
+# harpy.setNPparameters([2.000, 0.030, 0.254, 8.550, 373.112,  2.529, -5.910, 0.000, 0.000])
+
+# DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
+#%%
 #######################################
 # Main chi2 formula
 #######################################

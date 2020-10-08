@@ -276,3 +276,43 @@ class ArtemideReplicaSet:
             return r[self._SiversTMDPDFstart:self._SiversTMDPDFend]
         else:
             raise ValueError("part should correspond to a TMD")
+            
+    def GetParameterSet(self,part='full'):
+        """
+        Returns the distribution of parmaters saved in replica-set
+
+        Parameters
+        ----------
+        part : string or list of integers, optional
+            Specification which part of the replica to return. The default is "full".
+            Possible values: 'full', 'TMDR', 'uTMDPDF', 'uTMDFF', 'lpTMDPDF', 'SiversTMDPDF', etc
+            Or list of integers which specify the index of parameters to return
+        
+        Returns
+        -------
+        array of floats
+
+        """
+        r=self.replicaList
+        if(part=="full"):
+            return r
+        elif(part=="TMDR"):
+            return r[self._TMDRstart:self._TMDRend]
+        elif(part=="uTMDPDF"):
+            return r[self._uTMDPDFstart:self._uTMDPDFend]
+        elif(part=="uTMDFF"):
+            return r[self._uTMDFFstart:self._uTMDFFend]
+        elif(part=="lpTMDPDF"):
+            return r[self._lpTMDPDFstart:self._lpTMDPDFend]
+        elif(part=="SiversTMDPDF"):
+            return r[self._SiversTMDPDFstart:self._SiversTMDPDFend]
+        elif(isinstance(part,list) and all(isinstance(x, int) for x in part)):
+            if all(0<=x<=self._totalLength for x in part):
+                r=[]
+                for k in self.replicaList:
+                    r.append([k[i] for i in part])
+                return r
+            else:
+                raise ValueError("indices outside of range in `part'")
+        else:
+            raise ValueError("part should correspond to a TMD or list of integers")

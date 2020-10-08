@@ -13,11 +13,21 @@ from . import DataMultiSet
 
 
 def ComputeXSec(data,method="default"):
-    """ Computes the cross-section values for the given data (matched to data)
-    data can be: DataSet or DataMultiSet or a point-like dictionary
-    methods are:
+    """Computes the cross-section values for the given data and match it to data
+
+    Parameters
+    ----------
+    data : DataSet or DataMultiSet or a point-like dictionary    
+    method : String, optional
+        Parameters for evaluation of xSec. The default is "default".
         default = usual one
         binless = evaluated with avarage values of bins only
+
+    Returns
+    -------
+    YY : TYPE
+        DESCRIPTION.
+
     """
     if isinstance(data,DataSet.DataSet) or isinstance(data,DataMultiSet.DataMultiSet):
         YY=_ComputeXSec_Data(data,method)

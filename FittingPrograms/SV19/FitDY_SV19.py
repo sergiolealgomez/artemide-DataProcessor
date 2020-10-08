@@ -134,7 +134,7 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData(['CDF1', 'C
                       'A7-00y10', 'A7-10y20','A7-20y24', 
                       'A8-00y04', 'A8-04y08', 'A8-08y12', 'A8-12y16', 'A8-16y20', 'A8-20y24', 
                       'A8-46Q66', 'A8-116Q150', 
-                      'CMS7', 'CMS8', 
+                      'CMS7', 'CMS8',
                       'LHCb7', 'LHCb8', 'LHCb13', 
                       'PHE200', 'E228-200', 'E228-300', 'E228-400', 
                       'E772',
@@ -144,6 +144,17 @@ setDY=theData.CutData(cutFunc)
 
 print('Loaded ', setDY.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setDY.sets]), 'points.')
 print('Loaded experiments are', [i.name for i in setDY.sets])
+
+#%%
+### Loading the data set
+theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
+    'CMS13-00y04','CMS13-04y08','CMS13-08y12','CMS13-12y16','CMS13-16y24']))
+
+setDY=theData.CutData(cutFunc) 
+
+print('Loaded ', setDY.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setDY.sets]), 'points.')
+print('Loaded experiments are', [i.name for i in setDY.sets])
+
 
 #%%
 #######################################
