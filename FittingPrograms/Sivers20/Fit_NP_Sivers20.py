@@ -22,8 +22,8 @@ import DataProcessor.ArtemideReplicaSet
 #MAINPATH="/home/m/Github/artemide-DataProcessor/"
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
-#useOrder="nnlo"
-useOrder="n3lo"
+useOrder="nnlo"
+#useOrder="n3lo"
 
 #%%
 #######################################
@@ -43,6 +43,9 @@ if(useOrder=="nnlo"):
     harpy.setNPparameters_uTMDPDF([0.185239, 6.22706, 580.946, 2.44166, -2.53161, 0.,  0.0014, 0.442, 4.14])
     harpy.setNPparameters_uTMDFF([0.279443, 0.460015, 0.435955, 0.551302])
     
+    unSet=DataProcessor.ArtemideReplicaSet.ReadRepFile(
+    "/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_all=0.rep")
+    
     # # #### All=0 case piK
     # harpy.setNPparameters_TMDR([2., 0.0394095])
     # harpy.setNPparameters_uTMDPDF([0.180718, 4.38119, 426.208, 2.22347, -0.0646396, 0., 0.17, 0.48, 2.15])
@@ -54,8 +57,12 @@ elif(useOrder=="n3lo"):
     harpy.setNPparameters_uTMDPDF([0.17975, 3.9081, 453.883, 2.07199, 1.60774, 0,  0.0014, 0.442, 4.14])
     harpy.setNPparameters_uTMDFF([0.26994, 0.456091, 0.423312, 0.615092])
     
+    unSet=DataProcessor.ArtemideReplicaSet.ReadRepFile(
+    "/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_n3lo_all=0.rep")
+    
 
 harpy.setNPparameters_SiversTMDPDF([5.2, 0.,0.,0.,0., -0.6, 15.9, 0.5, -0.2, 21.6, -0.5, -0.1, 0.4, -1.1]) 
+
 #%%
 ### read the list of files and return the list of DataSets
 def loadThisData(listOfNames):    
@@ -99,7 +106,7 @@ def cutFunc(p):
             normX=DataProcessor.harpyInterface.ComputeXSec(pNew)        
         else:
             print("Are you crazy?")
-        p["thFactor"]=p["thFactor"]/normX        
+        p["thFactor"]=1./normX
     
     #### This is because star measures AN
     if p["id"][0:4]=="star":
@@ -110,26 +117,7 @@ def cutFunc(p):
 
 #%%
 ### Loading the data set
-# theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
-#                     'compass.sivers.pi+.dpt', 'compass.sivers.pi-.dpt',
-#                     'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',                  
-#                     'hermes.sivers.pi+.Qint.dpt','hermes.sivers.k+.Qint.dpt',
-#                     'hermes.sivers.pi-.Qint.dpt','hermes.sivers.k-.Qint.dpt',
-#                     'hermes.sivers.pi+.Q<2.dpt','hermes.sivers.k+.Q<2.dpt',
-#                     'hermes.sivers.pi+.Q>2.dpt','hermes.sivers.k+.Q>2.dpt',                  
-#                     'hermes.sivers.pi+.3d','hermes.sivers.pi-.3d',
-#                     'hermes.sivers.k+.3d','hermes.sivers.k-.3d',
-#                     'compass16.sivers.h+.1<z<2.dpt',
-#                     'compass16.sivers.h-.1<z<2.dpt',
-#                     'compass16.sivers.h+.z>1.dpt' ,
-#                     'compass16.sivers.h-.z>1.dpt' ,
-#                     'compass16.sivers.h+.z>2.dpt' ,
-#                     'compass16.sivers.h-.z>2.dpt' ,
-#                     "jlab.sivers.pi+","jlab.sivers.pi-",
-#                     "jlab.sivers.k+"]))
-    
-
-theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
+theData0=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
                     'compass.sivers.pi+.dpt', 'compass.sivers.pi-.dpt',
                     'compass.sivers.k+.dpt', 'compass.sivers.k-.dpt',
                     'compass16.sivers.h+.1<z<2.dpt','compass16.sivers.h-.1<z<2.dpt',
@@ -139,17 +127,15 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("SIDISset",loadThisData([
                     'jlab.sivers.pi+','jlab.sivers.pi-','jlab.sivers.k+'
                     ]))
 
-setSIDIS=theData.CutData(cutFunc) 
+setSIDIS=theData0.CutData(cutFunc) 
 
-theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
+theData1=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData([
                     'star.sivers.W+.dqT','star.sivers.W-.dqT',
-                    #'star.sivers.W+.dy','star.sivers.W-.dy',
                     'star.sivers.Z',
                     'compass.sivers.piDY.dqT'
-                    #,'compass.sivers.piDY.dQ','compass.sivers.piDY.dxF'
                     ]))
 
-setDY=theData.CutData(cutFunc) 
+setDY=theData1.CutData(cutFunc) 
 
 print('Loaded (SIDIS)', setSIDIS.numberOfSets, 'data sets with', sum([i.numberOfPoints for i in setSIDIS.sets]), 'points.')
 print('Loaded SIDIS experiments are', [i.name for i in setSIDIS.sets])
@@ -158,6 +144,14 @@ print('Loaded (DY)', setDY.numberOfSets, 'data sets with', sum([i.numberOfPoints
 print('Loaded DY experiments are', [i.name for i in setDY.sets])
 
 print('Total number of points:',setSIDIS.numberOfPoints+setDY.numberOfPoints)
+
+#%%
+### Set unpolarized TMD according to TMD set (adds constant pion row)
+def SetUnTMD(n):
+    unSet.SetReplica(n,part="TMDR")    
+    unSet.SetReplica(n,part="uTMDFF")
+    rr=unSet.GetReplica(n,part="uTMDPDF")
+    harpy.setNPparameters_uTMDPDF(rr[:-1]+[0.0014, 0.442, 4.14])
 
 #%%
 rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
@@ -169,44 +163,10 @@ DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysSh
 DataProcessor.harpyInterface.PrintChi2Table(setDY)
 
 #%%
-###########################
-### Computation of chi^2 for each replica
-##########################
-cccSIDIS=[]
-cccDY=[]
-cccZ=[]
-cccTotal=[]
-for i in range(1,rSet.numberOfReplicas+1):
-    rSet.SetReplica(i)
-    
-    ccSIDIS2,cc3=DataProcessor.harpyInterface.ComputeChi2(setSIDIS,method="central")
-    ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
-    cccSIDIS.append(ccSIDIS2)
-    cccDY.append(ccDY2)
-    cccZ.append(cc3[0]+cc3[1]+cc3[3])
-    cccTotal.append(ccSIDIS2+ccDY2)
-    
-#%%
-# rSet.SetReplica(0)
-# for x in [0.01,0.02, 0.04, 0.06,0.08,0.1,0.2,0.4,0.6,0.8,0.9]:
-#     for kT in [0.01,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1.0]:
-#         tmd=harpy.get_uTMDPDF_kT(x, kT, 1,mu=100.)
-#         #tmd=harpy.get_SiversTMDPDF_kT(x, kT, 1, mu=2.)
-#         print("{"+"{:12.6f},{:12.6f},{:12.6f}".format(x,kT,tmd[1+5]) +"},")
-        
-#%%
-# for x in [0.01,0.02, 0.04, 0.06,0.08,0.1,0.2,0.4,0.6,0.8,0.9]:
-#     for kT in [0.01,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1.0]:
-#         tmd=getSiversRowP(x,kT,1,mu=100.)
-#         pp=ComputeParameters(tmd)
-#         pp2=numpy.max([numpy.abs(pp[2]),numpy.abs(pp[3])])
-#         print("{"+"{:12.6f},{:12.6f},{:12.6f}".format(x,kT,pp2) +"},")
-
-#%%
 #######################################
 # Minimisation
 #######################################
-includeDY=True
+includeDY=False
 if includeDY:
     totalN=setSIDIS.numberOfPoints+setDY.numberOfPoints
 else :
@@ -231,23 +191,15 @@ def chi_2(x):
 #%%
 from iminuit import Minuit
 
-
-#initialValues=(7.861, 4.929, 0.000, 0.000, 0.000, 0.268, 0.367, -2.386, 0.974, 0.1517, -1.5301, -0.4305, 0.010, -1.0857)
-initialValues=(0.19526, 0.221, 38.5939, 0., 0.,
-               -0.03896, -0.31062, -2.60391, 
-               0.11233, -0.80279, 5.62511, 
-               0.84766, 3.81519, -0.248)
-
-#initialValues=(0.469,-1.482, 0.000, 0.000,0.000, -0.055, -0.687, 0.921, 0.094, -0.974, 13.520, -0.043,4.411, 0.000)
+if(useOrder=="nnlo"):
+    initialValues=(0.02617, 1.65313, 29.5239, 0.0, 0.0, -0.04842, -0.39636, -2.61426, 0.18038, -0.45053, 14.0649, 0.45734, 2.5715, -0.25895)
+elif(useOrder=="n3lo"):
+    initialValues=(0.04915, 3.285, 51.92, 0.0, 0.0, -0.03589, -0.3689, -3.5055, 0.2822, -0.59204, 9.572, 0.8442, 2.744, -0.4627)
 
 initialErrors=(0.1, 10., 10. , 0.1,0.1,
                0.3, 0.5, 1., 
                1., 1., 1., 
                1., 1., 0.1)
-# searchLimits=((0.0001,2.),(0.01,80), (0.0,400), None,None,
-#               (-2.,2.),(-0.99,2.5), (-10.,10.),
-#               (-20.,20.),(-0.99,6.), (-15.,15.),
-#               (-5.,5.),(-0.99,8), None)
 searchLimits=((0,None),(0,None), (0,None), None, None,
               (-5.,5.),(-0.99,30), (-30.,30.),
               (-5.,5.),(-0.99,60.),(-30.,30.),
@@ -266,99 +218,9 @@ m = Minuit.from_array_func(chi_2, initialValues,
 
 m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 m.strategy=1
-
 #%%
 
-
-# m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-# m.strategy=1
-
-m.migrad()
-
-print(m.params)
-sys.exit()
-# SaveToLog("MINIMIZATION FINISHED",str(m.params))
-# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
-#%%
-
-# m.hesse()
-
-# print(m.params)
-
-# print(m.matrix(correlation=True))
-
-# SaveToLog("HESSE FINISHED",str(m.params))
-# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
-#%%
-
-# m.minos()
-
-# print(m.params)
-
-# SaveToLog("MINOS FINISHED",str(m.params))
-# SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
-
- 
-#%%
-# # # #### JOINED PLOT without bins over replicas
-# print("{")
-# #rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY).rep")
-
-# for j in range(len(setSIDIS.sets)):
-#     s=setSIDIS.sets[j]
-#     YYlist=[]
-#     for r in range(rSet.numberOfReplicas):
-#         rSet.SetReplica(r)
-#         YY0=DataProcessor.harpyInterface.ComputeXSec(s,method="central")
-#         YYlist.append(YY0)
-        
-#     YY=numpy.mean(YYlist,axis=0)
-#     YYstd=numpy.std(YYlist,axis=0)
-                
-#     print('{"'+s.name+'",{')
-#     for i in range(s.numberOfPoints):
-#         print("{"+"{:2.4f},{:2.4f},{:2.4f},{:12.6f},{:12.6f},{:12.6f},{:12.6f}".format(
-#             s.points[i]["<x>"],
-#             s.points[i]["<z>"],
-#             s.points[i]["<pT>"],
-#             s.points[i]["xSec"],numpy.sqrt(numpy.sum(numpy.array(s.points[i]["uncorrErr"])**2)),
-#             YY[i],YYstd[i]
-#             ),end="")
-#         if i==s.numberOfPoints-1:
-#             print("}}},")                
-#         else:
-#             print("},")
-# for j in range(len(setDY.sets)):
-#     s=setDY.sets[j]
-#     YYlist=[]
-#     for r in range(rSet.numberOfReplicas):
-#         rSet.SetReplica(r)
-#         YY0=DataProcessor.harpyInterface.ComputeXSec(s)
-#         YYlist.append(YY0)
-        
-#     YY=numpy.mean(YYlist,axis=0)
-#     YYstd=numpy.std(YYlist,axis=0)
-        
-#     print('{"'+s.name+'",{')
-#     for i in range(s.numberOfPoints):
-#         print("{"+"{:4d},{:4d},{:2.4f},{:12.6f},{:12.6f},{:12.6f},{:12.6f}".format(
-#             -1,
-#             -1,
-#             s.points[i]["<qT>"],
-#             s.points[i]["xSec"],numpy.sqrt(numpy.sum(numpy.array(s.points[i]["uncorrErr"])**2)),
-#             YY[i],YYstd[i]
-#             ),end="")
-#         if i==s.numberOfPoints-1:
-#             if j==len(setDY.sets)-1:
-#                 print("}}}}")
-#             else:
-#                 print("}}},")                
-#         else:
-#             print("},")
-
-#%%
-
-def MinForReplica():
+def MinForReplica(n):
     
     
     def repchi_2(x):        
@@ -379,9 +241,12 @@ def MinForReplica():
         print(':->',cc,'       t=',endT-startT)
         return ccSIDIS2+ccDY2
     
-    repDataSIDIS=setSIDIS.GenerateReplica()
+    SetUnTMD(n)
+    
+    repDataSIDIS=theData0.CutData(cutFunc) 
+    
     if(includeDY):
-        repDataDY=setDY.GenerateReplica()
+        repDataDY=theData1.CutData(cutFunc) 
         totalNnew=repDataSIDIS.numberOfPoints+repDataDY.numberOfPoints
     else:
         totalNnew=repDataSIDIS.numberOfPoints    
@@ -392,8 +257,11 @@ def MinForReplica():
     localM.tol=0.0001*totalNnew*10000 ### the last 0.0001 is to compensate MINUIT def
     localM.strategy=1
 
-    localM.migrad()
+    #localM.migrad()
+    print(repchi_2(list(initialValues)))
     
+    
+    SetUnTMD(0)
     chi2Central=chi_2(localM.values.values())
     
     return [localM.fval,chi2Central,localM.values.values()]
@@ -402,15 +270,16 @@ def MinForReplica():
 #
 # Generate pseudo data and minimise   100 times
 #
-numOfReplicas=100
-REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model9case1(n3lo)-replicas.txt"
-for i in range(numOfReplicas):
+rStart=1
+rFinish=2
+REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model9case1(noDY)-NPreplicas.txt"
+for i in range(rStart,rFinish):
     print('---------------------------------------------------------------')
-    print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')
+    print('------------REPLICA: ',rStart," / ",i,' / ',rFinish,'--------------------')
     print('---------------------------------------------------------------')
-    repRes=MinForReplica()
+    repRes=MinForReplica(i)
     print(repRes)
     f=open(REPPATH,"a+")
     print('SAVING >>  ',f.name)
-    f.write(str(repRes)+"\n")
+    f.write(str(repRes+[i])+"\n")
     f.close()

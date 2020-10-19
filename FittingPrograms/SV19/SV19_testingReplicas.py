@@ -27,7 +27,8 @@ import harpy
 path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"
 #harpy.initialize(path_to_constants+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo")
 #harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_m=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0")
-harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_all=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_all=0")
+#harpy.initialize(path_to_constants+"DY+SIDIS_nnlo_all=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_all=0")
+harpy.initialize(path_to_constants+"DY+SIDIS_n3lo_all=0/const-DY+SIDIS_NNPDF31+DSS_n3lo_all=0")
 harpy.setNPparameters_TMDR([1.93, 0.0434])
 harpy.setNPparameters_uTMDPDF([0.253434, 9.04351, 346.999, 2.47992, -5.69988, 0.1, 0.])
 harpy.setNPparameters_uTMDFF([0.264,0.479,0.459,0.539]) 
@@ -171,7 +172,11 @@ print('Loaded experiments are', [i.name for i in setSIDIS.sets])
 #rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_m=0.rep")
 #rSet.SetReplica(0)
 ##NNPDF+DSS  all=0
-rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_all=0.rep")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_all=0.rep")
+#rSet.SetReplica(0)
+
+##NNPDF+DSS  all=0 n3lo
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_n3lo_all=0.rep")
 rSet.SetReplica(0)
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
@@ -181,7 +186,7 @@ DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,printDecomposedChi2=True)
 ######################################
 # Distribution of chi^2 over replicas
 #####################################
-SAVEPATH="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/FIGURES_DY+SIDIS_2019/LOGS/SV19_nnlo_all=0_chi2.txt"
+SAVEPATH="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/FIGURES_DY+SIDIS_2019/LOGS/SV19_n3lo_all=0_chi2.txt"
 for r in range(rSet.numberOfReplicas):
     rSet.SetReplica(r+1)
     ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)

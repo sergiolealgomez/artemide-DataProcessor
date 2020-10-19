@@ -125,7 +125,7 @@
  
 *A   : ---- Main definitions ----
 *p1  : Order of evolution
- NNLO
+ NNNLO
 *p2  : Type of evolution solution (1 = improved D solution ,2 = improved gamma solution, 3 = fixed mu)
            3
 *B   : ---- Parameters of NP model ----
@@ -265,7 +265,7 @@
 # ---------------------------------------------------------------------------
 *8   :
 *p1  : initialize TMDs-inKT module
- T
+ F
 *A   : ---- Numerical evaluation parameters ----
 *p1  : Tolerance (relative tolerance of summation in OGATA quadrature)
    1.0000000000000000E-004
@@ -281,7 +281,7 @@
  T
 *A   : ---- Main definitions ----
 *p1  : Order of coefficient function
- NNLO
+ NNNLO
 *p2  : Use the exact values of x1 and x2 (include qT/Q correction)
  F
 *p3  : Use resummation of pi^2-corrections in hard coefficient
@@ -304,7 +304,7 @@
  T
 *A   : ---- Main definitions ----
 *p1  : Order of coefficient function
- NNLO
+ NNNLO
 *p2  : Use transverse momentum corrections in kinematics
  T
 *p3  : Use target mass corrections in kinematics

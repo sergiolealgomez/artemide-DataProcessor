@@ -222,7 +222,7 @@ class DataSet:
         
         # populate with points
         for p in self.points:
-            pPass, pAdd=cutFunction(p)
+            pPass, pAdd=cutFunction(copy.deepcopy(p))
             if pPass:
                 dNew.AddPoint(pAdd)
         

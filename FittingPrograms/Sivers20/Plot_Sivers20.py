@@ -41,7 +41,10 @@ harpy.setNPparameters_SiversTMDPDF([5.2, 0.,0.,0.,0., -0.6, 15.9, 0.5, -0.2, 21.
 ##########################################
 # Loading replicas
 #########################################
-rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY).rep")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1.rep")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY).rep")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY-n3lo).rep")
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo).rep")
 #rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/YR_Studies/Sivers/REPS/Siv.5x41_pim_HB_opt5.rep")
 meanReplica=rSet.GetReplica(0)
 rSet.SetReplica()
@@ -154,13 +157,41 @@ def ComputeParameters(dd):
     
     return [numpy.mean(means),numpy.mean(modes),numpy.mean(lowers),numpy.mean(uppers)]
 #%%
-indices=[0,1,2,5,6,7,8,9,10,11,12]
-[r=rSet.GetReplica(i) i in range(1,rSet.numberOfReplicas+1)]
-numpy.corrcoef
+# #########################################################
+# ## Compute parameters of the NP parameters first diagonalizing the correlation matrix
+# #########################################################
+# ### Computing the diagonalization matrix and diagonalizing set
+# #indices=[0,1,2,5,6,7,8,9,10,11,12]
+# covarianceM=numpy.cov(numpy.transpose(rSet.GetParameterSet()))
+# eigenM=numpy.linalg.eig(covarianceM)[1]
+# eigenMinv=numpy.linalg.inv(eigenM)
+# diagonalSet=[numpy.matmul(eigenMinv, x) for x in rSet.GetParameterSet()]
+
+# ### computing prameters for diagonalized set
+# modeReplica=[]
+# meanReplica=[]
+# downReplica=[]
+# upReplica=[]
+# for j in range(14):
+#     example=[]
+#     for i in range(len(diagonalSet)):
+#         example.append(diagonalSet[i][j])
+        
+#     params=ComputeParameters(example)
+#     modeReplica.append(params[1])
+#     meanReplica.append(params[0])
+#     downReplica.append(params[2])
+#     upReplica.append(params[3])
+    
+# ### turning back
+# modeReplica=numpy.matmul(eigenM,modeReplica)
+# meanReplica=numpy.matmul(eigenM,meanReplica)
+# downReplica=numpy.matmul(eigenM,downReplica)
+# upReplica=numpy.matmul(eigenM,upReplica)
 
 #%%
 #########################################################
-## Compute parameters of the NP parameters
+## Compute parameters of the NP parameters with out rotation
 #########################################################
 modeReplica=[]
 meanReplica=[]
@@ -179,19 +210,11 @@ for j in range(14):
     print("param=",j," >>  ",params)
 
 #%%
-#########################################################
-## Compute parameters of the NP parameters
-#########################################################
-
-example=[]
-for i in range(rSet.numberOfReplicas):
-    example.append(rSet.GetReplica(i))
-    
-params=ComputeParameters(example)
-modeReplica=params[1]
-meanReplica=params[0]
-downReplica=params[2]
-upReplica=params[3]
+for i in  range(14):
+    rrr=rSet.GetReplica(0)
+    print("{:2.4f},{:2.4f},{:2.4f}".format(numpy.round(rrr[i],3),
+                                             numpy.round(downReplica[i]-rrr[i],3),
+                                             numpy.round(upReplica[i]-rrr[i],3)))
 
 #%%
 #########################################################
@@ -206,10 +229,10 @@ for xx in xValues:
         b=0.1*j
         p0=ComputeParameters(getSiversRow(xx,b,f))
         rSet.SetReplica(0)        
+        #harpy.setNPparameters_SiversTMDPDF(meanReplica)
         tmd=harpy.get_SiversTMDPDF(xx, b, 1)        
         kk.append([b,tmd[f+5],p0[0],p0[1],p0[2],p0[3]])
     pp.append(kk)
-    
 #%%
 #########################################################
 ## Evaluates pp which is the list of [kT,mean,low,up] for various values of x
@@ -251,7 +274,7 @@ for j in range(len(pp)):
 #%%
 from matplotlib import pyplot
 
-j=4
+j=5
 
 pyplot.plot([i[0] for i in pp[j]],[i[1] for i in pp[j]],color="black")
 pyplot.plot([i[0] for i in pp[j]],[i[2] for i in pp[j]],color="red")
@@ -270,3 +293,18 @@ pyplot.axvline(params[0],color="red")
 pyplot.axvline(params[1],color="green")
 pyplot.axvspan(params[2],params[3],color="green",alpha=0.2)
 pyplot.show()        
+
+#%%
+pp=[]
+xValues=[0.001,0.005,0.01,0.05,0.1,0.5]
+f=1
+for xx in xValues:
+    kk=[]
+    for j in range(41):
+        b=0.1*j
+        p0=ComputeParameters(getSiversRow(xx,b,f))
+        rSet.SetReplica(0)        
+        #harpy.setNPparameters_SiversTMDPDF(meanReplica)
+        tmd=harpy.get_SiversTMDPDF(xx, b, 1)        
+        kk.append([b,tmd[f+5],p0[0],p0[1],p0[2],p0[3]])
+    pp.append(kk)

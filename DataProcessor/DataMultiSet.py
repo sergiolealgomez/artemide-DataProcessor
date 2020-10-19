@@ -164,15 +164,32 @@ class DataMultiSet:
             res.append(self.sets[i].FindBestNorm(theoryPrediction[self._i1[i]:self._i2[i]]))
         return res
     
-    def CutData(self,cutFunction,addName=""):
-        """ Create an instance of DataMultiSet, which contains all sets after 
-            application of CutData to each. New multiset has name=name+addName
-            
-            cutFunction has interface
-            f(Point1)=bool, Point2
-            where bool states that the point2 should be included into the set.
+    def CutData(self,cutFunction,addName="",computeCovarianceMatrix = True):
         """
-        nSets=[s.CutData(cutFunction,addName) for s in self.sets]
+        Create an instance of MultiDataSet, which contains all sets after 
+        application of cutFunction. New multisetset has name=name+addName
+
+        Parameters
+        ----------
+        cutFunction : function with the interface f(Point1)=bool, Point2
+            where bool states that the point2 should be included into the set.
+                        
+        addName : string, optional
+            addendant to the name of the new sets (includind the subsets)
+            Default values is ""
+        
+        computeCovarianceMatrix : bool, optional
+            State is covariance matrix should be computed.
+            Switching it False, can improve performace
+            The default is True.
+
+        Returns
+        -------
+        dNew : DataSet
+            The cut DataSet
+
+        """
+        nSets=[s.CutData(cutFunction,addName,computeCovarianceMatrix) for s in self.sets]
 
         return DataMultiSet(self.name+addName,nSets)
     
