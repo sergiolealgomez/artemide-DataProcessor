@@ -22,8 +22,8 @@ import DataProcessor.ArtemideReplicaSet
 #MAINPATH="/home/m/Github/artemide-DataProcessor/"
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
-#useOrder="nnlo"
-useOrder="n3lo"
+useOrder="nnlo"
+#useOrder="n3lo"
 
 #%%
 #######################################
@@ -86,7 +86,7 @@ def cutFunc(p):
             return False , p
     
     if p["type"]=="SIDIS":   
-        deltaTEST=0.3
+        deltaTEST=0.6
         delta=p["<pT>"]/p["<z>"]/p["<Q>"]        
     
     
@@ -161,7 +161,7 @@ print('Total number of points:',setSIDIS.numberOfPoints+setDY.numberOfPoints)
 
 #%%
 rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
-                                                  "Sivers20_model9case1(n3lo).rep")
+                                                  "Sivers20_model9case1.rep")
 rSet.SetReplica()
 
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
@@ -185,7 +185,43 @@ for i in range(1,rSet.numberOfReplicas+1):
     cccDY.append(ccDY2)
     cccZ.append(cc3[0]+cc3[1]+cc3[3])
     cccTotal.append(ccSIDIS2+ccDY2)
-    
+
+#%%
+### SIDIS nnlo
+#chiSIDIS=0.865
+#chiDY=1.248
+#chiZ=2.873
+
+### SIDIS+DY nnlo
+#chiSIDIS=0.880
+#chiDY=0.782
+#chiZ=1.624
+
+### SIDIS n3lo
+#chiSIDIS=0.848
+#chiDY=1.236
+#chiZ=2.841
+
+### SIDIS+DY n3lo
+# chiSIDIS=0.883
+# chiDY=0.792
+# chiZ=1.559
+
+# rr=ComputeParameters(cccSIDIS)
+# print("SIDIS: ",chiSIDIS,rr[2]/63-chiSIDIS,rr[3]/63-chiSIDIS)
+
+# rr=ComputeParameters(cccDY)
+# print("DY: ",chiDY,rr[2]/12-chiDY,rr[3]/12-chiDY)
+
+# chii=(chiDY*12-chiZ)/11
+# rr=ComputeParameters(cccZ)
+# print("DY/Z: ",chii,rr[2]/11-chii,rr[3]/11-chii)
+
+# chii=(chiDY*12+chiSIDIS*63)/75
+# rr=ComputeParameters(cccTotal)
+# print("Total: ",chii,rr[2]/75-chii,rr[3]/75-chii)
+
+
 #%%
 # rSet.SetReplica(0)
 # for x in [0.01,0.02, 0.04, 0.06,0.08,0.1,0.2,0.4,0.6,0.8,0.9]:
@@ -231,14 +267,12 @@ def chi_2(x):
 #%%
 from iminuit import Minuit
 
-
-#initialValues=(7.861, 4.929, 0.000, 0.000, 0.000, 0.268, 0.367, -2.386, 0.974, 0.1517, -1.5301, -0.4305, 0.010, -1.0857)
-initialValues=(0.19526, 0.221, 38.5939, 0., 0.,
-               -0.03896, -0.31062, -2.60391, 
-               0.11233, -0.80279, 5.62511, 
-               0.84766, 3.81519, -0.248)
-
-#initialValues=(0.469,-1.482, 0.000, 0.000,0.000, -0.055, -0.687, 0.921, 0.094, -0.974, 13.520, -0.043,4.411, 0.000)
+if(useOrder=="nnlo"):
+    #initialValues=(0.02617, 1.65313, 29.5239, 0.0, 0.0, -0.04842, -0.39636, -2.61426, 0.18038, -0.45053, 14.0649, 0.45734, 2.5715, -0.25895)
+    #initialValues=(0.131196, 3.29739, 64.8559, 0., 0., -0.0350288, -0.360633, -3.48127, 0.278947, -0.543139, 11.7035, 0.749227, 2.6025, -0.443391)
+    initialValues=(0.15856, 3.45784, 69.1464, 0.0, 0.0, -0.0352, -0.35094, -3.49901, 0.27941, -0.58113, 7.50691, 0.70375, 2.59306, -0.42195)
+elif(useOrder=="n3lo"):
+    initialValues=(0.04915, 3.285, 51.92, 0.0, 0.0, -0.03589, -0.3689, -3.5055, 0.2822, -0.59204, 9.572, 0.8442, 2.744, -0.4627)
 
 initialErrors=(0.1, 10., 10. , 0.1,0.1,
                0.3, 0.5, 1., 
@@ -273,10 +307,10 @@ m.strategy=1
 # m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 # m.strategy=1
 
-m.migrad()
+m.migrad(ncall=100)
 
 print(m.params)
-sys.exit()
+# sys.exit()
 # SaveToLog("MINIMIZATION FINISHED",str(m.params))
 # SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
 #%%
@@ -402,8 +436,8 @@ def MinForReplica():
 #
 # Generate pseudo data and minimise   100 times
 #
-numOfReplicas=100
-REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model9case1(n3lo)-replicas.txt"
+numOfReplicas=450
+REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model9case1(noDY-n3lo)EXTRA-replicas.txt"
 for i in range(numOfReplicas):
     print('---------------------------------------------------------------')
     print('------------REPLICA ',i,'/',numOfReplicas,'--------------------')

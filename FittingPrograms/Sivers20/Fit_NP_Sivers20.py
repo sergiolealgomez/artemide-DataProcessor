@@ -22,8 +22,8 @@ import DataProcessor.ArtemideReplicaSet
 #MAINPATH="/home/m/Github/artemide-DataProcessor/"
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
-useOrder="nnlo"
-#useOrder="n3lo"
+#useOrder="nnlo"
+useOrder="n3lo"
 
 #%%
 #######################################
@@ -158,6 +158,8 @@ rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/Work
                                                   "Sivers20_model9case1(n3lo).rep")
 rSet.SetReplica()
 
+#harpy.setNPparameters_SiversTMDPDF([0.199479, 0.263377, 59.3553, 0., 0., -0.0263578, -0.266869, -2.83529, 0.0955288, -0.595511, 2.90686, 0.315239, 2.89282, -0.136414])
+
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY)
@@ -166,7 +168,7 @@ DataProcessor.harpyInterface.PrintChi2Table(setDY)
 #######################################
 # Minimisation
 #######################################
-includeDY=False
+includeDY=True
 if includeDY:
     totalN=setSIDIS.numberOfPoints+setDY.numberOfPoints
 else :
@@ -257,9 +259,7 @@ def MinForReplica(n):
     localM.tol=0.0001*totalNnew*10000 ### the last 0.0001 is to compensate MINUIT def
     localM.strategy=1
 
-    #localM.migrad()
-    print(repchi_2(list(initialValues)))
-    
+    localM.migrad(ncall=150,resume=False)    
     
     SetUnTMD(0)
     chi2Central=chi_2(localM.values.values())
@@ -271,8 +271,8 @@ def MinForReplica(n):
 # Generate pseudo data and minimise   100 times
 #
 rStart=1
-rFinish=2
-REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model9case1(noDY)-NPreplicas.txt"
+rFinish=100
+REPPATH=MAINPATH+"FittingPrograms/Sivers20/LOGS/"+"model9case1(n3lo)-NPreplicas.txt"
 for i in range(rStart,rFinish):
     print('---------------------------------------------------------------')
     print('------------REPLICA: ',rStart," / ",i,' / ',rFinish,'--------------------')

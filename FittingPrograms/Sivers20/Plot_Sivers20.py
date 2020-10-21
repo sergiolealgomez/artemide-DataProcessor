@@ -41,11 +41,14 @@ harpy.setNPparameters_SiversTMDPDF([5.2, 0.,0.,0.,0., -0.6, 15.9, 0.5, -0.2, 21.
 ##########################################
 # Loading replicas
 #########################################
-#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1.rep")
-#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY).rep")
-#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY-n3lo).rep")
-rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo).rep")
-#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/YR_Studies/Sivers/REPS/Siv.5x41_pim_HB_opt5.rep")
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile(
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1.rep")
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY)_1000.rep")
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY)NP.rep")
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY-n3lo).rep")
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY-n3lo)NP.rep")
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo).rep")
+"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo)NP.rep")
 meanReplica=rSet.GetReplica(0)
 rSet.SetReplica()
 
@@ -221,8 +224,8 @@ for i in  range(14):
 ## Evaluates pp which is the list of [b,mean,low,up] for various values of x
 #########################################################
 pp=[]
-xValues=[0.001,0.005,0.01,0.05,0.1,0.5]
-f=1
+xValues=[0.1]#[0.001,0.005,0.01,0.05,0.1,0.5]
+f=2
 for xx in xValues:
     kk=[]
     for j in range(41):
@@ -233,6 +236,7 @@ for xx in xValues:
         tmd=harpy.get_SiversTMDPDF(xx, b, 1)        
         kk.append([b,tmd[f+5],p0[0],p0[1],p0[2],p0[3]])
     pp.append(kk)
+    
 #%%
 #########################################################
 ## Evaluates pp which is the list of [kT,mean,low,up] for various values of x
@@ -308,3 +312,11 @@ for xx in xValues:
         tmd=harpy.get_SiversTMDPDF(xx, b, 1)        
         kk.append([b,tmd[f+5],p0[0],p0[1],p0[2],p0[3]])
     pp.append(kk)
+    
+#%%
+pp=[]
+for i in range(1,rSet.numberOfReplicas+1):
+    rSet.SetReplica(i)   
+    tmd=harpy.get_SiversTMDPDF(0.1, 0.5, 1)
+    pp.append(tmd[2+5])
+    
