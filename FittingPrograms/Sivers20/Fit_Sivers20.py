@@ -86,7 +86,7 @@ def cutFunc(p):
             return False , p
     
     if p["type"]=="SIDIS":   
-        deltaTEST=0.6
+        deltaTEST=0.3
         delta=p["<pT>"]/p["<z>"]/p["<Q>"]        
     
     
