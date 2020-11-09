@@ -43,7 +43,7 @@ import DataProcessor.DataMultiSet
 import socket
 PCname=socket.gethostname()
 
-replicaFile=PathToLog+"SV19_NNPDF31_PDFreplica_norm.txt"
+replicaFile=PathToLog+"SV19_NNPDF31_PDFreplica_noA7.txt"
 logFile=PathToLog+PCname+".log"
 
 #%%
@@ -167,7 +167,7 @@ def cutFunc(p):
 # Loading the data set
 #######################################
 theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData(['CDF1', 'CDF2', 'D01', 'D02', 'D02m', 
-                      'A7-00y10', 'A7-10y20','A7-20y24', 
+                      #'A7-00y10', 'A7-10y20','A7-20y24', 
                       'A8-00y04-norm' if useNormalizedLHCdata else 'A8-00y04',
                       'A8-04y08-norm' if useNormalizedLHCdata else 'A8-04y12',
                       'A8-08y12-norm' if useNormalizedLHCdata else 'A8-08y12',
