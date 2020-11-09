@@ -340,6 +340,11 @@ class DataSet:
         The matrix A defined as 
         A[a,b]=delta[a,b]+sum(corrErr[a,i]corrErr[b,i]/(uncorrErr[i]^2), i in number of points)
         """
+        
+        if(self.isVdiagonal):
+            self.matrixA=numpy.identity(0)
+            return
+        
         ## determine the number of correlated errors
         sc=self.numOfCorrErr+self.numOfNormErr
         

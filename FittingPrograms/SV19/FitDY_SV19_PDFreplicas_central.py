@@ -20,7 +20,7 @@ import sys
 sys.path.append(PathToDataProcessor)
 
 ## if this trigger is ON the LHC data will be fit only by shape
-useNormalizedLHCdata=True
+useNormalizedLHCdata=False
 
 #### Starting and final replica (included)
 StartReplica=1

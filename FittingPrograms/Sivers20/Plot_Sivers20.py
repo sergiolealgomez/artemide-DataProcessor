@@ -29,7 +29,7 @@ MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 #######################################
 import harpy
 path_to_constants=MAINPATH+"FittingPrograms/Sivers20/Constants-files/"
-harpy.initialize(path_to_constants+"const-Sivers20_plot")
+harpy.initialize(path_to_constants+"const-Sivers20_plot_nnlo")
 
 #### All=0 Case
 harpy.setNPparameters_TMDR([2., 0.0398333])
@@ -42,13 +42,13 @@ harpy.setNPparameters_SiversTMDPDF([5.2, 0.,0.,0.,0., -0.6, 15.9, 0.5, -0.2, 21.
 # Loading replicas
 #########################################
 rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile(
-#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1.rep")
+"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1.rep")
 #"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY)_1000.rep")
 #"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY)NP.rep")
 #"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY-n3lo).rep")
 #"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(noDY-n3lo)NP.rep")
 #"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo).rep")
-"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo)NP.rep")
+#"/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/Sivers20_model9case1(n3lo)NP.rep")
 meanReplica=rSet.GetReplica(0)
 rSet.SetReplica()
 
@@ -218,7 +218,11 @@ for i in  range(14):
     print("{:2.4f},{:2.4f},{:2.4f}".format(numpy.round(rrr[i],3),
                                              numpy.round(downReplica[i]-rrr[i],3),
                                              numpy.round(upReplica[i]-rrr[i],3)))
-
+#%%
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile(
+"/home/vla18041/LinkData2/WorkingFiles/TMD/YR_Studies/Sivers/REPS/Sivers20_HB_opt8.rep")
+meanReplica=rSet.GetReplica(0)
+rSet.SetReplica()
 #%%
 #########################################################
 ## Evaluates pp which is the list of [b,mean,low,up] for various values of x
@@ -243,7 +247,7 @@ for xx in xValues:
 #########################################################
 pp=[]
 xValues=[0.001,0.005,0.01,0.05,0.1,0.5]
-f=1
+f=2
 for xx in xValues:
     M2_proton=0.932**2
     kk=[]

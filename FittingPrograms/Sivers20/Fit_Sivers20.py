@@ -103,7 +103,7 @@ def cutFunc(p):
     
     #### This is because star measures AN
     if p["id"][0:4]=="star":
-        p["thFactor"]=-p["thFactor"]
+        p["thFactor"]=-p["thFactor"]        
         
 #    return delta<0.5 and p.qT_avarage<80
     return delta<deltaTEST, p
