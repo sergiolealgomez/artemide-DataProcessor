@@ -344,3 +344,46 @@ for i in range(numOfReplicas):
 #%%
 SaveToLog("Computation finished correctly ("+int(numOfReplicas)+" replicas computed) +\n "
           +"----------------------------------------------------------------------------------")
+
+#%%
+###############################################################
+## Just some plots
+###############################################################
+
+setPlot=DataProcessor.DataSet.DataSet("plotSet","SIDIS")
+
+for i in range(30):
+    # makeup a point
+    p=DataProcessor.Point.CreateSIDISPoint('plot'+str(i))
+    #print DataCurrent.name+'.'+str(i)
+    #p["process"]=[1, 1, 2103]
+    p["process"]=[1, 1, 2011]
+    p["s"]=300.
+    p["<pT>"]=0.7*(i+0.5)/30
+    p["pT"]=[0.7*(i)/30,0.7*(i+1)/30]
+    p["<Q>"]=4.
+    p["Q"]=[3.8,4.2]
+    p["<x>"]=0.1
+    p["x"]=[0.08,0.12]
+    p["<z>"]=0.4
+    p["z"]=[0.3,0.5]
+    p["xSec"]=1.
+    p["M_target"]=.938
+    p["M_product"]=0.1
+    p["includeCuts"]=False
+    p["cutParams"]=[0.1,0.85,10.,10000.]
+    if p["xSec"]<0.00000001:
+        p["thFactor"]=1.
+    else:
+        p["thFactor"]=1/(p["pT"][1]**2-p["pT"][0]**2)
+         
+    setPlot.AddPoint(p)    
+
+setPlot.FinalizeSet(computeCovarianceMatrix=False)
+
+plot=DataProcessor.harpyInterface.ComputeXSec(setPlot)
+
+print("{")
+for i in range(30):
+    print("{",setPlot.points[i]["<pT>"],",",plot[i],"},")
+print("}")

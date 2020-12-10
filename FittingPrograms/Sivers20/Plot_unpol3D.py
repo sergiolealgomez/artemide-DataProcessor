@@ -176,8 +176,10 @@ bValues=[0., 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, \
 3., 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4., 4.5, 5., 5.5, \
 6., 6.5, 7., 7.5, 8.]
 
-path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D/"
-nameADD="_b_optimal_(SIDIS+DY)_nnlo.dat"
+
+
+path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D_"+useOrder+"/"
+nameADD="_b_optimal_"+useOrder+".dat"
 muIn=-1.
 
 dQuark=[]
@@ -233,8 +235,8 @@ bValues=[0., 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, \
 6., 6.5, 7., 7.5, 8.]
 
 
-path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D/"
-nameADD="_b_2GeV_(SIDIS+DY)_nnlo.dat"
+path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D_"+useOrder+"/"
+nameADD="_b_2GeV_"+useOrder+".dat"
 muIn=2.
 
 dQuark=[]
@@ -288,8 +290,8 @@ bValues=[0.001, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6
 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8, \
 1.85, 1.9, 1.95, 2.]
 
-path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D/"
-nameADD="_kT_optimal_(SIDIS+DY)_nnlo.dat"
+path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D_"+useOrder+"/"
+nameADD="_kT_optimal_"+useOrder+".dat"
 muIn=-1.
 
 dQuark=[]
@@ -343,8 +345,8 @@ bValues=[0.001, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6
 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8, \
 1.85, 1.9, 1.95, 2.]
 
-path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D/"
-nameADD="_kT_2GeV_(SIDIS+DY)_nnlo.dat"
+path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/uTMDPDF3D_"+useOrder+"/"
+nameADD="_kT_2GeV_"+useOrder+".dat"
 muIn=2.
 
 dQuark=[]

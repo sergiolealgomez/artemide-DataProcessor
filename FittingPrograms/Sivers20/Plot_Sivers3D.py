@@ -21,8 +21,8 @@ import DataProcessor.ArtemideReplicaSet
 #MAINPATH="/home/m/Github/artemide-DataProcessor/"
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
-useOrder="nnlo"
-#useOrder="n3lo"
+#useOrder="nnlo"
+useOrder="n3lo"
 
 #%%
 #######################################
@@ -44,12 +44,11 @@ elif(useOrder=="n3lo"):
 if(useOrder=="nnlo"):
     
     rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
-                                                  #"Sivers20_model9case1(noDY).rep")### only SIDIS case
-                                                  "Sivers20_model9case1.rep")### SIDIS+DY case
+                                                  "Sivers20_BPV20(nnlo).rep")### SIDIS+DY case
 elif(useOrder=="n3lo"):
     rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
                                                   #"Sivers20_model9case1(noDY-n3lo).rep")### only SIDIS case
-                                                  "Sivers20_model9case1(n3lo).rep")### SIDIS+DY case
+                                                  "Sivers20_BPV20(n3lo).rep")### SIDIS+DY case
 
 #%%
 #########################################################
@@ -168,8 +167,8 @@ bValues=[0., 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, \
 
 
 
-path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/Sivers3D/"
-nameADD="_kT_2GeV_(SIDIS+DY)_nnlo.dat"
+path_to_save="/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/PlotData/Sivers3D_"+useOrder+"/"
+nameADD="_b_2GeV_"+useOrder+".dat"
 muIn=2.
 
 ############# For EIC impact

@@ -21,8 +21,8 @@ import DataProcessor.ArtemideReplicaSet
 #MAINPATH="/home/m/Github/artemide-DataProcessor/"
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 
-useOrder="nnlo"
-#useOrder="n3lo"
+#useOrder="nnlo"
+useOrder="n3lo"
 
 #%%
 #######################################
@@ -63,12 +63,10 @@ elif(useOrder=="n3lo"):
 if(useOrder=="nnlo"):
     
     rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
-                                                  #"Sivers20_model9case1(noDY).rep")### only SIDIS case
-                                                  "Sivers20_model9case1.rep")### SIDIS+DY case
+                                                  "Sivers20_BPV20(nnlo).rep")### SIDIS+DY case
 elif(useOrder=="n3lo"):
     rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
-                                                  #"Sivers20_model9case1(noDY-n3lo).rep")### only SIDIS case
-                                                  "Sivers20_model9case1(n3lo).rep")### SIDIS+DY case
+                                                  "Sivers20_BPV20(n3lo).rep")### SIDIS+DY case
 
 #%%
 ### Set unpolarized TMD according to TMD set (adds constant pion row)
@@ -103,8 +101,8 @@ xValues=[0.5,0.1,0.05,0.01]
 
 for x in xValues:
 
-    nameADD="_100GeV_central_x="+str(x)+".dat"
-    muIn=100.
+    nameADD="_2GeV_rnd_x="+str(x)+".dat"
+    muIn=2.
     
     dQuark=[]
     uQuark=[]
@@ -113,7 +111,7 @@ for x in xValues:
     ubarQuark=[]
     for kx in numpy.arange(-1.,1.+0.01,0.01):
         for ky in numpy.arange(-1.,1.+0.01,0.01):        
-            tmd=getTomography(x, kx, ky ,n=0,mu=muIn)
+            tmd=getTomography(x, kx, ky ,n=-1,mu=muIn)
             uQuark.append([kx,ky,tmd[2+5]])
             dQuark.append([kx,ky,tmd[1+5]])
             sQuark.append([kx,ky,tmd[3+5]])

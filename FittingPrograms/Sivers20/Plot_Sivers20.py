@@ -219,8 +219,9 @@ for i in  range(14):
                                              numpy.round(downReplica[i]-rrr[i],3),
                                              numpy.round(upReplica[i]-rrr[i],3)))
 #%%
-rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile(
-"/home/vla18041/LinkData2/WorkingFiles/TMD/YR_Studies/Sivers/REPS/Sivers20_HB_opt8.rep")
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
+                                                  "Sivers20_BPV20(n3lo).rep")
+                                                  #"Sivers20_BPV20(nnlo).rep")
 meanReplica=rSet.GetReplica(0)
 rSet.SetReplica()
 #%%
@@ -228,8 +229,8 @@ rSet.SetReplica()
 ## Evaluates pp which is the list of [b,mean,low,up] for various values of x
 #########################################################
 pp=[]
-xValues=[0.1]#[0.001,0.005,0.01,0.05,0.1,0.5]
-f=2
+xValues=[0.001,0.005,0.01,0.05,0.1,0.5]
+f=1
 for xx in xValues:
     kk=[]
     for j in range(41):
@@ -247,7 +248,7 @@ for xx in xValues:
 #########################################################
 pp=[]
 xValues=[0.001,0.005,0.01,0.05,0.1,0.5]
-f=2
+f=1
 for xx in xValues:
     M2_proton=0.932**2
     kk=[]
@@ -268,7 +269,7 @@ for j in range(len(pp)):
     print("{",end="")
     for i in range(len(kk)):
         #print("{","{:2.4f},{:12.9f},{:12.9f},{:12.9f},{:12.9f}".format(kk[i][0],kk[i][1],kk[i][2],kk[i][3],kk[i][4]),"}",end="")    
-        print("{","{:2.4f},{:12.9f},{:12.9f},{:12.9f}".format(kk[i][0],kk[i][1],kk[i][3],kk[i][4]),"}",end="")    
+        print("{","{:2.4f},{:12.9f},{:12.9f},{:12.9f}".format(kk[i][0],kk[i][2],kk[i][4],kk[i][5]),"}",end="")    
         if(i==len(kk)-1):
             print("}",end="")
         else:
@@ -282,7 +283,7 @@ for j in range(len(pp)):
 #%%
 from matplotlib import pyplot
 
-j=5
+j=4
 
 pyplot.plot([i[0] for i in pp[j]],[i[1] for i in pp[j]],color="black")
 pyplot.plot([i[0] for i in pp[j]],[i[2] for i in pp[j]],color="red")
@@ -322,5 +323,5 @@ pp=[]
 for i in range(1,rSet.numberOfReplicas+1):
     rSet.SetReplica(i)   
     tmd=harpy.get_SiversTMDPDF(0.1, 0.5, 1)
-    pp.append(tmd[2+5])
+    pp.append(tmd[1+5])
     
