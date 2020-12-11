@@ -167,7 +167,7 @@
        10000
 *D   : ---- Grid preparation options ----
 *p1  : Prepare grid
- F
+ T
 *p2  : Include gluon TMDs into the grid
  F
 *p3  : total number of PDFs added to the grid (by default it coincides with number of initialized PDFs)

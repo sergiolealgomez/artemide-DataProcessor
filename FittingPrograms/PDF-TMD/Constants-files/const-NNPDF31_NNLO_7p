@@ -47,7 +47,7 @@
 *p2  : reference number for hadrons
     1
 *p3  : LHAPDF set names for hadrons (line-by-line corresponding to reference number
- MMHT2014nnlo68cl
+ NNPDF31_nnlo_as_0118_1000
 *p4  : list of initialization replicas
     0
  
@@ -129,8 +129,8 @@
 *p1  : Length of lambdaNP
            2
 *p2  : Initialization parameters (in column)
-   1.5481650000000000     
-   4.6951000000000000E-002
+   1.8604110000000000     
+   2.9551000000000001E-002
 
 *C   : ---- Numerical evaluation parameters ----
 *p1  : Tolerance (relative tolerance of convolution integral)
@@ -153,11 +153,11 @@
 *p1  : Length of lambdaNP
            7
 *p2  : Initialization parameters (in column)
-  0.19780000000000000     
-   26.395219999999998     
-   2683.6241000000000     
-   3.0071189999999999     
-  -23.440556999999998     
+  0.25343399999999999     
+   9.0435111999999993     
+   346.99853800000000     
+   2.4799199999999999     
+  -5.6998810000000004     
   0.25000000000000000     
    0.0000000000000000     
 *C   : ---- Numerical evaluation parameters ----
@@ -246,7 +246,7 @@
  T
 *A   : ---- Numerical evaluation parameters ----
 *p1  : Tolerance (relative tolerance of summation in OGATA quadrature)
-   1.0000000000000000E-004
+   1.0000000000000000E-005
 *p2  : Ogata quadrature integration step
    1.0000000000000000E-003
  
@@ -319,7 +319,7 @@
  SA  
 *C   : ---- Parameters for parallel evaluation (used only if compiled with openMP) ----
 *p1  : Maximum number of processors to use
-           8
+           12
  
  
 # ---------------------------------------------------------------------------

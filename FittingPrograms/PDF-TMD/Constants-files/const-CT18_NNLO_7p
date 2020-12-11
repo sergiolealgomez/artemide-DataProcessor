@@ -39,7 +39,7 @@
 *p2  : mass of bottom-quark
    4.1799999999999997     
 *p3  : mass of top-quark
-   172.90000000000001       
+   172.90000000000001     
  
 *B   : ---- uPDF sets----
 *p1  : total number of PDFs to initialize (0= initialization is skipped)
@@ -47,7 +47,7 @@
 *p2  : reference number for hadrons
     1
 *p3  : LHAPDF set names for hadrons (line-by-line corresponding to reference number
- NNPDF31_nnlo_as_0118_1000
+ CT18NNLO
 *p4  : list of initialization replicas
     0
  
@@ -129,8 +129,8 @@
 *p1  : Length of lambdaNP
            2
 *p2  : Initialization parameters (in column)
-   1.8604110000000000     
-   2.9551000000000001E-002
+   2.3466529999999999     
+   2.2734999999999998E-002
 
 *C   : ---- Numerical evaluation parameters ----
 *p1  : Tolerance (relative tolerance of convolution integral)
@@ -153,11 +153,11 @@
 *p1  : Length of lambdaNP
            7
 *p2  : Initialization parameters (in column)
-  0.25343399999999999     
-   9.0435111999999993     
-   346.99853800000000     
-   2.4799199999999999     
-  -5.6998810000000004     
+  0.27705999999999997     
+   24.888309000000000     
+   1241.3441000000000     
+   2.6686879999999999     
+  -23.758896000000000     
   0.25000000000000000     
    0.0000000000000000     
 *C   : ---- Numerical evaluation parameters ----
@@ -167,7 +167,7 @@
        10000
 *D   : ---- Grid preparation options ----
 *p1  : Prepare grid
- F
+ T
 *p2  : Include gluon TMDs into the grid
  F
 *p3  : total number of PDFs added to the grid (by default it coincides with number of initialized PDFs)
@@ -259,7 +259,7 @@
  F
 *A   : ---- Numerical evaluation parameters ----
 *p1  : Tolerance (relative tolerance of summation in OGATA quadrature)
-   1.0000000000000000E-005
+   1.0000000000000000E-004
 *p2  : Ogata quadrature integration step
    1.0000000000000000E-003
  
@@ -319,7 +319,7 @@
  SA  
 *C   : ---- Parameters for parallel evaluation (used only if compiled with openMP) ----
 *p1  : Maximum number of processors to use
-           12
+           8
  
  
 # ---------------------------------------------------------------------------
