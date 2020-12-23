@@ -11,8 +11,8 @@
 # Global parameter of a run
 #######################################################################
 
-PDFinUse="HERA20"
-#PDFinUse="NNPDF31"
+#PDFinUse="HERA20"
+PDFinUse="NNPDF31"
 #PDFinUse="CT18"
 
 

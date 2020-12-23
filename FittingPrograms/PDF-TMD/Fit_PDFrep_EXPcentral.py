@@ -20,7 +20,7 @@ useNormalizedLHCdata=False
 ## Include ATLAS 7TeV?
 useA7data=False
 ## Split the low-energy experiment <Upsilon and >Upsilon
-splitUpsilon=False
+splitUpsilon=True
 
 #### Starting and final replica (included)
 StartReplica=1
@@ -218,14 +218,16 @@ if useNormalizedLHCdata:
 
 if(PDFinUse=="HERA20"):
     #initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 570.223, 0.000, 0.000) #model 1.0 HERA
-    initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 0.252, 8.021, 570.223) #model 2.0 HERA
-if(PDFinUse=="CT18"):
-    #initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 700.642, 0. , 0.)      #model 1.0 CT18
-    initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 0.212, 5.301, 700.642) #model 2.0 CT18
+    #initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 0.252, 8.021, 570.223) #model 2.0 HERA
+    initialValues=(2.000, 0.034, 0.145, 10.393, 0.333, 0.000, 0.366, 10.261, 677.434) #model 2.2 HERA
 if(PDFinUse=="NNPDF31"):
     #initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 232.544, 0. , 0.)      #model 1.0 NNPDF31
-    initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 0.152, 7.561, 232.544) #model 2.0 NNPDF31
-
+    #initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 0.152, 7.561, 232.544) #model 2.0 NNPDF31
+    initialValues=(2.000, 0.030, 0.188, 5.542, 0.200, 4.375, 0.486, 0.009, 232.793) #model 2.2 NNPDF31
+if(PDFinUse=="CT18"):
+    #initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 700.642, 0. , 0.)      #model 1.0 CT18
+    #initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 0.212, 5.301, 700.642) #model 2.0 CT18
+    initialValues=(2.000, 0.042, 0.094, 12.534, 0.293, 0.004, 0.003, 16.568, 819.267) #model 2.2 CT18
 harpy.setNPparameters(list(initialValues))
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
@@ -276,18 +278,18 @@ m = Minuit.from_array_func(chi_2, initialValues,
 
 #m.get_param_states()
 
-m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-m.strategy=1
-m.migrad()
+# m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
+# m.strategy=1
+# m.migrad()
 
-## print parameters
-print(m.params)
+# ## print parameters
+# print(m.params)
 
-## print chi^2 table
-harpy.setNPparameters(m.values.values())
-DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
+# ## print chi^2 table
+# harpy.setNPparameters(m.values.values())
+# DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 
-sys.exit()
+# sys.exit()
 #%%
 #######################################
 # Generate replica of data and compute chi2
