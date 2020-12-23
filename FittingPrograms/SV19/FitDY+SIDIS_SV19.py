@@ -48,10 +48,10 @@ def SaveToLog(text):
 #Initialize artemide
 #######################################
 import harpy
-#path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo"
+path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo"
 #path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo/const-DY+SIDIS_NNPDF31+DSS_nnlo_m=0"
 #path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_nnlo_all=0/const-DY+SIDIS_NNPDF31+DSS_nnlo_all=0"
-path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_n3lo_all=0/const-DY+SIDIS_NNPDF31+DSS_n3lo_all=0"
+#path_to_constants=MAINPATH+"FittingPrograms/SV19/Constants-files/"+"DY+SIDIS_n3lo_all=0/const-DY+SIDIS_NNPDF31+DSS_n3lo_all=0"
 
 SaveToLog('Initialization with : \n'+path_to_constants)
 

@@ -17,8 +17,11 @@ sys.path.append("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor")
 import DataProcessor.harpyInterface
 import DataProcessor.ArtemideReplicaSet
 
+
+prefix="n3lo_all=0"
+
 MAINPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/OtherPrograms/TMDGrids/"
-SAVEPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/OtherPrograms/TMDGrids/Grids/SV19_all=0/SV19_all=0"
+SAVEPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/OtherPrograms/TMDGrids/Grids/SV19_"+prefix+"/SV19_"+prefix
 
 #%%
 #######################################
@@ -26,8 +29,12 @@ SAVEPATH="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/OtherProgra
 #######################################
 import harpy
 path_to_constants=MAINPATH+"Constants/"
-harpy.initialize(path_to_constants+"const-TMDPDF-NNPDF")
-rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_all=0.rep")
+#harpy.initialize(path_to_constants+"const-TMDPDF-NNPDF")
+harpy.initialize(path_to_constants+"const-TMDPDF-NNPDF-n3lo")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo_all=0.rep")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_nnlo.rep")
+#rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_n3lo.rep")
+rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/Models/SV19/Replicas/DY+SIDIS/SV19_n3lo_all=0.rep")
 rSet.SetReplica(num=0,part="uTMDPDF")
 
 #%%
@@ -35,17 +42,18 @@ rSet.SetReplica(num=0,part="uTMDPDF")
 # Save Grid specification
 #######################################
 with open(SAVEPATH+'.info', 'w') as outfile:
-    outfile.write("SetDesc: Unpolarized TMDPDF SV19_all=0"+"\n")
+    outfile.write("SetDesc: Unpolarized TMDPDF SV19_"+prefix+"\n")
     outfile.write("Authors: I.Scimemi, A.Vladimirov"+"\n"),
     outfile.write("Reference: arXiv:1912.06532"+"\n"),
-    outfile.write("SetIndex: 000100"+"\n"),
+    outfile.write("SetIndex: 704000"+"\n"),
+    outfile.write("TMDScheme: Pavia TMDs"+"\n"),
     outfile.write("TMDType: pdf"+"\n"),
     outfile.write("CollDist: NNPDF31_nnlo_as_0118_1000"+"\n"),
     outfile.write("CollDistMember:  0"+"\n"),
-    outfile.write("Format: TMDlib1"+"\n"),
+    outfile.write("Format: TMDlib2"+"\n"),
     outfile.write("DataVersion: 1"+"\n"),
     outfile.write("OrderQCD: NNLO & zeta-prec."+"\n"),
-    outfile.write("Regularisation:  ??? "+"\n"),
+    outfile.write("Regularisation:  xxx "+"\n"),
     outfile.write("NumMembers: 301"+"\n"),
     outfile.write("ErrorType: Monte Carlo"+"\n"),
     outfile.write("FlavorScheme: LHAPDF style"+"\n"),
@@ -115,17 +123,17 @@ for i in range(len(Qrange)):
             else:
                 TMDval=harpy.get_uTMDPDF_kT(xval,rval*Qval,1,Qval,Qval**2,includeGluon=False)
             
-            valuesList[-5][i][j][k]=float(TMDval[0])
-            valuesList[-4][i][j][k]=float(TMDval[1])
-            valuesList[-3][i][j][k]=float(TMDval[2])
-            valuesList[-2][i][j][k]=float(TMDval[3])
-            valuesList[-1][i][j][k]=float(TMDval[4])
-            #valuesList[0][i][j][k]=float(TMDval[5])
-            valuesList[1][i][j][k]=float(TMDval[6])
-            valuesList[2][i][j][k]=float(TMDval[7])
-            valuesList[3][i][j][k]=float(TMDval[8])
-            valuesList[4][i][j][k]=float(TMDval[9])
-            valuesList[5][i][j][k]=float(TMDval[10])
+            valuesList[-5][i][j][k]='{:g}'.format(xval*TMDval[0])
+            valuesList[-4][i][j][k]='{:g}'.format(xval*TMDval[1])
+            valuesList[-3][i][j][k]='{:g}'.format(xval*TMDval[2])
+            valuesList[-2][i][j][k]='{:g}'.format(xval*TMDval[3])
+            valuesList[-1][i][j][k]='{:g}'.format(xval*TMDval[4])
+            #valuesList[0][i][j][k]='{:g}'.format(xval*TMDval[5])
+            valuesList[1][i][j][k]='{:g}'.format(xval*TMDval[6])
+            valuesList[2][i][j][k]='{:g}'.format(xval*TMDval[7])
+            valuesList[3][i][j][k]='{:g}'.format(xval*TMDval[8])
+            valuesList[4][i][j][k]='{:g}'.format(xval*TMDval[9])
+            valuesList[5][i][j][k]='{:g}'.format(xval*TMDval[10])
             
 endTime=time.time()
 print('Computation time : ',endTime-startTime,' sec.')
@@ -135,11 +143,11 @@ print('Computation time : ',endTime-startTime,' sec.')
 # Save replica 0000
 #######################################
 startTime=time.time()
-with open(SAVEPATH+'_0000.yaml', 'w') as outfile:
+with open(SAVEPATH+'_0000.dat', 'w') as outfile:
     outfile.write("Qg: "+str(Qrange)+"\n")
     outfile.write("xg: "+str(Xrange)+"\n")
     outfile.write("qToQg: "+str(Rrange)+"\n")
-    outfile.write("TMDs: "+str(valuesList)+"\n")
+    outfile.write("TMDs: "+str(valuesList).replace("'","")+"\n")
 endTime=time.time()
 print('Dump time : ',endTime-startTime,' sec.')    
 
@@ -163,22 +171,22 @@ for r in range(rSet.numberOfReplicas):
                 else:
                     TMDval=harpy.get_uTMDPDF_kT(xval,rval*Qval,1,Qval,Qval**2,includeGluon=False)
                 
-                valuesList[-5][i][j][k]=float(TMDval[0])
-                valuesList[-4][i][j][k]=float(TMDval[1])
-                valuesList[-3][i][j][k]=float(TMDval[2])
-                valuesList[-2][i][j][k]=float(TMDval[3])
-                valuesList[-1][i][j][k]=float(TMDval[4])
-                #valuesList[0][i][j][k]=float(TMDval[5])
-                valuesList[1][i][j][k]=float(TMDval[6])
-                valuesList[2][i][j][k]=float(TMDval[7])
-                valuesList[3][i][j][k]=float(TMDval[8])
-                valuesList[4][i][j][k]=float(TMDval[9])
-                valuesList[5][i][j][k]=float(TMDval[10])
+                valuesList[-5][i][j][k]='{:g}'.format(xval*TMDval[0])
+                valuesList[-4][i][j][k]='{:g}'.format(xval*TMDval[1])
+                valuesList[-3][i][j][k]='{:g}'.format(xval*TMDval[2])
+                valuesList[-2][i][j][k]='{:g}'.format(xval*TMDval[3])
+                valuesList[-1][i][j][k]='{:g}'.format(xval*TMDval[4])
+                #valuesList[0][i][j][k]='{:g}'.format(xval*TMDval[5])
+                valuesList[1][i][j][k]='{:g}'.format(xval*TMDval[6])
+                valuesList[2][i][j][k]='{:g}'.format(xval*TMDval[7])
+                valuesList[3][i][j][k]='{:g}'.format(xval*TMDval[8])
+                valuesList[4][i][j][k]='{:g}'.format(xval*TMDval[9])
+                valuesList[5][i][j][k]='{:g}'.format(xval*TMDval[10])
                 
     with open(SAVEPATH+'_'+'{:04d}'.format(r+1)+'.yaml', 'w') as outfile:
         outfile.write("Qg: "+str(Qrange)+"\n")
         outfile.write("xg: "+str(Xrange)+"\n")
         outfile.write("qToQg: "+str(Rrange)+"\n")
-        outfile.write("TMDs: "+str(valuesList)+"\n")
+        outfile.write("TMDs: "+str(valuesList).replace("'","")+"\n")
     endTime=time.time()
     print('Computation time : ',endTime-startTime,' sec.')

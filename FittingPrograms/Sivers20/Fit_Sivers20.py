@@ -27,7 +27,7 @@ useOrder="n3lo"
 
 #### If true fSIDIS=+fDY, (wrong)
 #### if false fSIDIS=-fDY (correct)
-useWrongSign=True
+useWrongSign=False
 
 #%%
 #######################################
@@ -170,13 +170,13 @@ print('Total number of points:',setSIDIS.numberOfPoints+setDY.numberOfPoints)
 
 #%%
 rSet=DataProcessor.ArtemideReplicaSet.ReadRepFile("/home/vla18041/LinkData2/WorkingFiles/TMD/Fit_Notes/Sivers20/REPS/"+
-                                                  "Sivers20_BPV20(n3lo_fSIDIS=fDY).rep")
+                                                  "Sivers20_BPV20(n3lo).rep")
                                                   # "Sivers20_model9case1(noDY-n3lo).rep")
 
 rSet.SetReplica()
 
-harpy.setNPparameters_SiversTMDPDF([0.0763382, 2.6377, 94.5443, 0., 0., -0.0436252, -0.319028, -3.25994, \
-0.203802, -0.617296, -2.87003, 0.0710813, 2.86455, 0.0240161])
+#harpy.setNPparameters_SiversTMDPDF([0.0763382, 2.6377, 94.5443, 0., 0., -0.0436252, -0.319028, -3.25994, \
+#0.203802, -0.617296, -2.87003, 0.0710813, 2.86455, 0.0240161])
 
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
 

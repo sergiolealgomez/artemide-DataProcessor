@@ -12,21 +12,24 @@
 #######################################################################
 
 #PDFinUse="HERA20"
-PDFinUse="NNPDF31"
-#PDFinUse="CT18"
+#PDFinUse="NNPDF31"
+PDFinUse="CT18"
 
 ## if this trigger is ON the LHC data will be fit only by shape
 useNormalizedLHCdata=False
-##
+## Include ATLAS 7TeV?
 useA7data=False
+## Split the low-energy experiment <Upsilon and >Upsilon
+splitUpsilon=False
 
 #### Starting and final replica (included)
 StartReplica=1
 FinalReplica=3
 
 ## automatic name generation for the run
-runName="model1_"+PDFinUse+"_PDFrep_"
+runName="model2.2_"+PDFinUse+"_PDFrep_"
 if (not useA7data): runName+="noA7_"
+if (splitUpsilon): runName+="spltUPS_"
 if (useNormalizedLHCdata): runName+="norm_"
 if (runName[-1]=="_"): runName=runName[0:-1]
 
@@ -97,7 +100,7 @@ import harpy
 SaveToLog('Initialization with : \n'+PathToConstantsFile)
 
 harpy.initialize(PathToConstantsFile)
-initializationArray=[2.0340, 0.0299, 0.2512, 7.7572, 0.2512, 7.7572, 10000., 0.0000,  0.0000]
+initializationArray=[2.0340, 0.0299, 0.2512, 7.7572, 0.2512, 7.7572, 0.2512, 7.7572, 10000.]
 harpy.setNPparameters(initializationArray)
 
 #%%
@@ -121,66 +124,36 @@ def loadThisData(listOfNames):
 #######################################
 def cutFunc(p):    
     par=1.0
-    if p["type"]=="DY":
-        if(p["xSec"]>0):
-            err=numpy.sqrt(sum([i**2 for i in p["uncorrErr"]]))/p["xSec"]
-        else:
-            err=100.
-        delta=p["<qT>"]/p["<Q>"]
-        
-        if(p["id"][0] == "E"):
-            delta=p["<qT>"]/p["Q"][1] 
-        
-        
-        if(p["id"][0:4] == "E605"):
-            if(p["Q"][0]==10.5):#UPSILON resonance-bin
-                return False , p
-        elif(p["id"][0:4] == "E772"):
-            if(p["Q"][0]<10):#these bins seems broken
-                return False , p
-        elif(p["id"][0:4] == "E615"):
-            if(9<p["<Q>"]<11.2):#UPSILON resonance-bin
-                return False , p
-        elif(p["id"][0:4] == "E228"):
-            if(9<p["<Q>"]<11):#UPSILON resonance-bin
-                return False , p
-        else:
-            if(9<p["<Q>"]<11):#UPSILON resonance-bin
-                return False , p
+
+    if(p["xSec"]>0):
+        err=numpy.sqrt(sum([i**2 for i in p["uncorrErr"]]))/p["xSec"]
+    else:
+        err=100.
+    delta=p["<qT>"]/p["<Q>"]
     
-    if p["type"]=="SIDIS":        
-        if p["<z>"]>0.8:
+    if(p["id"][0] == "E"):
+        delta=p["<qT>"]/p["Q"][1]    
+        
+    if(p["id"][0:4] == "E605"):
+        if(p["Q"][0]==10.5):#UPSILON resonance-bin
             return False , p
-        ## bins with low z drop
-        if p["<z>"]<0.2:
+    elif(p["id"][0:4] == "E772"):
+        if(p["Q"][0]<10):#these bins seems broken
+            return False , p
+    elif(p["id"][0:4] == "E615"):
+        if(9<p["<Q>"]<11.2):#UPSILON resonance-bin
+            return False , p
+    elif(p["id"][0:4] == "E228"):
+        if(9<p["<Q>"]<11):#UPSILON resonance-bin
+            return False , p
+    else:
+        if(9<p["<Q>"]<11):#UPSILON resonance-bin
             return False , p
         
-        par=1.0
-        if p["xSec"]<0.00000001:
-            err=1
-            delta=1
-        else:
-            ##############3 I MULTIPLY THE ERROR BY 100 (so it does not affect the cuts)
-            err=10000#*numpy.sqrt(p.uncorrErrorsSquare)/p.xSec    
-            gamma2=(2.0*p["M_target"]*p["<x>"]/p["<Q>"])**2
-            rho2=(p["M_product"]/p["<z>"]/(p["<Q>"]))**2
-            qT=p["<pT>"]/p["<z>"]*numpy.sqrt((1+gamma2)/(1-gamma2*rho2))
-            delta=qT/(p["<Q>"])
-            
-            ### compute the largest possible qT (approximate)
-            gamma2WORST=(2.0*p["M_target"]*p["x"][1]/p["<Q>"])**2
-            # it is definitely not a TMD point
-            if gamma2WORST*rho2>1:
-                return False , p
-            qTWORST=p["pT"][1]/p["z"][0]*numpy.sqrt((1+gamma2WORST)/(1-gamma2WORST*rho2))
-    
-            ## drop if qT>Q/2
-            if qTWORST>p["<Q>"]/2:
-                return False , p
-    
-        ### drop Q<2
-        if p["<Q>"]<2 :
-            return False , p
+    if(p["id"][-2:]=="<u" and p["<Q>"]>10.5):
+        return False,p
+    if(p["id"][-2:]==">u" and p["<Q>"]<10.5):
+        return False,p
     
 #    return delta<0.5 and p.qT_avarage<80
     return (delta<0.1 or (delta<0.25 and par/err*delta**2<1)) , p
@@ -189,7 +162,8 @@ def cutFunc(p):
 #######################################
 # Loading the data set
 #######################################
-theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData(['CDF1', 'CDF2', 'D01', 'D02', 'D02m', 
+
+setHE=loadThisData(['CDF1', 'CDF2', 'D01', 'D02', 'D02m', 
                       'A7-00y10' if useA7data else '',
                       'A7-10y20' if useA7data else '',
                       'A7-20y24' if useA7data else '', 
@@ -199,13 +173,30 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",loadThisData(['CDF1', 'C
                       'A8-12y16-norm' if useNormalizedLHCdata else 'A8-12y16',
                       'A8-16y20-norm' if useNormalizedLHCdata else 'A8-16y20',
                       'A8-20y24-norm' if useNormalizedLHCdata else 'A8-20y24',
-                      'A8-16y20-norm' if useNormalizedLHCdata else 'A8-16y20',
+                      'A8-46Q66-norm' if useNormalizedLHCdata else 'A8-46Q66',
                       'A8-116Q150-norm' if useNormalizedLHCdata else 'A8-116Q150',
                       'CMS7', 'CMS8', 
-                      'LHCb7', 'LHCb8', 'LHCb13', 
-                      'PHE200', 'E228-200', 'E228-300', 'E228-400', 
-                      'E772',
-                      'E605']))
+                      'LHCb7', 'LHCb8', 'LHCb13'])
+
+#### If I separate data above and below UPSILON, I create two copies of LE data with different names
+#### the data to be split only  'E228-300', 'E228-400' and E605
+if(splitUpsilon):
+    setLE1=loadThisData(['PHE200', 'E228-200','E772'])
+    setLE2=loadThisData(['E228-300', 'E228-400','E605'])
+    setLE3=loadThisData(['E228-300', 'E228-400','E605'])
+    for s in setLE2:
+        s.name+="-blwUPS"
+        for p in s.points:
+            p["id"]+="<u"
+    for s in setLE3:
+        s.name+="-abvUPS"
+        for p in s.points:
+            p["id"]+=">u"
+    setLE=[setLE1[0],setLE1[1],setLE2[0],setLE3[0],setLE2[1],setLE3[1],setLE1[2],setLE2[2],setLE3[2]]
+else:
+    setLE=loadThisData(['PHE200', 'E228-200', 'E228-300', 'E228-400','E772','E605'])
+
+theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",setHE+setLE)
 
 setDY=theData.CutData(cutFunc) 
 
@@ -226,11 +217,14 @@ if useNormalizedLHCdata:
 #%%
 
 if(PDFinUse=="HERA20"):
-    initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 570.223, 0.000, 0.000) #model 1.0 HERA
+    #initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 570.223, 0.000, 0.000) #model 1.0 HERA
+    initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 0.252, 8.021, 570.223) #model 2.0 HERA
 if(PDFinUse=="CT18"):
-    initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 700.642, 0.000, 0.000) #model 1.0 CT18
+    #initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 700.642, 0. , 0.)      #model 1.0 CT18
+    initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 0.212, 5.301, 700.642) #model 2.0 CT18
 if(PDFinUse=="NNPDF31"):
-    initialValues=(2.000,   0.029, 0.345, 2.587, 0.152, 7.561, 232.544, 0.000, 0.000) #model 1.0 NNPDF31
+    #initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 232.544, 0. , 0.)      #model 1.0 NNPDF31
+    initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 0.152, 7.561, 232.544) #model 2.0 NNPDF31
 
 harpy.setNPparameters(list(initialValues))
 
@@ -260,31 +254,40 @@ def chi_2(x):
 from iminuit import Minuit
 
 ##### model 1.0
-#initialValues=(2.00,      0.039,      0.254, 8.550, 0.254, 8.550, 373.112, 0.000, 0.000)
-initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,   0.2,    10.0,   0.1,   0.1)
-searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,25.0),(0.0,2.0),(0.,25.0),(0.,1000),None, None)
-parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, True, True)
+#initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,   0.2,    10.0,   0.1,   0.1)
+#searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,25.0),(0.0,2.0),(0.,25.0),(0.,1000),None, None)
+#parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, True, True)
+
+##### model 2.0
+initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,    0.2,  0.05,   0.2,    10.0)
+searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,10.0),(0.,50.0),(0.0,10.0),(0.,50.0),(0.0,10.0),(0.,50.0),(0.,2500))
+parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, False, False)
+
+# ##### model 3.0
+# initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,   0.2,    10.0,   0.1,   0.1)
+# searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,25.0),(0.0,2.0),(0.,25.0),(0.,2500),None, (-0.5, 10.))
+# parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, False, False)
 
 
 #%%
 
-# m = Minuit.from_array_func(chi_2, initialValues,
-#       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
+m = Minuit.from_array_func(chi_2, initialValues,
+      error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
 
-# #m.get_param_states()
+#m.get_param_states()
 
-# m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-# m.strategy=1
-# m.migrad()
+m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
+m.strategy=1
+m.migrad()
 
-# ## print parameters
-# print(m.params)
+## print parameters
+print(m.params)
 
-# ## print chi^2 table
-# harpy.setNPparameters(m.values.values())
-# DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
+## print chi^2 table
+harpy.setNPparameters(m.values.values())
+DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 
-# sys.exit()
+sys.exit()
 #%%
 #######################################
 # Generate replica of data and compute chi2
