@@ -21,6 +21,9 @@ useNormalizedLHCdata=False
 useA7data=False
 ## Split the low-energy experiment <Upsilon and >Upsilon
 splitUpsilon=True
+## Use the reduced set of the data
+useReducedSet=True
+
 
 #### Starting and final replica (included)
 StartReplica=1
@@ -31,6 +34,7 @@ runName="model2.2_"+PDFinUse+"_PDFrep_"
 if (not useA7data): runName+="noA7_"
 if (splitUpsilon): runName+="spltUPS_"
 if (useNormalizedLHCdata): runName+="norm_"
+if (useReducedSet): runName+="reducedSet_"
 if (runName[-1]=="_"): runName=runName[0:-1]
 
 print(" RUN: "+runName)
@@ -122,7 +126,51 @@ def loadThisData(listOfNames):
 #######################################
 # Data cut function
 #######################################
+dropPoints=["A7-10y20.7", "A7-10y20.8", "A7-10y20.9", "A7-20y24.4", "A7-20y24.5", \
+"A7-20y24.6", "A7-20y24.7", "A7-20y24.8", "A7-20y24.9", "A8-08y12.8", \
+"A8-116Q150.1", "A8-116Q150.2", "A8-116Q150.3", "A8-116Q150.4", \
+"A8-116Q150.5", "A8-116Q150.6", "A8-116Q150.7", "A8-116Q150.8", \
+"A8-116Q150.9", "A8-12y16.8", "A8-16y20.6", "A8-16y20.7", \
+"A8-16y20.8", "A8-20y24.5", "A8-20y24.6", "A8-20y24.7", "A8-20y24.8", \
+"CDF1.10", "CDF1.11", "CDF1.12", "CDF1.13", "CDF1.14", "CDF1.15", \
+"CDF1.16", "CDF1.17", "CDF1.18", "CDF1.19", "CDF1.20", "CDF1.21", \
+"CDF1.22", "CDF1.23", "CDF1.24", "CDF1.25", "CDF1.26", "CDF1.27", \
+"CDF1.28", "CDF1.29", "CDF1.3", "CDF1.30", "CDF1.31", "CDF1.32", \
+"CDF1.4", "CDF1.5", "CDF1.6", "CDF1.7", "CDF1.8", "CDF1.9", \
+"CDF2.15", "CDF2.16", "CDF2.17", "CDF2.18", "CDF2.19", "CDF2.20", \
+"CDF2.21", "CDF2.22", "CDF2.23", "CDF2.24", "CDF2.25", "CDF2.26", \
+"CDF2.27", "CDF2.28", "CDF2.29", "CDF2.30", "CDF2.31", "CDF2.32", \
+"CDF2.33", "CDF2.34", "CDF2.35", "CDF2.36", "CDF2.37", "CDF2.38", \
+"CDF2.39", "CDF2.40", "CDF2.41", "CDF2.42", "CDF2.43", "CDF2.44", \
+"CMS7.1", "CMS7.2", "CMS7.3", "CMS7.4", "CMS7.5", "CMS7.6", "CMS7.7", \
+"CMS8.0", "CMS8.1", "CMS8.2", "CMS8.3", "CMS8.4", "CMS8.5", "CMS8.6", \
+"CMS8.7", "D01.10", "D01.11", "D01.12", "D01.13", "D01.14", "D01.15", \
+"D01.2", "D01.3", "D01.4", "D01.5", "D01.6", "D01.7", "D01.8", \
+"D01.9", "D02.1", "D02.2", "D02.3", "D02.4", "D02.5", "D02.6", \
+"D02.7", "D02.8", "D02m.3", "D02m.4", "E228-200.8Q9.10", \
+"E228-200.8Q9.5", "E228-200.8Q9.6", "E228-200.8Q9.9", \
+"E228-300.11Q12.11", "E228-300.11Q12.3", "E228-300.11Q12.4", \
+"E228-300.11Q12.5", "E228-300.11Q12.6", "E228-300.11Q12.7", \
+"E228-300.11Q12.8", "E228-300.8Q9.10", "E228-400.13Q14.11", \
+"E228-400.13Q14.12", "E228-400.13Q14.6", "E228-400.13Q14.7", \
+"E228-400.13Q14.9", "E605.7Q8.7", "E605.7Q8.8", "E605.7Q8.9", \
+"E772.12Q13.10", "E772.12Q13.6", "E772.12Q13.8", "E772.12Q13.9", \
+"E772.13Q14.4", "E772.13Q14.5", "E772.14Q15.0", "E772.14Q15.3", \
+"E772.14Q15.4", "E772.14Q15.5", "E772.14Q15.6", "LHCb13.1", \
+"LHCb13.10", "LHCb13.2", "LHCb13.3", "LHCb13.4", "LHCb13.5", \
+"LHCb13.6", "LHCb13.7", "LHCb13.8", "LHCb13.9", "LHCb7.10", \
+"LHCb7.2", "LHCb7.3", "LHCb7.4", "LHCb7.7", "LHCb7.8", "LHCb7.9", \
+"LHCb8.10", "LHCb8.8", "LHCb8.9", "PHE200.2",\
+##### extra points by hands
+"A8-116Q150.0","CDF1.0","CDF1.1","CDF1.2","D01.0", "D01.1", "D02.0","CMS7.0","LHCb13.0"]
+
+
 def cutFunc(p):    
+    
+    #### check against the presence in the reduced set.
+    if(useReducedSet and p["id"] in dropPoints):
+        return False,p
+    
     par=1.0
 
     if(p["xSec"]>0):
@@ -276,20 +324,20 @@ parametersToMinimize=(True,     False,    False,    False,    False,     False, 
 m = Minuit.from_array_func(chi_2, initialValues,
       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
 
-#m.get_param_states()
+m.get_param_states()
 
-# m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-# m.strategy=1
-# m.migrad()
+m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
+m.strategy=1
+m.migrad()
 
-# ## print parameters
-# print(m.params)
+## print parameters
+print(m.params)
 
-# ## print chi^2 table
-# harpy.setNPparameters(m.values.values())
-# DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
+## print chi^2 table
+harpy.setNPparameters(m.values.values())
+DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 
-# sys.exit()
+sys.exit()
 #%%
 #######################################
 # Generate replica of data and compute chi2

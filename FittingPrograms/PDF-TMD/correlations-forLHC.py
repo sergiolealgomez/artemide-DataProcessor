@@ -17,7 +17,7 @@ PDFinUse="CT18"
 
 
 ## automatic name generation for the run
-runName="model2.2_"+PDFinUse+"_correlation2_"
+runName="model2.2_"+PDFinUse+"_correlation2_LHCsense_"
 if (runName[-1]=="_"): runName=runName[0:-1]
 
 print(" RUN: "+runName)
@@ -28,7 +28,6 @@ print(" RUN: "+runName)
 #######################################
 PathToHarpy="/home/vla18041/LinkData2/arTeMiDe_Repository/artemide-ForPDF/harpy"
 PathToDataProcessor="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
-PathToDataLibrary=PathToDataProcessor+"DataLib/unpolDY/"
 PathToLog=PathToDataProcessor+"FittingPrograms/PDF-TMD/LOGS/"
 PathToConstantsFile=PathToDataProcessor+"/FittingPrograms/PDF-TMD/Constants-files/const-"+PDFinUse+"_NNLO_7p"
 
@@ -64,21 +63,6 @@ harpy.setNPparameters(initializationArray)
 
 #%%
 #######################################
-# read the list of files and return the list of DataSets
-#######################################
-def loadThisData(listOfNames):    
-    import DataProcessor.DataSet
-    
-    dataCollection=[]
-    for name in listOfNames:
-        if( name==''): continue
-        loadedData=DataProcessor.DataSet.LoadCSV(PathToDataLibrary+name+".csv")
-        dataCollection.append(loadedData)   
-
-    return dataCollection
-
-#%%
-#######################################
 # Data cut function
 #######################################
 def cutFunc(p):    
@@ -110,17 +94,12 @@ def cutFunc(p):
 # Loading the data set
 #######################################
 
-setHE=loadThisData(['CDF1', 'CDF2', 'D01', 'D02', 'D02m', 
-                      'A7-00y10', 'A7-10y20', 'A7-20y24',
-                      'A8-00y04', 'A8-04y08', 'A8-08y12',
-                      'A8-12y16', 'A8-16y20', 'A8-20y24',
-                      'A8-46Q66', 'A8-116Q150',
-                      'CMS7', 'CMS8', 
-                      'LHCb7', 'LHCb8', 'LHCb13'])
+import DataProcessor.DataSet
+dataCollection=[]
+loadedData=DataProcessor.DataSet.LoadCSV("/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/OtherPrograms/LHC_impact_Study/LHC13TeV-Empty.csv")
+dataCollection.append(loadedData)
 
-setLE=loadThisData(['PHE200', 'E228-200', 'E228-300', 'E228-400','E772','E605'])
-
-theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",setHE+setLE)
+theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",dataCollection)
 
 setDY=theData.CutData(cutFunc) 
 
@@ -144,8 +123,6 @@ if(PDFinUse=="CT18"):
 
 
 harpy.setNPparameters(list(initialValues))
-
-DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 
 #%%
 ######################
@@ -207,7 +184,7 @@ def CorrelationParameters(pN,deltap):
     ### correlation (<xSec * p>- <xSec><p>)/deltaXsec/deltap
     rho1=numpy.divide(avOF1-numpy.multiply(avO,avF1),numpy.multiply(stdO,stdF1))
         
-    return numpy.transpose([rho1,stdO])
+    return numpy.transpose([rho1,stdO,avO])
 
 #%%
 #################################################
