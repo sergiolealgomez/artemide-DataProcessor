@@ -12,8 +12,8 @@
 #######################################################################
 
 #PDFinUse="HERA20"
-#PDFinUse="NNPDF31"
-PDFinUse="CT18"
+PDFinUse="NNPDF31"
+#PDFinUse="CT18"
 
 ## if this trigger is ON the LHC data will be fit only by shape
 useNormalizedLHCdata=False
@@ -22,15 +22,17 @@ useA7data=False
 ## Split the low-energy experiment <Upsilon and >Upsilon
 splitUpsilon=True
 ## Use the reduced set of the data
-useReducedSet=True
+useReducedSet=False#ArithmeticErrorTrue
 
+## total number of parameters in TMDPDF (7 and 12 case are defined)
+numberOfParameters=12
 
 #### Starting and final replica (included)
 StartReplica=1
 FinalReplica=3
 
 ## automatic name generation for the run
-runName="model2.2_"+PDFinUse+"_PDFrep_"
+runName="model4.0_"+PDFinUse+"_PDFrep_"
 if (not useA7data): runName+="noA7_"
 if (splitUpsilon): runName+="spltUPS_"
 if (useNormalizedLHCdata): runName+="norm_"
@@ -47,7 +49,13 @@ PathToHarpy="/home/vla18041/LinkData2/arTeMiDe_Repository/artemide-ForPDF/harpy"
 PathToDataProcessor="/home/vla18041/LinkData2/arTeMiDe_Repository/DataProcessor/"
 PathToDataLibrary=PathToDataProcessor+"DataLib/unpolDY/"
 PathToLog=PathToDataProcessor+"FittingPrograms/PDF-TMD/LOGS/"
-PathToConstantsFile=PathToDataProcessor+"/FittingPrograms/PDF-TMD/Constants-files/const-"+PDFinUse+"_NNLO_7p"
+PathToSavings=PathToDataProcessor+"FittingPrograms/PDF-TMD/LOGS/"+runName+"/"
+if(numberOfParameters==7):
+    PathToConstantsFile=PathToDataProcessor+"/FittingPrograms/PDF-TMD/Constants-files/const-"+PDFinUse+"_NNLO_7p"
+elif(numberOfParameters==12):
+    PathToConstantsFile=PathToDataProcessor+"/FittingPrograms/PDF-TMD/Constants-files/const-"+PDFinUse+"_NNLO_12p"
+else:
+    print("UNKNOWN NUMBER OF PARAMETERS")
 
 import sys
 sys.path.remove('/home/vla18041/LinkData2/arTeMiDe_Repository/artemide/harpy')
@@ -104,7 +112,13 @@ import harpy
 SaveToLog('Initialization with : \n'+PathToConstantsFile)
 
 harpy.initialize(PathToConstantsFile)
-initializationArray=[2.0340, 0.0299, 0.2512, 7.7572, 0.2512, 7.7572, 0.2512, 7.7572, 10000.]
+if(numberOfParameters==7):
+    initializationArray=[2.0340, 0.0299, 0.2512, 7.7572, 0.2512, 7.7572, 0.2512, 7.7572, 10000.]
+elif(numberOfParameters==12):
+    initializationArray=[2.0340, 0.0299, 0.2512, 7.7572, 0.2512, 7.7572, 0.2512, 7.7572,0.2512, 7.7572,0.2512, 7.7572, 10000.,0.]
+else:
+    print("UNKNOWN NUMBER OF PARAMETERS")
+
 harpy.setNPparameters(initializationArray)
 
 #%%
@@ -164,12 +178,8 @@ dropPoints=["A7-10y20.7", "A7-10y20.8", "A7-10y20.9", "A7-20y24.4", "A7-20y24.5"
 ##### extra points by hands
 "A8-116Q150.0","CDF1.0","CDF1.1","CDF1.2","D01.0", "D01.1", "D02.0","CMS7.0","LHCb13.0"]
 
-
-def cutFunc(p):    
-    
-    #### check against the presence in the reduced set.
-    if(useReducedSet and p["id"] in dropPoints):
-        return False,p
+#### Check the point kinematics
+def cutFunc0(p):    
     
     par=1.0
 
@@ -205,6 +215,17 @@ def cutFunc(p):
     
 #    return delta<0.5 and p.qT_avarage<80
     return (delta<0.1 or (delta<0.25 and par/err*delta**2<1)) , p
+
+### check the point against the list of dropping points.
+def cutFunc(p):    
+    
+    #### check against the presence in the reduced set.
+    if(useReducedSet and p["id"] in dropPoints):
+        return False,p
+    
+    return cutFunc0(p)
+
+
 
 #%%
 #######################################
@@ -248,6 +269,8 @@ theData=DataProcessor.DataMultiSet.DataMultiSet("DYset",setHE+setLE)
 
 setDY=theData.CutData(cutFunc) 
 
+setDYfull=theData.CutData(cutFunc0) 
+
 print('Loaded ', setDY.numberOfSets, 'data sets with ', sum([i.numberOfPoints for i in setDY.sets]), 'points.')
 print('Loaded experiments are', [i.name for i in setDY.sets])
 
@@ -267,15 +290,22 @@ if useNormalizedLHCdata:
 if(PDFinUse=="HERA20"):
     #initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 570.223, 0.000, 0.000) #model 1.0 HERA
     #initialValues=(2.000,  0.033, 0.230, 5.609, 0.252, 8.021, 0.252, 8.021, 570.223) #model 2.0 HERA
-    initialValues=(2.000, 0.034, 0.145, 10.393, 0.333, 0.000, 0.366, 10.261, 677.434) #model 2.2 HERA
+    #initialValues=(2.000, 0.034, 0.145, 10.393, 0.333, 0.000, 0.366, 10.261, 677.434) #model 2.2 HERA
+    #initialValues=(2.000, 0.036, 0.089, 8.657,  0.389, 0.000, 0.465, 6.195, 527.903) #model 2.2 HERA reduced
+    initialValues=(2.000, 0.036, 0.099, 8.578, 0.396, 0.246, 0.089, 8.604, 0.379, 0.000, 0.455, 5.355, 528.381, 0.000) #model 4.0 HERA
 if(PDFinUse=="NNPDF31"):
     #initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 232.544, 0. , 0.)      #model 1.0 NNPDF31
     #initialValues=(2.000,  0.029, 0.345, 2.587, 0.152, 7.561, 0.152, 7.561, 232.544) #model 2.0 NNPDF31
-    initialValues=(2.000, 0.030, 0.188, 5.542, 0.200, 4.375, 0.486, 0.009, 232.793) #model 2.2 NNPDF31
+    #initialValues=(2.000, 0.030, 0.188, 5.542, 0.200, 4.375, 0.486, 0.009, 232.793) #model 2.2 NNPDF31
+    #initialValues=(2.000, 0.035, 0.160, 5.139, 0.219, 3.711, 0.460, 0.038, 229.333) #model 2.2 NNPDF31 reduced
+    initialValues=(2.000, 0.034, 0.330, 1.416, 0.371, 2.504, 0.128, 9.149, 0.128, 5.158, 0.195, 4.758, 192.312, 0.000) #model 4.0 NNPDF31
 if(PDFinUse=="CT18"):
     #initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 700.642, 0. , 0.)      #model 1.0 CT18
     #initialValues=(2.000,  0.039, 0.161, 7.904, 0.212, 5.301, 0.212, 5.301, 700.642) #model 2.0 CT18
-    initialValues=(2.000, 0.042, 0.094, 12.534, 0.293, 0.004, 0.003, 16.568, 819.267) #model 2.2 CT18
+    #initialValues=(2.000, 0.042, 0.094, 12.534, 0.293, 0.004, 0.003, 16.568, 819.267) #model 2.2 CT18
+    #initialValues=(2.000, 0.042, 0.121, 9.626,  0.289, 0.000, 0.000, 17.820, 524.722) #model 2.2 CT18 reduced
+    #initialValues=(2.000, 0.042, 0.121, 9.626,  0.289, 0.000, 0.121, 9.626,  0.289, 0.000, 0.000, 17.820, 524.722, 0.) #model 4.0 CT18
+    initialValues=(2.000, 0.048, 0.063, 0.009, 0.414, 4.566, 0.049, 24.999, 0.000, 0.213, 0.002, 24.326, 0.036, 0.000) #model 4.0 CT18
 harpy.setNPparameters(list(initialValues))
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
@@ -309,35 +339,36 @@ from iminuit import Minuit
 #parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, True, True)
 
 ##### model 2.0
-initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,    0.2,  0.05,   0.2,    10.0)
-searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,10.0),(0.,50.0),(0.0,10.0),(0.,50.0),(0.0,10.0),(0.,50.0),(0.,2500))
-parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, False, False)
-
-# ##### model 3.0
-# initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,   0.2,    10.0,   0.1,   0.1)
-# searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,25.0),(0.0,2.0),(0.,25.0),(0.,2500),None, (-0.5, 10.))
+# initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,    0.2,  0.05,   0.2,    10.0)
+# searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,10.0),(0.,50.0),(0.0,10.0),(0.,50.0),(0.0,10.0),(0.,50.0),(0.,2500))
 # parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, False, False)
+
+# ##### model 4.0
+initialErrors=(0.1,       0.002,      0.05,    0.2,  0.05,   0.2, 0.05,    0.2,0.05,    0.2,   0.05,    0.2, 10., 0.1)
+searchLimits=((1.4,4.5), (0.0001,5.0),(0.0,2.0),(0.,25.0),(0.0,2.0),(0.,25.0),(0.0,2.0),
+              (0.,25.0),(0.0,2.0),(0.,25.0),(0.0,2.0),(0.,25.0),(0.,2500),(0.,100))
+parametersToMinimize=(True,     False,    False,    False,    False,     False,  False, False, False, False, False, False, False,True)
 
 
 #%%
 
-m = Minuit.from_array_func(chi_2, initialValues,
-      error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
+# m = Minuit.from_array_func(chi_2, initialValues,
+#       error=initialErrors, limit=searchLimits, fix=parametersToMinimize, errordef=1)
 
-m.get_param_states()
+# m.get_param_states()
 
-m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
-m.strategy=1
-m.migrad()
+# m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
+# m.strategy=1
+# m.migrad()
 
-## print parameters
-print(m.params)
+# ## print parameters
+# print(m.params)
 
-## print chi^2 table
-harpy.setNPparameters(m.values.values())
-DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
+# ## print chi^2 table
+# harpy.setNPparameters(m.values.values())
+# DataProcessor.harpyInterface.PrintChi2Table(setDY,printDecomposedChi2=True)
 
-sys.exit()
+# sys.exit()
 #%%
 #######################################
 # Generate replica of data and compute chi2
@@ -373,6 +404,182 @@ def MinForReplica():
 
 #%%
 #######################################
+# Save plot of TMD
+#######################################
+xValues=[
+0.0001, 0.00011, 0.00013, 0.00014, 0.00016, 0.00018, 0.0002, 0.00022, \
+0.00025, 0.00028, 0.00032, 0.00035, 0.0004, 0.00045, 0.0005, 0.00056, 0.00063, \
+0.00071, 0.00079, 0.00089,\
+0.001, 0.0011, 0.0013, 0.0014, 0.0016, 0.0018, 0.002, 0.0022, \
+0.0025, 0.0028, 0.0032, 0.0035, 0.004, 0.0045, 0.005, 0.0056, 0.0063, \
+0.0071, 0.0079, 0.0089, 0.01, 0.011, 0.013, 0.014, 0.016, 0.018, \
+0.02, 0.022, 0.025, 0.028, 0.032, 0.035, 0.04, 0.045, 0.05, 0.056, \
+0.063, 0.071, 0.079, 0.089, 0.1, 0.11, 0.13, 0.14, 0.16, 0.18, 0.2, \
+0.22, 0.25, 0.28, 0.32, 0.35, 0.4, 0.45, 0.5, 0.56, 0.63, 0.71, 0.79, \
+0.89, 0.99]
+bValues=[0., 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, \
+0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1., 1.1, 1.2, 1.3, 1.4, 1.5, \
+1.6, 1.7, 1.8, 1.9, 2., 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, \
+3., 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4., 4.5, 5., 5.5, \
+6., 6.5, 7., 7.5, 8.]
+
+
+##### check the existance of files
+from pathlib import Path
+Path(PathToSavings).mkdir(parents=True, exist_ok=True)
+
+## check file a and if absent, create it and add first lines x, and b
+def TryFile(a):    
+    import os.path
+    if(os.path.isfile(PathToSavings+a)):
+        return
+    else:
+        file=open(PathToSavings+a,"w")
+        line=[]
+        for x in xValues:
+            for b in bValues:
+               line.append(x)
+        file.write(str(line)+"\n")
+        line=[]
+        for x in xValues:
+            for b in bValues:
+               line.append(b)
+        file.write(str(line)+"\n")
+        file.close()
+        
+TryFile("u-optimal.plt3d")
+TryFile("d-optimal.plt3d")
+TryFile("s-optimal.plt3d")
+TryFile("uBar-optimal.plt3d")
+TryFile("dBar-optimal.plt3d")
+TryFile("sBar-optimal.plt3d")
+
+TryFile("u-2GeV.plt3d")
+TryFile("d-2GeV.plt3d")
+TryFile("s-2GeV.plt3d")
+TryFile("uBar-2GeV.plt3d")
+TryFile("dBar-2GeV.plt3d")
+TryFile("sBar-2GeV.plt3d")
+
+TryFile("u-90GeV.plt3d")
+TryFile("d-90GeV.plt3d")
+TryFile("s-90GeV.plt3d")
+TryFile("uBar-90GeV.plt3d")
+TryFile("dBar-90GeV.plt3d")
+TryFile("sBar-90GeV.plt3d")
+
+def AddLine(fout,lineToAdd):
+    file=open(PathToSavings+fout,"a+")
+    file.write(str(lineToAdd)+"\n")
+    file.close()
+
+def SavePlot():
+    
+    #### optimal
+    u2=[]
+    d2=[]
+    s2=[]
+    ubar2=[]
+    dbar2=[]
+    sbar2=[]
+    
+    mu=-1.
+    for x in xValues:
+        for b in bValues:
+            tmd=harpy.get_uTMDPDF(x,b,1,mu=mu)
+            u2.append(tmd[5+2])
+            d2.append(tmd[5+1])
+            s2.append(tmd[5+3])
+            ubar2.append(tmd[5-2])
+            dbar2.append(tmd[5-1])
+            sbar2.append(tmd[5-3])
+    AddLine("u-optimal.plt3d",u2)
+    AddLine("d-optimal.plt3d",d2)
+    AddLine("s-optimal.plt3d",s2)
+    AddLine("uBar-optimal.plt3d",ubar2)
+    AddLine("dBar-optimal.plt3d",dbar2)
+    AddLine("sBar-optimal.plt3d",sbar2)
+    
+    
+    #### 2GeV
+    u2=[]
+    d2=[]
+    s2=[]
+    ubar2=[]
+    dbar2=[]
+    sbar2=[]
+    
+    mu=2.
+    for x in xValues:
+        for b in bValues:
+            tmd=harpy.get_uTMDPDF(x,b,1,mu=mu)
+            u2.append(tmd[5+2])
+            d2.append(tmd[5+1])
+            s2.append(tmd[5+3])
+            ubar2.append(tmd[5-2])
+            dbar2.append(tmd[5-1])
+            sbar2.append(tmd[5-3])
+    AddLine("u-2GeV.plt3d",u2)
+    AddLine("d-2GeV.plt3d",d2)
+    AddLine("s-2GeV.plt3d",s2)
+    AddLine("uBar-2GeV.plt3d",ubar2)
+    AddLine("dBar-2GeV.plt3d",dbar2)
+    AddLine("sBar-2GeV.plt3d",sbar2)
+    
+    #### 90GeV
+    u2=[]
+    d2=[]
+    s2=[]
+    ubar2=[]
+    dbar2=[]
+    sbar2=[]
+    
+    mu=90.
+    for x in xValues:
+        for b in bValues:
+            tmd=harpy.get_uTMDPDF(x,b,1,mu=mu)
+            u2.append(tmd[5+2])
+            d2.append(tmd[5+1])
+            s2.append(tmd[5+3])
+            ubar2.append(tmd[5-2])
+            dbar2.append(tmd[5-1])
+            sbar2.append(tmd[5-3])
+    AddLine("u-90GeV.plt3d",u2)
+    AddLine("d-90GeV.plt3d",d2)
+    AddLine("s-90GeV.plt3d",s2)
+    AddLine("uBar-90GeV.plt3d",ubar2)
+    AddLine("dBar-90GeV.plt3d",dbar2)
+    AddLine("sBar-90GeV.plt3d",sbar2)
+    
+#%%
+#######################################
+# Save plot of xSec
+#######################################
+##### check the existance of files
+from pathlib import Path
+Path(PathToSavings).mkdir(parents=True, exist_ok=True)
+import os.path
+if(os.path.isfile(PathToSavings+"xSec.plt")):
+    pass
+else:
+    file=open(PathToSavings+"xSec.plt","w")
+    line=[p["id"] for p in setDYfull.points]
+    file.write(str(line)+"\n")
+    line=[p["qT"] for p in setDYfull.points]
+    file.write(str(line)+"\n")
+    line=[p["xSec"] for p in setDYfull.points]
+    file.write(str(line)+"\n")
+    line=[numpy.sqrt(numpy.sum(numpy.array(p["uncorrErr"])**2)) for p in setDYfull.points]
+    file.write(str(line)+"\n")
+    file.close()
+    
+        
+def SavePlotData():
+    
+    dd=DataProcessor.harpyInterface.ComputeXSec(setDYfull)
+    AddLine("xSec.plt",dd)
+#%%
+#######################################
 # This is the main cicle. 
 # It generates replica of data take random PDF and minimize it
 # Save to log.
@@ -392,8 +599,8 @@ for i in range(StartReplica,FinalReplica+1):
     print(repRes)
     SaveToLog("Minimization for replica "+str(i) +"in ["+ str(StartReplica)+','+str(FinalReplica)+"] finished.")    
     
-    ## compute the chi2 for true data
-    mainDY, mainDY2 =DataProcessor.harpyInterface.ComputeChi2(setDY)    
+    ## compute the chi2 for true data full
+    mainDY, mainDY2 =DataProcessor.harpyInterface.ComputeChi2(setDYfull)    
     SaveToLog("Central chi^2 for "+str(i) +"in ["+ str(StartReplica)+','+str(FinalReplica)+" computed. \n Saving to log >> "+replicaFile)
     
     ## save to file
@@ -402,6 +609,12 @@ for i in range(StartReplica,FinalReplica+1):
     ### [total chi^2(cenral), total chi^2 (pseudo data), list of chi^2 for experiments(central), number of PDF, list of NP-parameters]
     f.write(str([mainDY,repRes[0],mainDY2,i,repRes[1]])+"\n")
     f.close()
+    
+    print('SAVING >>  PLOTS')
+    
+    SavePlot()
+    SavePlotData()
+    
     
 #%%
 #######################################
