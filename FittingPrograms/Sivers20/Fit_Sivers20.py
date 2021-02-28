@@ -177,7 +177,7 @@ rSet.SetReplica()
 
 #harpy.setNPparameters_SiversTMDPDF([0.0763382, 2.6377, 94.5443, 0., 0., -0.0436252, -0.319028, -3.25994, \
 #0.203802, -0.617296, -2.87003, 0.0710813, 2.86455, 0.0240161])
-
+#%%
 DataProcessor.harpyInterface.PrintChi2Table(setSIDIS,method="central",printSysShift=False)
 
 DataProcessor.harpyInterface.PrintChi2Table(setDY)
@@ -199,6 +199,50 @@ DataProcessor.harpyInterface.PrintChi2Table(setDY)
 #     cccDY.append(ccDY2)
 #     cccZ.append(cc3[0]+cc3[1]+cc3[3])
 #     cccTotal.append(ccSIDIS2+ccDY2)
+
+#%%
+# ###########################
+# ### Computation of chi^2 for each replica for sets of experiments
+# ##########################
+# cccSIDIS=[]
+# cccDY=[]
+# cccTotal=[]
+
+# c08=[]
+# c16=[]
+# hpiPlus=[]
+# hpiMinus=[]
+# hkPlus=[]
+# hkMinus=[]
+# jlab=[]
+
+# Wplus=[]
+# Wminus=[]
+# ZZ=[]
+# piDY=[]
+
+# for i in range(1,rSet.numberOfReplicas+1):
+#     rSet.SetReplica(i)
+    
+#     ccSIDIS2,cc2=DataProcessor.harpyInterface.ComputeChi2(setSIDIS,method="central")
+#     ccDY2,cc3=DataProcessor.harpyInterface.ComputeChi2(setDY)
+    
+#     cccSIDIS.append(ccSIDIS2)
+#     cccDY.append(ccDY2)
+#     cccTotal.append(ccSIDIS2+ccDY2)
+    
+#     c08.append(cc2[0]+cc2[1]+cc2[2]+cc2[3])
+#     c16.append(cc2[4]+cc2[5]+cc2[6]+cc2[7])
+#     hpiPlus.append(cc2[8])
+#     hpiMinus.append(cc2[9])
+#     hkPlus.append(cc2[10])
+#     hkMinus.append(cc2[11])
+#     jlab.append(cc2[12]+cc2[13]+cc2[14])
+    
+#     Wplus.append(cc3[0])
+#     Wminus.append(cc3[1])
+#     ZZ.append(cc3[2])
+#     piDY.append(cc3[3])
 
 #%%
 ### SIDIS nnlo
@@ -315,9 +359,9 @@ m.strategy=1
 # m.tol=0.0001*totalN*10000 ### the last 0.0001 is to compensate MINUIT def
 # m.strategy=1
 
-# m.migrad()#ncall=150)
+m.migrad()#ncall=150)
 
-# print(m.params)
+print(m.params)
 # sys.exit()
 # SaveToLog("MINIMIZATION FINISHED",str(m.params))
 # SaveToLog("CORRELATION MATRIX",str(m.matrix(correlation=True)))
