@@ -14,8 +14,8 @@
 #PDFinUse="HERA20"
 #PDFinUse="NNPDF31"
 #PDFinUse="CT18"
-#PDFinUse="MSHT20"
-PDFinUse="CJ15"
+PDFinUse="MSHT20"
+#PDFinUse="CJ15"
 
 ## if this trigger is ON the LHC data will be fit only by shape
 useNormalizedLHCdata=False
