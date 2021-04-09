@@ -36,7 +36,7 @@ StartReplica=3
 FinalReplica=3
 
 ## automatic name generation for the run
-runName="model5.0_"+PDFinUse+"_PDFrep_"
+runName="model4.0_"+PDFinUse+"_PDFrep_"
 if (not useA7data): runName+="noA7_"
 if (splitUpsilon): runName+="spltUPS_"
 if (useNormalizedLHCdata): runName+="norm_"
