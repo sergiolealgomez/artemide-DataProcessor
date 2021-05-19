@@ -1,0 +1,16 @@
+Name,CMS8_mT_m
+Comment,CMS 8TeV
+Reference,arXiv:1606.05864
+Process type,DY_mT
+Number of points,4
+Number of uncorr.errors,1
+Number of corr.errors,0
+Number of norm.errors,1
+List of norm.errors (relative),0.0
+Total cross-section nomalized,True
+List of points 
+Point id,process id,s[GeV^2],<Q>[GeV],Qmin[GeV],Qmax[GeV],<y>,yMin,yMax,<qT>[GeV],qTMin[GeV],qTMax[GeV],<mT>[GeV],mTMin[GeV],mTMax[GeV],xSec,Uncorr.Err.0,Th.Factor,FiducialCuts,kCut1[GeV],kCut2[GeV],etaMin,etaMax
+CMS8_n.0,4 - 1 - 904,64000000.0,15000.0,0.0,30000.0,0.0,-1000.0,1000.0,3.75,0.001,7.5,10000.0,0.0,20000.0,0.0487509,0.000620294,0.13335111348179757,True,20.0,0.0,-2.1,2.1
+CMS8_n.1,4 - 1 - 904,64000000.0,15000.0,0.0,30000.0,0.0,-1000.0,1000.0,10.0,7.5,12.5,10000.0,0.0,20000.0,0.0416289,0.000871954,0.2,True,20.0,0.0,-2.1,2.1
+CMS8_n.2,4 - 1 - 904,64000000.0,15000.0,0.0,30000.0,0.0,-1000.0,1000.0,15.0,12.5,17.5,10000.0,0.0,20000.0,0.023727,0.000397716,0.2,True,20.0,0.0,-2.1,2.1
+CMS8_n.3,4 - 1 - 904,64000000.0,15000.0,0.0,30000.0,0.0,-1000.0,1000.0,20.75,17.5,24.0,10000.0,0.0,20000.0,0.014282,0.000199594,0.15384615384615385,True,20.0,0.0,-2.1,2.1
